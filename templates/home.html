@@ -1,0 +1,18 @@
+{% extends 'navbar.html' %}
+
+
+{% block content %}
+<h3>This is home page</h3>
+
+<form action="" method="GET">
+    <input type="text" placeholder="Search event.." name="event">
+</form>
+
+{% if filter %}
+<a href="/">All categories</a>
+{% endif %}
+{% for category in categories %}
+    <p>{{category}} <a href="book/{{category.id}}">Book now</a></p>
+{% endfor %}
+{{event}}
+{% endblock %}

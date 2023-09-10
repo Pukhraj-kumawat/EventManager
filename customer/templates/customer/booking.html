@@ -1,0 +1,10 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<h3>This is booking page </h3>
+
+{% for event in events %}
+    <div>{{event.name}}</div>
+{% endfor %}
+
+{% endblock %}
