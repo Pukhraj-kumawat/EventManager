@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from . import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 from EventPlanner.models import UserProfile,Category,Event
 from EventPlanner.forms import SignUpForm
 
@@ -42,9 +44,8 @@ def loginPage(request):
         except:
             pass
     context = {}
-    
     return render(request,'customer/login-page.html',context)
 
-
+@login_required(login_url='/login-C/')
 def loggedIn(request):
     return render(request,'customer/logged-in.html')
