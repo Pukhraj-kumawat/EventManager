@@ -2,8 +2,10 @@ from django.shortcuts import render,redirect,HttpResponse
 from .models import Category,Event,UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth.decorators import login_required
 from customer import views
 from .forms import SignUpForm
+
 
 
 # Create your views here.
@@ -46,7 +48,28 @@ def signUp(request):
     context = {'signUpForm':SignUpForm}
     return render(request,'EventPlanner/sign-up.html',context)
     
+@login_required(login_url='/login-E/')
 def loggedIn(request):
     return render(request,'EventPlanner/logged-in.html')
 
+
+def loginPage(request):
+    if request.method == 'POST':
+        try:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request,username=username,password=password)
+            if user:
+                login(request,user)
+                return redirect('/logged-in-E/')
+            else:
+                return HttpResponse("Not authenticated")
+        except:
+            pass
+    context = {}
+    return render(request,'EventPlanner/login-page.html',context)
+
                 
+def logoutPage(request):
+    logout(request)
+    return redirect('/login-E/')

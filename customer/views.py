@@ -28,5 +28,23 @@ def signUp(request):
     return render(request,'customer/sign-up.html',context)
 
 
+def loginPage(request):
+    if request.method == 'POST':
+        try:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request,username=username,password=password)
+            if user:
+                login(request,user)
+                return redirect('/logged-in-C/')
+            else:
+                return HttpResponse("Not authenticated")
+        except:
+            pass
+    context = {}
+    
+    return render(request,'customer/login-page.html',context)
+
+
 def loggedIn(request):
     return render(request,'customer/logged-in.html')

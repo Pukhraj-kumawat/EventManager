@@ -1,0 +1,39 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<style>
+    .login-form-div{
+        display: flex;
+        justify-content: center;
+        
+    }
+
+</style>
+
+<div>
+    <h4>This is navbar <a href="/sign-up-E/">SignUp as Event Planner</a>
+        <a href="/sign-up-C/">SignUp as Customer</a>
+    </h4>
+
+</div>
+
+<div class="login-form-div">
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <p>Enter username</p>
+    <input type="text" name="username" placeholder="username" class="username">
+    <p>Enter password</p>
+    <input type="password" name="password" placeholder="password" class="password">
+    <p>
+        <input type="submit" value="Log in">
+        <button><a href="/logout-E/">Logout</a></button>
+    </p>
+</form>
+
+
+</div>
+
+
+
+{% endblock %}
