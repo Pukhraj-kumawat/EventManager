@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,HttpResponse
 from .models import Category,Event,UserProfile
 from django.contrib.auth.models import User
-from . import forms
+from django.contrib.auth import login,logout,authenticate
+from customer import views
+from .forms import SignUpForm
 
 
 # Create your views here.
@@ -31,19 +33,20 @@ def book(request,pk):
     return render(request,'EventPlanner/booking.html',context)
 
 def signUp(request):
-    context = {'signUpForm':forms.SignUpForm}
     if request.method == 'POST':
         try:
-            # create instance of filled form
-            form = forms.SignUpForm(request.POST)
+            form = SignUpForm(request.POST)
+            form.save()
             if form.is_valid():
-                username = form.cleaned_data['username']
-                form.save()
-            # fetch the above created user
-            user = User.objects.get(username=username)
-            # create userProfile for this user
-            UserProfile.objects.create(user=user,is_event_planner=True)            
+                user = form.save(commit=False)
+                user.save()
+                UserProfile_instance = UserProfile.objects.create(user=user,is_event_planner=True)
         except:
-            pass
+            pass    
+    context = {'signUpForm':SignUpForm}
     return render(request,'EventPlanner/sign-up.html',context)
     
+def loggedIn(request):
+    return render(request,'EventPlanner/logged-in.html')
+
+                

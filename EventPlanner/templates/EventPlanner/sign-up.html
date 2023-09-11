@@ -3,14 +3,63 @@
 
 {% block content %}
 
-<form action="" method="POST">
-    {% csrf_token %}
+<style>
+    #id_first_name,
+    #id_last_name,
+    #id_email,
+    #id_username,
+    #id_password1,
+    #id_password2 {
+        width: 200px;
+    }
 
-    {{signUpForm.as_p}}
+    .form-div{
 
-    <input type="submit" value="Sign Up">
-</form>
+        display: flex;
+        justify-content: center;
+    }
 
+    .sign-up-button-div{
+        display: flex;
+        justify-content: center;
+    }
+
+
+</style>
+<h4> <a href="/">Home page</a></h4>
+
+<div class="form-div">
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <p>Enter your first name </p>
+        <p class="first_name">{{signUpForm.first_name}}</p>
+
+        <p>Enter your last name </p>
+        <p class="last_name">{{signUpForm.last_name}}</p>
+
+        <p>Enter your email </p>
+        <p class="email">{{signUpForm.email}}</p>
+
+        <p>Enter your username</p>
+        <p class="username">{{signUpForm.username}}</p>
+
+        <p>Enter your password</p>
+        <p class="password1">{{signUpForm.password1}}</p>
+
+        <p>Confirm password </p>
+        <p class="password2">{{signUpForm.password2}}</p>
+
+        <div class="sign-up-button-div">
+        <input type="submit" value="Sign Up" class="sign-up-button">
+        </div>
+    </form>
+
+</div>
+
+<hr>
+{{error}}
 
 
 {% endblock %}

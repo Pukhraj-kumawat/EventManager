@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from EventPlanner.models import UserProfile
 from django.contrib.auth.models import User
 from . import forms
+from django.contrib.auth.forms import UserCreationForm
+from EventPlanner.models import UserProfile,Category,Event
+from EventPlanner.forms import SignUpForm
 
 # Create your views here.
 
@@ -12,18 +14,19 @@ def book(request,pk):
     return render(request,'customer/booking.html',context)
 
 def signUp(request):
-    context = {'signUpForm':forms.SignUpForm}
     if request.method == 'POST':
         try:
-            form = forms.SignUpForm(request.POST)
+            form = SignUpForm(request.POST)
+            form.save()
             if form.is_valid():
-                # fetch username from form
-                username = form.cleaned_data['username']
-                form.save()
-            # fetch the above created user
-            user = User.objects.get(username=username)
-            # create UserProfile 
-            UserProfile.objects.create(user=user,is_customer=True)
+                user = form.save(commit=False)
+                user.save()
+                UserProfile_instance = UserProfile.objects.create(user=user,is_customer=True)
         except:
-            pass
+            pass    
+    context = {'signUpForm':SignUpForm}
     return render(request,'customer/sign-up.html',context)
+
+
+def loggedIn(request):
+    return render(request,'customer/logged-in.html')
