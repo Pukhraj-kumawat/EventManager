@@ -2,12 +2,15 @@
 
 {% block content %}
 <style>
-    .login-form-div{
+    .login-form-div {
         display: flex;
         justify-content: center;
-        
-    }
 
+    }
+    .validation-error-div{
+        display: flex;
+        justify-content: center;
+    }
 </style>
 
 <div>
@@ -18,19 +21,23 @@
 </div>
 
 <div class="login-form-div">
-<form action="" method="POST">
-    {% csrf_token %}
-    <p>Enter username</p>
-    <input type="text" name="username" placeholder="username" class="username">
-    <p>Enter password</p>
-    <input type="password" name="password" placeholder="password" class="password">
-    <p>
-        <input type="submit" value="Log in">
-        <button><a href="/logout-E/">Logout</a></button>
-    </p>
-</form>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <p>Enter username</p>
+        <input type="text" name="username" placeholder="username" class="username">
+        <p>Enter password</p>
+        <input type="password" name="password" placeholder="password" class="password">
+        <p>
+            <input type="submit" value="Log in">
+            <button><a href="/logout-E/">Logout</a></button>
+        </p>
+    </form>
+</div>
 
-
+<div class="validation-error-div">
+    {% if validation_error %}
+    <p>Username or Password is invalid!</p>
+    {% endif %}
 </div>
 
 {% endblock %}

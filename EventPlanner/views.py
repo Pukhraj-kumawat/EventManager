@@ -5,6 +5,7 @@ from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from customer import views
 from .forms import SignUpForm
+import re
 
 
 
@@ -35,17 +36,28 @@ def book(request,pk):
     return render(request,'EventPlanner/booking.html',context)
 
 def signUp(request):
+    validation_error = None
     if request.method == 'POST':
         try:
+            # access filled form instance
             form = SignUpForm(request.POST)
-            form.save()
+
             if form.is_valid():
                 user = form.save(commit=False)
+                # save the form 
                 user.save()
+                # create the UserProfile for the above user
                 UserProfile_instance = UserProfile.objects.create(user=user,is_event_planner=True)
+                # login the user
+                login(request,user)
+                # redirect the user to logged in page
+                return redirect('/logged-in-E/')
+            else:
+                # catch the error
+                validation_error = form.errors                
         except:
-            pass    
-    context = {'signUpForm':SignUpForm}
+            pass
+    context = {'signUpForm':SignUpForm,'validation_error':validation_error,}
     return render(request,'EventPlanner/sign-up.html',context)
     
 @login_required(login_url='/login-E/')
@@ -54,22 +66,28 @@ def loggedIn(request):
 
 
 def loginPage(request):
+    validation_error = False
+    if request.user.is_authenticated:
+        return redirect('/logged-in-C/')
     if request.method == 'POST':
         try:
+            # fetch the data from HTML login form
             username = request.POST.get('username')
             password = request.POST.get('password')
+            # authenticate the user
             user = authenticate(request,username=username,password=password)
             if user:
                 login(request,user)
                 return redirect('/logged-in-E/')
             else:
-                return HttpResponse("Not authenticated")
+                validation_error = True
         except:
             pass
-    context = {}
+    context = {'validation_error':validation_error}
     return render(request,'EventPlanner/login-page.html',context)
 
                 
 def logoutPage(request):
     logout(request)
     return redirect('/login-E/')
+

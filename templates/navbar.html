@@ -7,10 +7,14 @@
 </head>
 <body>
 
+    {% if not request.user.is_authenticated %}
     <h5>
         <a href="/login-E/">Login as Event Planner</a>
         <a href="/login-C/">Login as customer</a>
     </h5>
+    {% else %}
+        <a href="/logout/">Logout</a>
+    {% endif %}
 
     <h4><a href="/">Home page</a></h4>
     {% block content %}

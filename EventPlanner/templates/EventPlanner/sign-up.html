@@ -34,21 +34,27 @@
 
         <p>Enter your first name </p>
         <p class="first_name">{{signUpForm.first_name}}</p>
-
+        {{validation_error.first_name}}
+    
         <p>Enter your last name </p>
         <p class="last_name">{{signUpForm.last_name}}</p>
+        {{validation_error.last_name}}
 
         <p>Enter your email </p>
         <p class="email">{{signUpForm.email}}</p>
+        {{validation_error.email}}
 
         <p>Enter your username</p>
         <p class="username">{{signUpForm.username}}</p>
+        {{validation_error.username}}
 
         <p>Enter your password</p>
         <p class="password1">{{signUpForm.password1}}</p>
+        {{validation_error.password1}}
 
         <p>Confirm password </p>
         <p class="password2">{{signUpForm.password2}}</p>
+        {{validation_error.password2}}
 
         <div class="sign-up-button-div">
         <input type="submit" value="Sign Up" class="sign-up-button">
