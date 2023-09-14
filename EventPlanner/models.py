@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+# from phonenumber_field.formfields import PhoneNumberField
 
 # Create your models here.
 
@@ -20,11 +21,17 @@ class Event(models.Model):
     def __str__(self):
         return self.name
     
+CHOICES = (('is_customer','is_customer'),('is_event_planner','is_event_planner'))
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    is_customer = models.BooleanField(default=False)
-    is_event_planner = models.BooleanField(default=False)
+    user_type = models.CharField(choices=CHOICES,max_length=50)
+    contact_info = models.CharField(max_length=200,blank=True,null=True)
+    company_name = models.CharField(max_length=50,blank=True,null=True)
+    website = models.URLField(max_length=200,blank=True,null=True)
+    bio = models.TextField(blank=True,null=True)
+    location = models.TextField(blank=True,null=True)
+    service_offered = models.TextField(blank=True,null=True)
 
     def __str__(self):
         return self.user.username

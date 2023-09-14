@@ -16,6 +16,10 @@
         <a href="/logout/">Logout</a>
     {% endif %}
 
+    {% if request.user.is_authenticated %}
+        welocome to <b>{{request.user.first_name}}</b>
+    {% endif %}
+
     <h4><a href="/">Home page</a></h4>
     {% block content %}
         <h3>This is block content</h3>

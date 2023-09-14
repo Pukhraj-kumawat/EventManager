@@ -1,9 +1,26 @@
 {% extends 'home.html' %}
 
 {% block content %}
+
+<style>
+    .event-info-div{
+        border: 2px solid #000; 
+        padding: 10px;
+    }
+    .category-div{
+        background-color: lightgray;
+        display: inline-block;
+
+    }
+</style>
+
 <h3>This is booking page </h3>
 
 {% for event in events %}
+    <div class="event-info-div">
+        <div class="category-div"><h5>{{event.category}}</h5></div>
+    <h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}} @{{event.event_planner}}</h4>
     <div>{{event.name}}</div>
+    </div>
 {% endfor %}
 {% endblock %}

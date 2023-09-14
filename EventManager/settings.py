@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'customer',
     'EventPlanner',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

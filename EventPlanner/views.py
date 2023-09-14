@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from customer import views
-from .forms import SignUpForm
+from .forms import SignUpForm,UserProfileForm,UserForm
+from django.contrib.auth.forms import PasswordChangeForm
 import re
 
 
@@ -35,7 +36,7 @@ def book(request,pk):
     context = {'events':events}
     return render(request,'EventPlanner/booking.html',context)
 
-def signUp(request):
+def signUp(request,user_type):
     validation_error = None
     if request.method == 'POST':
         try:
@@ -46,12 +47,20 @@ def signUp(request):
                 user = form.save(commit=False)
                 # save the form 
                 user.save()
+                # Check whther user is an event planner 
+                if user_type == 'is_event_planner':
                 # create the UserProfile for the above user
-                UserProfile_instance = UserProfile.objects.create(user=user,is_event_planner=True)
-                # login the user
-                login(request,user)
-                # redirect the user to logged in page
-                return redirect('/logged-in-E/')
+                    UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_event_planner')
+                    # login the user
+                    login(request,user)
+                    # redirect the user to logged in page
+                    return redirect('/logged-in-E/')                    
+                else:
+                    UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_customer')
+                    # login the user
+                    login(request,user)
+                    # redirect the user to logged in page
+                    return redirect('/logged-in-C/')      
             else:
                 # catch the error
                 validation_error = form.errors                
@@ -91,3 +100,45 @@ def logoutPage(request):
     logout(request)
     return redirect('/login-E/')
 
+
+@login_required(login_url='/login-E/')
+def profile(request,pk):
+    errors = None
+    user = User.objects.get(id=pk)
+    user_profile = UserProfile.objects.get(user=user)
+    profile_form = UserProfileForm(instance=user_profile,initial={'website':'https://'})
+    user_form = UserForm(instance=user)
+    if request.method == 'POST':
+        try:
+            profile_form = UserProfileForm(request.POST,instance=user_profile)
+            user_form = UserForm(request.POST,instance=user)
+            if user_form.is_valid():
+                user_form.save()
+            else:
+                errors = user_form.errors
+            if profile_form.is_valid():
+                form_data = profile_form.save(commit=False)
+                form_data.user = request.user            
+                form_data.save()
+            else:
+                errors = profile_form.errors
+        except:
+            pass        
+    context = {'UserProfileForm':profile_form,'errors':errors,'user_form':user_form,'user_profile':user_profile}
+    return render(request,'EventPlanner/profile.html',context)
+
+@login_required(login_url='/login-E/')
+def ChangePassword(request):
+    errors = None
+    password_form = PasswordChangeForm(request.user)
+    if request.method == 'POST':
+        try:
+            changed_password = PasswordChangeForm(request.user,request.POST)
+            if changed_password.is_valid():
+                changed_password.save()
+            else:
+                errors = changed_password.errors
+        except:
+            pass
+    context = {'password_form':password_form,'errors':errors}
+    return render(request,'EventPlanner/change-password.html',context)

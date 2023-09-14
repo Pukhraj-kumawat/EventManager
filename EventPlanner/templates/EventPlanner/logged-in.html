@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<h3>Welcome {{request.user.first_name}}</h3>
 <h2>You are logged in as Event planner</h2>
+<a href="/profile/{{request.user.id}}/">Your profile</a>
 
 {% endblock %}

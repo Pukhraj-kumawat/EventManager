@@ -15,28 +15,6 @@ def book(request,pk):
     context = {'events':events}
     return render(request,'customer/booking.html',context)
 
-def signUp(request):
-    validation_error = None
-    if request.method == 'POST':
-        try:
-            # access filled form instance            
-            form = SignUpForm(request.POST)
-            if form.is_valid():
-                user = form.save(commit=False)
-                # save the form                 
-                user.save()
-                # create the UserProfile for the above user
-                UserProfile_instance = UserProfile.objects.create(user=user,is_customer=True)
-                login(request,user)
-                # redirect the user to logged in page
-                return redirect('/logged-in-C/')                
-            else:
-                validation_error = form.errors
-        except:
-            pass    
-    context = {'signUpForm':SignUpForm,'validation_error':validation_error}
-    return render(request,'customer/sign-up.html',context)
-
 
 def loginPage(request):
     validation_error = False
