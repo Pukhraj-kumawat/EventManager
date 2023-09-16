@@ -23,7 +23,7 @@
 <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
 <div>{{booking.vendor.userprofile.contact_info}}</div>
 <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
-
+<a href="/booked/?venue_id={{booking.venue.id}}&vendor_id={{booking.vendor.id}}">Cancle booking</a>
 <hr>
 
 {% elif booking.venue %}
@@ -32,22 +32,21 @@
 <h3>{{booking.venue.name}}</h3>
 <div>{{booking.venue.location}}</div>
 <div>{{booking.venue.city}} {{booking.venue.state}}</div>
+<a href="/booked/?venue_id={{booking.venue.id}}&vendor_id={{booking.vendor.id}}">Cancle booking</a>
 
 <hr>
 
 {% else %}
-
 <h2>booking.vendor : => </h2>
 <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
 <div>{{booking.vendor.userprofile.contact_info}}</div>
 <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
+<a href="/booked/?venue_id={{booking.venue.id}}&vendor_id={{booking.vendor.id}}">Cancle booking</a>
 
 {% endif %}
 
 {% endif %}
-
 
 {% endfor %}
-
 
 {% endblock %}

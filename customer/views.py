@@ -70,6 +70,24 @@ def create_book(request,venue_id=None,vendor_id = None):
 
 @login_required(login_url='/login-C/')
 def booked(request):
+    if request.method == 'GET':
+        try:
+            venue_id = request.GET.get('venue_id')
+            vendor_id = request.GET.get('vendor_id')
+            if venue_id and vendor_id:
+                venue = Venue.objects.get(id=int(venue_id))
+                vendor = User.objects.get(id = int(vendor_id))
+                booking_object = Booking.objects.get(user=request.user,venue=venue,vendor=vendor)
+            elif venue_id:
+                venue = Venue.objects.get(id = int(venue_id))
+                booking_object = Booking.objects.get(user=request.user,venue=venue)
+            else:
+                vendor = User.objects.get(id = int(vendor_id))
+                booking_object = Booking.objects.get(user=request.user,vendor=vendor)
+            booking_object.delete()    
+        except:
+            pass
+
     bookings = Booking.objects.all()
     context = {'bookings':bookings}
     return render(request,'customer/booked.html',context)

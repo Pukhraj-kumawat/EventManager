@@ -15,8 +15,5 @@
     <p>{{category}} <a href="book/{{category.id}}">Book now</a></p>
 {% endfor %}
 
-{% if user.is_authenticated %}
-<a href="/profile/{{request.user.id}}/">Your profile</a>
-{% endif %}
 
 {% endblock %}
