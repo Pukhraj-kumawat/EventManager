@@ -22,7 +22,11 @@ This is full package page
 <div>Contact information :: {{vendor_profile.contact_info}}</div>
 <div>Minimum price : {{venue.min_price}}</div>
 {% if request.user.is_authenticated %}
+
+{% if request.user.userprofile.user_type == 'is_customer' %}
 <button><a href="/booked/{{venue.id}}/{{vendor.id}}">Book now</a></button>
+{% endif %}
+
 {% else %}
 <button><a href="/login-C/">Book now</a></button>
 {% endif %}

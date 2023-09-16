@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from . import forms
+from .models import Booking
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
@@ -51,15 +52,24 @@ def full_package(request,pk):
     context = {'venue':venue,'vendors':vendors,'vender_data':vender_data}
     return render(request,'customer/full-package.html',context)
 
-def booked(request,venue_id=None,vendor_id = None):
+@login_required(login_url='/login-C/')
+def create_book(request,venue_id=None,vendor_id = None):
     if venue_id and vendor_id :
         venue = Venue.objects.get(id = venue_id)
         vendor = User.objects.get(id = vendor_id)
+        Booking.objects.create(venue=venue,vendor=vendor,user = request.user)
     elif venue_id:
         venue = Venue.objects.get(id = venue_id)
         vendor = None
+        Booking.objects.create(venue=venue,user = request.user)
     else:
         vendor = User.objects.get(id = vendor_id)
         venue = None
-    context = {'venue':venue,'vendor':vendor}
+        Booking.objects.create(vendor=vendor,user = request.user)
+    return redirect('/booked/')
+
+@login_required(login_url='/login-C/')
+def booked(request):
+    bookings = Booking.objects.all()
+    context = {'bookings':bookings}
     return render(request,'customer/booked.html',context)

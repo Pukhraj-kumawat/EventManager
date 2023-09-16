@@ -37,7 +37,11 @@
                 <div> Book full packege (Venue + Vendor)<a href="/full-package/{{venue.id}}/">View</a></div>
             </h5>
             {% if request.user.is_authenticated %}
+
+            {% if request.user.userprofile.user_type == 'is_customer' %}
             <button class="auth-book" onclick="clicked()"><a href="/booked/{{venue.id}}/">Book now</a></button>
+            {% endif %}
+
             {% else %}
             <button class="un-auth-book"><a href="/login-C/">Book now</a></button>
             {% endif %}
@@ -64,7 +68,11 @@
             <br>
 
             {% if request.user.is_authenticated %}
+
+            {% if request.user.userprofile.user_type == 'is_customer' %}
             <button class="auth-book" onclick="clicked()"><a href="/booked/0/{{event.event_planner.id}}/">Book now</a></button>
+            {% endif %}
+
             {% else %}
             <button class="un-auth-book"><a href="/login-C/">Book now</a></button>
             {% endif %}
