@@ -1,0 +1,18 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<div>
+
+<div>
+
+    {% for field in user_profile_form %}
+    <h5>{{field.label_tag}}</h5>
+    <p>{{field.value}}</p>
+    {% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

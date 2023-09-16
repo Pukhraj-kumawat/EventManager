@@ -25,7 +25,7 @@ class SignUpForm(UserCreationForm):
             )
         ]
     )
-    email = forms.EmailField(max_length=255, required=False)
+    email = forms.EmailField(max_length=255, required=True)
     # To override custom validation error message -- >
             # username = forms.CharField(error_messages={'unique': 'Already taken choose another one'})
 
@@ -37,7 +37,9 @@ class SignUpForm(UserCreationForm):
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
-        fields = '__all__'       
+        fields = '__all__' 
+        exclude = ('user_type','user',)
+                      
 
 class UserForm(ModelForm):
     class Meta:

@@ -66,7 +66,7 @@ def signUp(request,user_type):
                 validation_error = form.errors                
         except:
             pass
-    context = {'signUpForm':SignUpForm,'validation_error':validation_error,}
+    context = {'signUpForm':SignUpForm,'validation_error':validation_error,'user_type':user_type}
     return render(request,'EventPlanner/sign-up.html',context)
     
 @login_required(login_url='/login-E/')
@@ -103,10 +103,11 @@ def logoutPage(request):
 
 @login_required(login_url='/login-E/')
 def profile(request,pk):
-    errors = None
+    user_errors = None
+    profile_errors = None
     user = User.objects.get(id=pk)
     user_profile = UserProfile.objects.get(user=user)
-    profile_form = UserProfileForm(instance=user_profile,initial={'website':'https://'})
+    profile_form = UserProfileForm(instance=user_profile,initial={'website': user_profile.website if user_profile.website else 'https://'})
     user_form = UserForm(instance=user)
     if request.method == 'POST':
         try:
@@ -115,16 +116,16 @@ def profile(request,pk):
             if user_form.is_valid():
                 user_form.save()
             else:
-                errors = user_form.errors
+                user_errors = user_form.errors
             if profile_form.is_valid():
                 form_data = profile_form.save(commit=False)
                 form_data.user = request.user            
                 form_data.save()
             else:
-                errors = profile_form.errors
+                profile_errors = profile_form.errors
         except:
             pass        
-    context = {'UserProfileForm':profile_form,'errors':errors,'user_form':user_form,'user_profile':user_profile}
+    context = {'UserProfileForm':profile_form,'user_errors':user_errors,'profile_errors':profile_errors,'user_form':user_form,'user_profile':user_profile}
     return render(request,'EventPlanner/profile.html',context)
 
 @login_required(login_url='/login-E/')
@@ -142,3 +143,11 @@ def ChangePassword(request):
             pass
     context = {'password_form':password_form,'errors':errors}
     return render(request,'EventPlanner/change-password.html',context)
+
+
+def EventPlannerInfo(request,pk):
+    user = User.objects.get(id = pk)
+    user_profile = UserProfile.objects.get(user=user)
+    user_profile_form = UserProfileForm(instance=user_profile)
+    context = {'user_profile_form':user_profile_form}
+    return render(request,'EventPlanner/event-planner-info.html',context)

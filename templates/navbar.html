@@ -9,9 +9,15 @@
 
     {% if not request.user.is_authenticated %}
     <h5>
-        <a href="/login-E/">Login as Event Planner</a>
-        <a href="/login-C/">Login as customer</a>
+        <a href="/sign-up-is_customer/">Create account </a>
+        <a href="/login-C/">Sign in </a>
     </h5>
+
+    <h5>
+        <a href="/sign-up-is_event_planner/">Want to become Event planner</a>
+        <a href="/login-E/">Sign in </a>
+    </h5>
+
     {% else %}
         <a href="/logout/">Logout</a>
     {% endif %}

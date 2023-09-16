@@ -4,7 +4,7 @@ from . import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from EventPlanner.models import UserProfile,Category,Event
+from EventPlanner.models import UserProfile,Category,Event,Venue
 from EventPlanner.forms import SignUpForm
 
 # Create your views here.
@@ -12,7 +12,8 @@ from EventPlanner.forms import SignUpForm
 def book(request,pk):
     category = Category.objects.get(id=pk)
     events = Event.objects.filter(category=category)
-    context = {'events':events}
+    venues = Venue.objects.filter(category=category)
+    context = {'events':events,'venues':venues}
     return render(request,'customer/booking.html',context)
 
 
@@ -38,3 +39,14 @@ def loginPage(request):
 @login_required(login_url='/login-C/')
 def loggedIn(request):
     return render(request,'customer/logged-in.html')
+
+def full_package(request,pk):
+    venue = Venue.objects.get(id=pk)
+    vendors = venue.vendors.all()
+    vender_data = {}
+    for vendor in vendors:
+        vendor_profile = UserProfile.objects.get(user=vendor)
+        vender_data[vendor] = vendor_profile 
+    
+    context = {'venue':venue,'vendors':vendors,'vender_data':vender_data}
+    return render(request,'customer/full-package.html',context)

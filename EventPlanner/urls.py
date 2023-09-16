@@ -9,6 +9,7 @@ urlpatterns = [
     path('logged-in-E/',views.loggedIn),
     path('profile/<int:pk>/',views.profile),
     path('change-password/',views.ChangePassword),
+    path('event-planner-info/<int:pk>/',views.EventPlannerInfo),
     
 ]
 

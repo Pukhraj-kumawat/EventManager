@@ -9,10 +9,14 @@
 
     <div>First name</div>
     <div>{{user_form.first_name}}</div>
+
     <div>Last name</div>
     <div>{{user_form.last_name}}</div>
+
+
     <div>Email</div>
     <div>{{user_form.email}}</div>
+
 
     <div class="hidden-div1">
         <div>{{UserProfileForm.user}}</div>
@@ -24,23 +28,10 @@
 
     {% if user_profile.user_type == 'is_event_planner' %}
 
-    <div>Contact information</div>
-    <div>{{UserProfileForm.contact_info}}</div>
-
-    <div>company_name</div>
-    <div>{{UserProfileForm.company_name}}</div>
-
-    <div>website</div>
-    <div>{{UserProfileForm.website}}</div>
-
-    <div>bio</div>
-    <div>{{UserProfileForm.bio}}</div>
-
-    <div>location</div>
-    <div>{{UserProfileForm.location}}</div>
-
-    <div>service_offered</div>
-    <div>{{UserProfileForm.service_offered}}</div>
+        {% for field in UserProfileForm %}
+            <div>{{field.label_tag}}</div>
+            <div>{{field}}</div>
+        {% endfor %}
 
     {% endif %}
 
@@ -52,14 +43,11 @@
     <a href="/change-password/">Change password</a>
 </div>
 
-<script>
-    const inputField1 = document.querySelector('.hidden-div1');
-    inputField1.style.display = 'none';
-
-    const inputField2 = document.querySelector('.hidden-div2');
-    inputField2.style.display = 'none';
-</script>
 <hr>
-{{errors}}
+
+{{user_errors}}
+
+{{profile_errors}}
+
 
 {% endblock %}
