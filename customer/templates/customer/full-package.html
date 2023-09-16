@@ -14,13 +14,19 @@ This is full package page
 
 {% for vendor,vendor_profile in vender_data.items %}
 
-    <div><h4>{{vendor.first_name}}  {{vendor.last_name}}  (@{{vendor.username}})</h4></div>
-    <div><a href="/event-planner-info/{{vendor.id}}/">View profile</a></div>
-    <div> Company : <a href="{{vendor_profile.website}}">{{vendor_profile.company_name}}</a> </div>
-    <div>Contact information :: {{vendor_profile.contact_info}}</div>
-    <div>Minimum price : {{venue.min_price}}</div>
-    <button>Book now</button>
-    <hr>
+<div>
+    <h4>{{vendor.first_name}} {{vendor.last_name}} (@{{vendor.username}})</h4>
+</div>
+<div><a href="/event-planner-info/{{vendor.id}}/">View profile</a></div>
+<div> Company : <a href="{{vendor_profile.website}}">{{vendor_profile.company_name}}</a> </div>
+<div>Contact information :: {{vendor_profile.contact_info}}</div>
+<div>Minimum price : {{venue.min_price}}</div>
+{% if request.user.is_authenticated %}
+<button><a href="/booked/{{venue.id}}/{{vendor.id}}">Book now</a></button>
+{% else %}
+<button><a href="/login-C/">Book now</a></button>
+{% endif %}
+<hr>
 
 
 

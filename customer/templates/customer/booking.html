@@ -14,7 +14,7 @@
 
     }
 
-    .grid-div{
+    .grid-div {
         display: grid;
         grid-template-columns: 1fr 1fr;
 
@@ -30,13 +30,20 @@
         {% for venue in venues %}
         <div class="event-info-div">
             <h4>{{venue.name}}</h4>
-                <div>{{venue.location}}</div>
-                <div>{{venue.city}} {{venue.state}}</div>
-                <div>Minimum price : {{venue.min_price}}</div>
-                <h5><div> Book full packege (Venue + Vendor)<a href="/full-package/{{venue.id}}">View</a></div></h5>
-                <button>Book now</button>
-            </div>
-        
+            <div>{{venue.location}}</div>
+            <div>{{venue.city}} {{venue.state}}</div>
+            <div>Minimum price : {{venue.min_price}}</div>
+            <h5>
+                <div> Book full packege (Venue + Vendor)<a href="/full-package/{{venue.id}}/">View</a></div>
+            </h5>
+            {% if request.user.is_authenticated %}
+            <button class="auth-book" onclick="clicked()"><a href="/booked/{{venue.id}}/">Book now</a></button>
+            {% else %}
+            <button class="un-auth-book"><a href="/login-C/">Book now</a></button>
+            {% endif %}
+
+        </div>
+
         {% endfor %}
 
     </div>
@@ -55,7 +62,12 @@
             </div>
             <div>{{event.description}}</div>
             <br>
-            <button>Book now</button>
+
+            {% if request.user.is_authenticated %}
+            <button class="auth-book" onclick="clicked()"><a href="/booked/0/{{event.event_planner.id}}/">Book now</a></button>
+            {% else %}
+            <button class="un-auth-book"><a href="/login-C/">Book now</a></button>
+            {% endif %}
 
         </div>
         {% endfor %}

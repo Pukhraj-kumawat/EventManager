@@ -1,0 +1,34 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<h4>Your bookings ...</h4>
+
+{% if venue and vendor %}
+    <h2>Venue : => </h2>
+    <h3>{{venue.name}}</h3>
+    <div>{{venue.location}}</div>
+    <div>{{venue.city}} {{venue.state}}</div>
+    <hr>
+    <h2>Vendor : => </h2>
+    <h3>{{vendor.first_name}} {{vendor.last_name}}</h3>
+    <div>{{vendor.userprofile.contact_info}}</div>
+    <div>{{vendor.userprofile.company_name}} {{vendor.userprofile.website}}</div>
+
+{% elif venue %}
+
+<h2>Venue : => </h2>
+<h3>{{venue.name}}</h3>
+<div>{{venue.location}}</div>
+<div>{{venue.city}} {{venue.state}}</div>    
+
+{% else %}
+
+<h2>Vendor : => </h2>
+<h3>{{vendor.first_name}} {{vendor.last_name}}</h3>
+<div>{{vendor.userprofile.contact_info}}</div>
+<div>{{vendor.userprofile.company_name}} {{vendor.userprofile.website}}</div>
+
+{% endif %}
+
+{% endblock %}

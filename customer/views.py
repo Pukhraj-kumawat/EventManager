@@ -50,3 +50,16 @@ def full_package(request,pk):
     
     context = {'venue':venue,'vendors':vendors,'vender_data':vender_data}
     return render(request,'customer/full-package.html',context)
+
+def booked(request,venue_id=None,vendor_id = None):
+    if venue_id and vendor_id :
+        venue = Venue.objects.get(id = venue_id)
+        vendor = User.objects.get(id = vendor_id)
+    elif venue_id:
+        venue = Venue.objects.get(id = venue_id)
+        vendor = None
+    else:
+        vendor = User.objects.get(id = vendor_id)
+        venue = None
+    context = {'venue':venue,'vendor':vendor}
+    return render(request,'customer/booked.html',context)
