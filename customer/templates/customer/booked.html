@@ -23,7 +23,14 @@
 <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
 <div>{{booking.vendor.userprofile.contact_info}}</div>
 <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
-<a href="/booked/?venue_id={{booking.venue.id}}&vendor_id={{booking.vendor.id}}">Cancle booking</a>
+<div>{{booking.date}} {{booking.time}}</div>
+
+<form action="/delete-book/" method="POST">
+    {% csrf_token %}
+    <input type="hidden" value="{{booking.id}}" name="booking_id">
+     <input type="submit" value="Cancle booking">
+</form>
+
 <hr>
 
 {% elif booking.venue %}
@@ -32,7 +39,13 @@
 <h3>{{booking.venue.name}}</h3>
 <div>{{booking.venue.location}}</div>
 <div>{{booking.venue.city}} {{booking.venue.state}}</div>
-<a href="/booked/?venue_id={{booking.venue.id}}&vendor_id={{booking.vendor.id}}">Cancle booking</a>
+<div>{{booking.date}} {{booking.time}}</div>
+
+<form action="/delete-book/" method="POST">
+    {% csrf_token %}
+    <input type="hidden" value="{{booking.id}}" name="booking_id">
+    <input type="submit" value="Cancle booking">
+</form>
 
 <hr>
 
@@ -41,7 +54,13 @@
 <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
 <div>{{booking.vendor.userprofile.contact_info}}</div>
 <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
-<a href="/booked/?venue_id={{booking.venue.id}}&vendor_id={{booking.vendor.id}}">Cancle booking</a>
+<div>{{booking.date}} {{booking.time}}</div>
+
+<form action="/delete-book/" method="POST">
+    {% csrf_token %}
+    <input type="hidden" value="{{booking.id}}" name="booking_id">
+    <input type="submit" value="Cancle booking">
+</form>
 
 {% endif %}
 

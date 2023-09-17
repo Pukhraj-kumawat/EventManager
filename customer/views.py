@@ -53,41 +53,44 @@ def full_package(request,pk):
     return render(request,'customer/full-package.html',context)
 
 @login_required(login_url='/login-C/')
-def create_book(request,venue_id=None,vendor_id = None):
+def create_book(request):
+    venue_id = None
+    vendor_id = None
+    date = None
+    time = None
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        venue_id = request.POST.get('venue_id')
+        vendor_id = request.POST.get('vendor_id')        
+        if not time:
+            time = '00:00:00'
     if venue_id and vendor_id :
         venue = Venue.objects.get(id = venue_id)
         vendor = User.objects.get(id = vendor_id)
-        Booking.objects.create(venue=venue,vendor=vendor,user = request.user)
+        booking = Booking.objects.create(venue=venue,vendor=vendor,user = request.user,date=date,time=time)
     elif venue_id:
         venue = Venue.objects.get(id = venue_id)
         vendor = None
-        Booking.objects.create(venue=venue,user = request.user)
+        booking = Booking.objects.create(venue=venue,user = request.user,date=date,time=time)
     else:
         vendor = User.objects.get(id = vendor_id)
         venue = None
-        Booking.objects.create(vendor=vendor,user = request.user)
+        booking = Booking.objects.create(vendor=vendor,user = request.user,date=date,time=time)
     return redirect('/booked/')
 
 @login_required(login_url='/login-C/')
-def booked(request):
-    if request.method == 'GET':
-        try:
-            venue_id = request.GET.get('venue_id')
-            vendor_id = request.GET.get('vendor_id')
-            if venue_id and vendor_id:
-                venue = Venue.objects.get(id=int(venue_id))
-                vendor = User.objects.get(id = int(vendor_id))
-                booking_object = Booking.objects.get(user=request.user,venue=venue,vendor=vendor)
-            elif venue_id:
-                venue = Venue.objects.get(id = int(venue_id))
-                booking_object = Booking.objects.get(user=request.user,venue=venue)
-            else:
-                vendor = User.objects.get(id = int(vendor_id))
-                booking_object = Booking.objects.get(user=request.user,vendor=vendor)
-            booking_object.delete()    
-        except:
-            pass
-
+def booked(request):  
     bookings = Booking.objects.all()
     context = {'bookings':bookings}
     return render(request,'customer/booked.html',context)
+
+def delete_book(request):
+    if request.method == 'POST':
+        try:        
+            booking_id = request.POST.get('booking_id')
+            booking = Booking.objects.get(id=booking_id)
+            booking.delete()      
+        except:
+            pass
+    return redirect('/booked/')
