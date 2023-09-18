@@ -25,6 +25,7 @@
 <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
 <div>{{booking.date}} {{booking.time}}</div>
 
+
 <form action="/delete-book/" method="POST">
     {% csrf_token %}
     <input type="hidden" value="{{booking.id}}" name="booking_id">

@@ -31,6 +31,7 @@ class UserProfile(models.Model):
     website = models.URLField(max_length=200,blank=True,null=True)
     bio = models.TextField(blank=True,null=True)
     city = models.CharField(max_length=20,null=False,blank=False)
+    state = models.CharField(max_length=20,null=False,blank=False)
     location = models.TextField(blank=True,null=True)
     service_offered = models.TextField(blank=True,null=True)
 

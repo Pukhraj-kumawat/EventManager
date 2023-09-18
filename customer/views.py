@@ -1,21 +1,53 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
-from . import forms
+from .forms import VenueForm
 from .models import Booking
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from EventPlanner.models import UserProfile,Category,Event,Venue
 from EventPlanner.forms import SignUpForm
+from copy import deepcopy
 
 # Create your views here.
 
-def book(request,pk):
+def book(request,pk):    
     category = Category.objects.get(id=pk)
     events = Event.objects.filter(category=category)
+    events_copy = deepcopy(list(events))
     venues = Venue.objects.filter(category=category)
-    context = {'events':events,'venues':venues}
+    if request.method == 'GET':
+        venue_city = request.GET.get('venue-city')
+        venue_name = request.GET.get('venue-name')
+        venue_min_price = request.GET.get('venue-min_price')
+        vendor_city = request.GET.get('vendor-city')
+        vendor_first_name = request.GET.get('vendor-first-name')
+        vendor_last_name = request.GET.get('vendor-last-name')
+        try:
+            if venue_city:            
+                venues = Venue.objects.filter(category=category,city__icontains = venue_city)
+            if venue_name:
+                venues = Venue.objects.filter(category=category,name__icontains = venue_name)
+            if venue_min_price:
+                venues = Venue.objects.filter(category=category,min_price__lte = float(venue_min_price))
+            if vendor_city:
+                event_list = []                
+                for event in events:
+                    if event.event_planner.userprofile.city == vendor_city:
+                        event_list.append(event)
+                events = event_list
+            if vendor_first_name and vendor_last_name:
+                event_planner_list1 = []
+                for event in events:
+                    if event.event_planner.first_name == vendor_first_name and event.event_planner.last_name == vendor_last_name:
+                        event_planner_list1.append(event)
+                events = event_planner_list1 
+
+        except:
+            pass
+    context = {'events':events,'venues':venues,'pk':pk}
     return render(request,'customer/booking.html',context)
+
 
 
 def loginPage(request):
@@ -54,29 +86,26 @@ def full_package(request,pk):
 
 @login_required(login_url='/login-C/')
 def create_book(request):
-    venue_id = None
-    vendor_id = None
-    date = None
-    time = None
     if request.method == 'POST':
         date = request.POST.get('date')
         time = request.POST.get('time')
-        venue_id = request.POST.get('venue_id')
-        vendor_id = request.POST.get('vendor_id')        
         if not time:
             time = '00:00:00'
+        venue_id = request.POST.get('venue_id')
+        vendor_id = request.POST.get('vendor_id')       
     if venue_id and vendor_id :
         venue = Venue.objects.get(id = venue_id)
         vendor = User.objects.get(id = vendor_id)
-        booking = Booking.objects.create(venue=venue,vendor=vendor,user = request.user,date=date,time=time)
-    elif venue_id:
+        booking = Booking(venue=venue,vendor=vendor,user = request.user,date=date,time=time)        
+    if venue_id:
         venue = Venue.objects.get(id = venue_id)
         vendor = None
-        booking = Booking.objects.create(venue=venue,user = request.user,date=date,time=time)
-    else:
+        booking = Booking(venue=venue,user = request.user,date=date,time=time)        
+    if vendor_id:
         vendor = User.objects.get(id = vendor_id)
         venue = None
-        booking = Booking.objects.create(vendor=vendor,user = request.user,date=date,time=time)
+        booking = Booking(vendor=vendor,user = request.user,date=date,time=time)  
+    booking.save()
     return redirect('/booked/')
 
 @login_required(login_url='/login-C/')

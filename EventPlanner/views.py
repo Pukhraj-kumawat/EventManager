@@ -151,3 +151,12 @@ def EventPlannerInfo(request,pk):
     user_profile_form = UserProfileForm(instance=user_profile)
     context = {'user_profile_form':user_profile_form}
     return render(request,'EventPlanner/event-planner-info.html',context)
+
+
+def DeleteAccount(request):
+    return render(request,'EventPlanner/delete-account.html')
+
+def confirmDelete(request):
+    user = request.user
+    user.delete()
+    return redirect('/')

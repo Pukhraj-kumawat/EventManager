@@ -27,10 +27,10 @@ This is full package page
 
 <form action="/create-book/" method="POST">
     {% csrf_token %}
-    <input type="date" name="date" placeholder="date" required>
-    <input type="time" name="time" placeholder="time">
     <input type="hidden" value="{{venue.id}}" name="venue_id">
     <input type="hidden" value="{{vendor.id}}" name="vendor_id">
+    <input type="date" name="date" placeholder="date" required>
+    <input type="time" name="time" placeholder="time">
     <button type="submit">Book now</button>
 </form>
 
