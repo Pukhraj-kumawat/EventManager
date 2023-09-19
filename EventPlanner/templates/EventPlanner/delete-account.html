@@ -3,7 +3,7 @@
 {% block content %}
 
 <h5>Do you really want to delete your account ?</h5>
-
+<a href="/profile/{{request.user.id}}/">Back</a>
 <a href="/confirm-delete/">Confirm</a>
 
 {% endblock %}

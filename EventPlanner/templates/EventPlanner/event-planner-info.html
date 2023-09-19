@@ -4,14 +4,14 @@
 
 <div>
 
-<div>
+    <div>
+        <h3>{{user.first_name}} {{user.last_name}}</h3>
+        {% for field in user_profile_form %}
+        <h5>{{field.label_tag}}</h5>
+        <p>{{field.value}}</p>
+        {% endfor %}
 
-    {% for field in user_profile_form %}
-    <h5>{{field.label_tag}}</h5>
-    <p>{{field.value}}</p>
-    {% endfor %}
-
-</div>
+    </div>
 
 </div>
 

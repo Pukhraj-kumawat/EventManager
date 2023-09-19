@@ -4,6 +4,7 @@
 {% block content %}
 <h4>This is profile page</h4>
 
+{% if request.user == user_profile.user %}
 <form action="" method="POST">
     {% csrf_token %}
 
@@ -50,11 +51,5 @@
     <a href="/delete-account/">Delete account</a>
 </div>
 
-<hr>
-
-{{user_errors}}
-
-{{profile_errors}}
-
-
+{% endif %}
 {% endblock %}

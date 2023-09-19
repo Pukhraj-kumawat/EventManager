@@ -10,6 +10,7 @@ urlpatterns = [
     path('profile/<int:pk>/',views.profile),
     path('change-password/',views.ChangePassword),
     path('event-planner-info/<int:pk>/',views.EventPlannerInfo),
+    path('venue-info/<int:pk>/',views.VenueInfo),
     path('delete-account/',views.DeleteAccount),
     path('confirm-delete/',views.confirmDelete),
 ]

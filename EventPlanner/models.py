@@ -43,6 +43,7 @@ venue_choices = (('Rajasthan','Rajasthan'),('Gujrat','Gujrat'),('Madhya pradesh'
 class Venue(models.Model):
     name = models.CharField(max_length=100,null=False,blank=False)
     min_price = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
+    max_capacity = models.IntegerField(null=False,blank=False)
     location = models.TextField(null=False,blank=False)
     city = models.CharField(max_length=20,null=False,blank=False)
     state = models.CharField(choices=venue_choices,max_length=50,null=False,blank=False)

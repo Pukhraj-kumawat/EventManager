@@ -106,9 +106,9 @@ def profile(request,pk):
     user_errors = None
     profile_errors = None
     user = User.objects.get(id=pk)
-    user_profile = UserProfile.objects.get(user=user)
+    user_profile = UserProfile.objects.get(user = user)
     profile_form = UserProfileForm(instance=user_profile,initial={'website': user_profile.website if user_profile.website else 'https://'})
-    user_form = UserForm(instance=user)
+    user_form = UserForm(instance = user)
     if request.method == 'POST':
         try:
             profile_form = UserProfileForm(request.POST,instance=user_profile)
@@ -147,11 +147,13 @@ def ChangePassword(request):
 
 def EventPlannerInfo(request,pk):
     user = User.objects.get(id = pk)
-    user_profile = UserProfile.objects.get(user=user)
-    user_profile_form = UserProfileForm(instance=user_profile)
-    context = {'user_profile_form':user_profile_form}
+    user_profile = UserProfile.objects.get(user = user)
+    user_profile_form = UserProfileForm(instance = user_profile)
+    context = {'user_profile_form':user_profile_form,'user':user}
     return render(request,'EventPlanner/event-planner-info.html',context)
 
+def VenueInfo(request,pk):
+    return render(request,'EventPlanner/venue-info.html')
 
 def DeleteAccount(request):
     return render(request,'EventPlanner/delete-account.html')

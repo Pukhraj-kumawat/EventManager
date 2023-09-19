@@ -25,10 +25,11 @@
         grid-template-columns: 1fr 1fr 1fr;
     }
 
-    .filter-div-vendor{
+    .filter-div-vendor {
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
+
     .filter {
         border: 2px solid #000;
         padding: 10px;
@@ -37,9 +38,15 @@
 
 <h3>This is booking page </h3>
 
+{% if venues %}
+
 <div class="grid-div">
 
+
+
     <div>
+
+
         <h1>Venues</h1>
 
         <div class="filter-div-event">
@@ -49,8 +56,9 @@
                     <input type="text" placeholder="Search city" name="venue-city">
                 </form>
                 <a href="/book/{{pk}}/">All</a>
-                {% for venue in venues %}
-                <a href="/book/{{pk}}/?venue-city={{venue.city}}">{{venue.city}}</a>
+
+                {% for city in unique_venue_cities %}
+                <a href="/book/{{pk}}/?venue-city={{city}}">{{city}}</a>
                 {% endfor %}
             </div>
 
@@ -60,9 +68,14 @@
                     <input type="text" placeholder="Search name" name="venue-name">
                 </form>
                 <a href="/book/{{pk}}/">All</a>
-                {% for venue in venues %}
-                <a href="/book/{{pk}}/?venue-name={{venue.name}}">{{venue.name}}</a>
+                <!-- {% for venue in venues %}
+                <a href="/book/{{pk}}/?venue-name={{venue.name}}" class="{{venue.name}} venue-name">{{venue.name}}</a>
+                {% endfor %} -->
+
+                {% for name in unique_venue_names %}
+                <a href="/book/{{pk}}/?venue-name={{name}}">{{name}}</a>
                 {% endfor %}
+
             </div>
 
 
@@ -71,19 +84,27 @@
                     <input type="text" placeholder="Minimum price" name="min_price">
                 </form>
                 <a href="/book/{{pk}}/">All</a>
-                {% for venue in venues %}
+                <!-- {% for venue in venues %}
                 <a href="/book/{{pk}}/?venue-min_price={{venue.min_price}}">{{venue.min_price}}</a>
+                {% endfor %} -->
+
+                {% for min_price in unique_venue_min_prices %}
+                <a href="/book/{{pk}}/?venue-min_price={{min_price}}">{{min_price}}</a>
                 {% endfor %}
+
             </div>
 
         </div>
 
         {% for venue in venues %}
         <div class="event-info-div">
-            <h4>{{venue.name}}</h4>
+            <a href="/venue-info/{{venue.id}}/">
+                <h4>{{venue.name}}</h4>
+            </a>
             <div>{{venue.location}}</div>
             <div>{{venue.city}} {{venue.state}}</div>
             <br>
+            <div>Maximum capacity: {{venue.max_capacity}}</div>
             <div>Minimum price : {{venue.min_price}}</div>
             <h5>
                 {% if venue.vendors.all %}
@@ -114,8 +135,13 @@
     </div>
 
     <div>
-        <h1>Vendors</h1>
 
+        {% endif %}
+
+
+        {% if events %}
+
+        <h1>Vendors</h1>
 
         <div class="filter-div-vendor">
 
@@ -124,8 +150,9 @@
                     <input type="text" placeholder="Search city" name="vendor-city">
                 </form>
                 <a href="/book/{{pk}}/">All</a>
-                {% for event in events %}
-                <a href="/book/{{pk}}/?vendor-city={{event.event_planner.userprofile.city}}">{{event.event_planner.userprofile.city}}</a>
+
+                {% for vendor_city in unique_vendor_cities %}
+                <a href="/book/{{pk}}/?vendor-city={{vendor_city}}">{{vendor_city}}</a>
                 {% endfor %}
             </div>
 
@@ -135,8 +162,9 @@
                     <input type="text" placeholder="Search name" name="vendor-name">
                 </form>
                 <a href="/book/{{pk}}/">All</a>
-                {% for event in events %}
-                <a href="/book/{{pk}}/?vendor-first-name={{event.event_planner.first_name}}&vendor-last-name={{event.event_planner.last_name}}">{{event.event_planner.first_name}} {{event.event_planner.last_name}}</a>
+
+                {% for first_name,last_name in unique_vendor_names.items %}
+                    <a href="/book/{{pk}}/?vendor-first-name={{first_name}}&vendor-last-name={{last_name}}">{{first_name}} {{last_name}}</a>
                 {% endfor %}
             </div>
 
@@ -146,16 +174,17 @@
         {% for event in events %}
 
         <div class="event-info-div">
-            <div class="category-div">
-                <h5>{{event.category}}</h5>
-            </div>
-            <h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}} (@{{event.event_planner}})</h4>
-            <div><a href="/event-planner-info/{{event.event_planner.id}}/">View profile</a></div>
+
+
+            <a href="/event-planner-info/{{event.event_planner.id}}/">
+                <h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4>
+            </a>
+
             <div>
                 <h5>{{event.name}}</h5>
             </div>
             <div>
-                 {{event.event_planner.userprofile.location}}
+                {{event.event_planner.userprofile.location}}
             </div>
             <div>
                 {{event.event_planner.userprofile.city}} {{event.event_planner.userprofile.state}}
@@ -189,5 +218,10 @@
     </div>
 </div>
 
+{% endif %}
+
+<script>
+
+</script>
 
 {% endblock %}
