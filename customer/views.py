@@ -7,42 +7,50 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from EventPlanner.models import UserProfile,Category,Event,Venue
 from EventPlanner.forms import SignUpForm
-from copy import deepcopy
+from django.db.models import Q
 
 # Create your views here.
 
 def book(request,pk):    
-    category = Category.objects.get(id=pk)
-    events = Event.objects.filter(category=category)
-    events_copy = deepcopy(list(events))
+    category = Category.objects.get(id = pk)
+    events = Event.objects.filter(category = category)    
     venues = Venue.objects.filter(category=category)
     if request.method == 'GET':
         venue_city = request.GET.get('venue-city')
         venue_name = request.GET.get('venue-name')
         venue_min_price = request.GET.get('venue-min_price')
         vendor_city = request.GET.get('vendor-city')
+        vendor_name = request.GET.get('vendor-name')
         vendor_first_name = request.GET.get('vendor-first-name')
         vendor_last_name = request.GET.get('vendor-last-name')
         try:
             if venue_city:            
-                venues = Venue.objects.filter(category=category,city__icontains = venue_city)
+                venues = Venue.objects.filter(category = category,city__icontains = venue_city)
             if venue_name:
-                venues = Venue.objects.filter(category=category,name__icontains = venue_name)
+                venues = Venue.objects.filter(category = category,name__icontains = venue_name)
             if venue_min_price:
-                venues = Venue.objects.filter(category=category,min_price__lte = float(venue_min_price))
+                venues = Venue.objects.filter(cxategory = category,min_price__lte = float(venue_min_price))
             if vendor_city:
-                event_list = []                
-                for event in events:
-                    if event.event_planner.userprofile.city == vendor_city:
-                        event_list.append(event)
-                events = event_list
+                userprofile_set = UserProfile.objects.filter(city__icontains = vendor_city)
+                events = []
+                for userprofile in userprofile_set:
+                    events_list = Event.objects.filter(event_planner = userprofile.user,category = category)
+                    for event in events_list:
+                        events.append(event)
+            if vendor_name:
+                user_set = User.objects.filter( Q(first_name__icontains = vendor_name) | Q(last_name__icontains = vendor_name))
+                events = []
+                for user in user_set:
+                    events_list = Event.objects.filter(event_planner = user,category = category)
+                    for event in events_list:
+                        events.append(event)
             if vendor_first_name and vendor_last_name:
-                event_planner_list1 = []
-                for event in events:
-                    if event.event_planner.first_name == vendor_first_name and event.event_planner.last_name == vendor_last_name:
-                        event_planner_list1.append(event)
-                events = event_planner_list1 
-
+                user_set = User.objects.filter(first_name = vendor_first_name,last_name = vendor_last_name)
+                events = []
+                for user in user_set:
+                    events_list = Event.objects.filter(event_planner = user,category = category)
+                    for event in events_list:
+                        events.append(event)
         except:
             pass
     context = {'events':events,'venues':venues,'pk':pk}
