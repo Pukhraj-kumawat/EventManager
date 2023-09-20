@@ -12,7 +12,7 @@ from django.db.models import Q
 
 # Create your views here.
 
-def book(request,pk):
+def book(request,pk):    
     category = Category.objects.get(id = pk)
     events = Event.objects.filter(category = category)    
     venues = Venue.objects.filter(category = category)
@@ -38,7 +38,6 @@ def book(request,pk):
         else:
             unique_vendor_names[first_name] = last_name
 
-
     if request.method == 'GET':
         venue_city = request.GET.get('venue-city')
         venue_name = request.GET.get('venue-name')
@@ -52,8 +51,8 @@ def book(request,pk):
                 venues = Venue.objects.filter(category = category,city__icontains = venue_city)                
             if venue_name:
                 venues = Venue.objects.filter(category = category,name__icontains = venue_name)
-            if venue_min_price:
-                venues = Venue.objects.filter(cxategory = category,min_price__lte = float(venue_min_price))
+            if venue_min_price:                
+                venues = Venue.objects.filter(category = category,min_price__lte = float(venue_min_price))                                
             if vendor_city:
                 userprofile_set = UserProfile.objects.filter(city__icontains = vendor_city)
                 events = []
@@ -77,8 +76,6 @@ def book(request,pk):
                         events.append(event)
         except:
             pass
-  
-    
     
     context = {'events':events,'venues':venues,'pk':pk,'unique_venue_cities':unique_venue_cities,'unique_venue_names':unique_venue_names,'unique_venue_min_prices':unique_venue_min_prices,'unique_vendor_cities':unique_vendor_cities,'unique_vendor_names':unique_vendor_names}
 

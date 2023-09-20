@@ -84,9 +84,6 @@
                     <input type="text" placeholder="Minimum price" name="min_price">
                 </form>
                 <a href="/book/{{pk}}/">All</a>
-                <!-- {% for venue in venues %}
-                <a href="/book/{{pk}}/?venue-min_price={{venue.min_price}}">{{venue.min_price}}</a>
-                {% endfor %} -->
 
                 {% for min_price in unique_venue_min_prices %}
                 <a href="/book/{{pk}}/?venue-min_price={{min_price}}">{{min_price}}</a>
@@ -164,7 +161,8 @@
                 <a href="/book/{{pk}}/">All</a>
 
                 {% for first_name,last_name in unique_vendor_names.items %}
-                    <a href="/book/{{pk}}/?vendor-first-name={{first_name}}&vendor-last-name={{last_name}}">{{first_name}} {{last_name}}</a>
+                <a href="/book/{{pk}}/?vendor-first-name={{first_name}}&vendor-last-name={{last_name}}">{{first_name}}
+                    {{last_name}}</a>
                 {% endfor %}
             </div>
 
@@ -219,9 +217,5 @@
 </div>
 
 {% endif %}
-
-<script>
-
-</script>
 
 {% endblock %}
