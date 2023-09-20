@@ -13,35 +13,17 @@ from django.db.models import Q
 # Create your views here.
 
 def book(request,pk):    
+    error = None
+    venues_on_price = 'Exist'
     category = Category.objects.get(id = pk)
     events = Event.objects.filter(category = category)    
     venues = Venue.objects.filter(category = category)
 
-    venue_cities = [venue.city for venue in venues]
-    unique_venue_cities = list(set(venue_cities))
-
-    venue_names = [venue.name for venue in venues]
-    unique_venue_names = list(set(venue_names))
-
-    venue_min_prices = [venue.min_price for venue in venues]
-    unique_venue_min_prices = list(set(venue_min_prices))  
-  
-    vendor_cities = [event.event_planner.userprofile.city for event in events]
-    unique_vendor_cities = list(set(vendor_cities))
-
-    vendor_names = {event.event_planner.first_name:event.event_planner.last_name for event in events}
-    unique_vendor_names = {}
-    for first_name,last_name in vendor_names.items():
-        if first_name in unique_vendor_names.keys():
-            if last_name in unique_vendor_names.values():
-                pass
-        else:
-            unique_vendor_names[first_name] = last_name
-
     if request.method == 'GET':
         venue_city = request.GET.get('venue-city')
         venue_name = request.GET.get('venue-name')
-        venue_min_price = request.GET.get('venue-min_price')
+        min_price = request.GET.get('min_price')
+        max_price = request.GET.get('max_price')
         vendor_city = request.GET.get('vendor-city')
         vendor_name = request.GET.get('vendor-name')
         vendor_first_name = request.GET.get('vendor-first-name')
@@ -51,8 +33,11 @@ def book(request,pk):
                 venues = Venue.objects.filter(category = category,city__icontains = venue_city)                
             if venue_name:
                 venues = Venue.objects.filter(category = category,name__icontains = venue_name)
-            if venue_min_price:                
-                venues = Venue.objects.filter(category = category,min_price__lte = float(venue_min_price))                                
+            if min_price and max_price:
+                venues = Venue.objects.filter(category = category,min_price__lt = float(max_price),min_price__gte = float(min_price))
+                if not venues:
+                    venues = 'Exist'
+                    venues_on_price = 'unavailable'
             if vendor_city:
                 userprofile_set = UserProfile.objects.filter(city__icontains = vendor_city)
                 events = []
@@ -74,10 +59,11 @@ def book(request,pk):
                     events_list = Event.objects.filter(event_planner = user,category = category)
                     for event in events_list:
                         events.append(event)
+
         except:
             pass
     
-    context = {'events':events,'venues':venues,'pk':pk,'unique_venue_cities':unique_venue_cities,'unique_venue_names':unique_venue_names,'unique_venue_min_prices':unique_venue_min_prices,'unique_vendor_cities':unique_vendor_cities,'unique_vendor_names':unique_vendor_names}
+    context = {'error':error,'events':events,'venues':venues,'pk':pk,'venues_on_price':venues_on_price}
 
     return render(request,'customer/booking.html',context)
 

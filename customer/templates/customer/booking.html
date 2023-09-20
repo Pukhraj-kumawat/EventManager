@@ -38,15 +38,12 @@
 
 <h3>This is booking page </h3>
 
-{% if venues %}
+
 
 <div class="grid-div">
 
-
-
+    {% if venues %}
     <div>
-
-
         <h1>Venues</h1>
 
         <div class="filter-div-event">
@@ -57,9 +54,10 @@
                 </form>
                 <a href="/book/{{pk}}/">All</a>
 
-                {% for city in unique_venue_cities %}
-                <a href="/book/{{pk}}/?venue-city={{city}}">{{city}}</a>
+                {% for venue in venues %}
+                <a href="/book/{{pk}}/?venue-city={{venue.city}}" class="">{{venue.city}}</a>
                 {% endfor %}
+
             </div>
 
 
@@ -68,12 +66,9 @@
                     <input type="text" placeholder="Search name" name="venue-name">
                 </form>
                 <a href="/book/{{pk}}/">All</a>
-                <!-- {% for venue in venues %}
-                <a href="/book/{{pk}}/?venue-name={{venue.name}}" class="{{venue.name}} venue-name">{{venue.name}}</a>
-                {% endfor %} -->
 
-                {% for name in unique_venue_names %}
-                <a href="/book/{{pk}}/?venue-name={{name}}">{{name}}</a>
+                {% for venue in venues %}
+                <a href="/book/{{pk}}/?venue-name={{venue.name}}">{{venue.name}}</a>
                 {% endfor %}
 
             </div>
@@ -85,13 +80,24 @@
                 </form>
                 <a href="/book/{{pk}}/">All</a>
 
-                {% for min_price in unique_venue_min_prices %}
-                <a href="/book/{{pk}}/?venue-min_price={{min_price}}">{{min_price}}</a>
-                {% endfor %}
+                <!-- {% for venue in venues %}
+                <a href="/book/{{pk}}/?venue-min_price={{venue.min_price}}">{{venue.min_price}}</a>
+                {% endfor %} -->
+
+                <div>
+                    <a href="/book/{{pk}}/?min_price=0&max_price=9999">Below Rs 10,000</a>
+                    <a href="/book/{{pk}}/?min_price=10000&max_price=19999">Rs 10,000 to Rs 20,000</a>
+                    <a href="/book/{{pk}}/?min_price=20000&max_price=29999">Rs 20,000 to Rs 30,000</a>
+                    <a href="/book/{{pk}}/?min_price=30000&max_price=39999">Rs 30,000 to Rs 40,000</a>
+                    <a href="/book/{{pk}}/?min_price=40000&max_price=49999">Rs 40,000 to Rs 50,000</a>
+                    <a href="/book/{{pk}}/?min_price=50000&max_price=10000000000">Above Rs 50,000</a>
+                </div>
 
             </div>
 
         </div>
+
+        {% if venues_on_price != 'unavailable' %}
 
         {% for venue in venues %}
         <div class="event-info-div">
@@ -126,18 +132,22 @@
                 {% endif %}
 
         </div>
-
         {% endfor %}
 
+        {% else %}
+            <p>Sorry! no Venue available for the given price range.</p>
+        {% endif %}
+      
     </div>
 
-    <div>
+    {% endif %}
 
-        {% endif %}
-
+        <!-- {% if venues_on_price == 'unavailable'%}
+            <p>unavailable</p>
+        {% endif %} -->
 
         {% if events %}
-
+    <div>
         <h1>Vendors</h1>
 
         <div class="filter-div-vendor">
@@ -147,22 +157,9 @@
                     <input type="text" placeholder="Search city" name="vendor-city">
                 </form>
                 <a href="/book/{{pk}}/">All</a>
-
-                {% for vendor_city in unique_vendor_cities %}
-                <a href="/book/{{pk}}/?vendor-city={{vendor_city}}">{{vendor_city}}</a>
-                {% endfor %}
-            </div>
-
-
-            <div class="filter">
-                <form action="" method="GET">
-                    <input type="text" placeholder="Search name" name="vendor-name">
-                </form>
-                <a href="/book/{{pk}}/">All</a>
-
-                {% for first_name,last_name in unique_vendor_names.items %}
-                <a href="/book/{{pk}}/?vendor-first-name={{first_name}}&vendor-last-name={{last_name}}">{{first_name}}
-                    {{last_name}}</a>
+                {% for event in events %}
+                <a href="/book/{{pk}}/?vendor-city={{event.event_planner.userprofile.city}}">{{event.event_planner.userprofile.city}}
+                </a>
                 {% endfor %}
             </div>
 
@@ -217,5 +214,6 @@
 </div>
 
 {% endif %}
+
 
 {% endblock %}
