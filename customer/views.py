@@ -21,7 +21,6 @@ def book(request,pk):
 
     if request.method == 'GET':
         venue_city = request.GET.get('venue-city')
-        venue_name = request.GET.get('venue-name')
         min_price = request.GET.get('min_price')
         max_price = request.GET.get('max_price')
         vendor_city = request.GET.get('vendor-city')
@@ -30,9 +29,7 @@ def book(request,pk):
         vendor_last_name = request.GET.get('vendor-last-name')
         try:
             if venue_city:            
-                venues = Venue.objects.filter(category = category,city__icontains = venue_city)                
-            if venue_name:
-                venues = Venue.objects.filter(category = category,name__icontains = venue_name)
+                venues = Venue.objects.filter(category = category,city__icontains = venue_city)                            
             if min_price and max_price:
                 venues = Venue.objects.filter(category = category,min_price__lt = float(max_price),min_price__gte = float(min_price))
                 if not venues:
