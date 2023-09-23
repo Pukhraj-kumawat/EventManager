@@ -148,7 +148,9 @@ def ChangePassword(request):
 
 
 def EventPlannerInfo(request,pk):      
-    if request.method == 'POST':        
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            return redirect('/login-C/')
         unique_token_form = request.POST.get('unique-token')
         unique_token_session = request.session.get('chat_token')
         if unique_token_form == unique_token_session:
@@ -164,13 +166,15 @@ def EventPlannerInfo(request,pk):
     else:
         unique_token = str(uuid.uuid4())
         request.session['chat_token'] = unique_token        
-
-    messages = Messages.objects.filter(sender = request.user)
-    user = User.objects.get(id = pk)
-    user_profile = UserProfile.objects.get(user = user)
+    if request.user.is_authenticated:
+        messages = Messages.objects.filter(sender = request.user)
+    else:
+        messages = None
+    vendor = User.objects.get(id = pk)
+    user_profile = UserProfile.objects.get(user = vendor)
     user_profile_form = UserProfileForm(instance = user_profile)
     
-    context = {'user_profile_form':user_profile_form,'user':user,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,}    
+    context = {'user_profile_form':user_profile_form,'vendor':vendor,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,}    
 
     return render(request,'EventPlanner/event-planner-info.html',context)
 
