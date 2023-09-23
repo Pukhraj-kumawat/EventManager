@@ -156,6 +156,8 @@ def EventPlannerInfo(request,pk):
             if message_form.is_valid():
                 message_object = message_form.save(commit = False)
                 message_object.sender_id = request.user
+                vendor = User.objects.get(id=int(pk))
+                message_object.receiver_id = vendor
                 message_object.save()
                 del request.session['chat_token']
                 return redirect(f'/event-planner-info/{pk}/')            
@@ -167,7 +169,7 @@ def EventPlannerInfo(request,pk):
     user = User.objects.get(id = pk)
     user_profile = UserProfile.objects.get(user = user)
     user_profile_form = UserProfileForm(instance = user_profile)
-    context = {'user_profile_form':user_profile_form,'user':user,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token}    
+    context = {'user_profile_form':user_profile_form,'user':user,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk}    
 
     return render(request,'EventPlanner/event-planner-info.html',context)
 

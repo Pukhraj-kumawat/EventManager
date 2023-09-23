@@ -14,6 +14,7 @@ class Booking(models.Model):
 
 class Messages(models.Model):
     sender_id = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False)
+    receiver_id = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False,related_name = 'receiver')
     message = models.TextField(null=False,blank=False)
     created=models.DateTimeField(auto_now_add = True)
 
