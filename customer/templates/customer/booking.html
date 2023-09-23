@@ -56,8 +56,12 @@
 
 
                 {% for venue in venues %}
-                <a href="/book/{{pk}}/?venue-city={{venue.city}}" class="venue-{{venue.city}} venue-city">{{venue.city}}{{num}}</a>
-                        
+                {% if not min_price %}
+                <a href="/book/{{pk}}/?venue-city={{venue.city}}" class="venue-{{venue.city}} venue-city">{{venue.city}}</a>       
+
+                {% else %}
+                <a href="/book/{{pk}}/?min_price={{min_price}}&max_price={{max_price}}&venue-city={{venue.city}}" class="venue-{{venue.city}} venue-city">{{venue.city}}</a>       
+                {% endif %}
                 {% endfor %}
                     
 
@@ -66,20 +70,25 @@
 
 
             <div class="filter">
-                <form action="" method="GET">
-                    <input type="text" placeholder="Minimum price" name="min_price">
-                </form>
                 <a href="/book/{{pk}}/">All</a>
 
-
+                {% if not venue_city %}
                 <div>
-                    <a href="/book/{{pk}}/?min_price=0&max_price=9999">Below Rs 10,000</a>
-                    <a href="/book/{{pk}}/?min_price=10000&max_price=19999">Rs 10,000 to Rs 20,000</a>
-                    <a href="/book/{{pk}}/?min_price=20000&max_price=29999">Rs 20,000 to Rs 30,000</a>
-                    <a href="/book/{{pk}}/?min_price=30000&max_price=39999">Rs 30,000 to Rs 40,000</a>
-                    <a href="/book/{{pk}}/?min_price=40000&max_price=49999">Rs 40,000 to Rs 50,000</a>
-                    <a href="/book/{{pk}}/?min_price=50000&max_price=10000000000">Above Rs 50,000</a>
+                    <a href="/book/{{pk}}/?min_price=0&max_price=9999" >Below Rs 10,000</a>
+                    <a href="/book/{{pk}}/?min_price=10000&max_price=19999" >Rs 10,000 to Rs 20,000</a>
+                    <a href="/book/{{pk}}/?min_price=20000&max_price=29999" >Rs 20,000 to Rs 30,000</a>
+                    <a href="/book/{{pk}}/?min_price=30000&max_price=39999" >Rs 30,000 to Rs 40,000</a>
+                    <a href="/book/{{pk}}/?min_price=40000&max_price=49999" >Rs 40,000 to Rs 50,000</a>
+                    <a href="/book/{{pk}}/?min_price=50000&max_price=10000000000" >Above Rs 50,000</a>
                 </div>
+                {% else %}
+                <a href="/book/{{pk}}/?min_price=0&max_price=9999&venue-city={{venue_city}}" >Below Rs 10,000</a>
+                <a href="/book/{{pk}}/?min_price=10000&max_price=19999&venue-city={{venue_city}}" >Rs 10,000 to Rs 20,000</a>
+                <a href="/book/{{pk}}/?min_price=20000&max_price=29999&venue-city={{venue_city}}" >Rs 20,000 to Rs 30,000</a>
+                <a href="/book/{{pk}}/?min_price=30000&max_price=39999&venue-city={{venue_city}}" >Rs 30,000 to Rs 40,000</a>
+                <a href="/book/{{pk}}/?min_price=40000&max_price=49999&venue-city={{venue_city}}" >Rs 40,000 to Rs 50,000</a>
+                <a href="/book/{{pk}}/?min_price=50000&max_price=10000000000&venue-city={{venue_city}}" >Above Rs 50,000</a>
+                {% endif %}
 
             </div>
 
@@ -123,7 +132,7 @@
         {% endfor %}
 
         {% else %}
-            <p>Sorry! no Venue available for the given price range.</p>
+            <p>Sorry! no Venue available for the given location with this price range.</p>
         {% endif %}
       
     </div>
@@ -231,6 +240,7 @@ let cityArray = [];
             .style.display = 'inline';
     })
 };
+
     
     
 </script>

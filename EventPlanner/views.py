@@ -7,7 +7,9 @@ from customer import views
 from .forms import SignUpForm,UserProfileForm,UserForm
 from django.contrib.auth.forms import PasswordChangeForm
 import re
-
+from customer.forms import MessageForm
+from customer.models import Messages
+import uuid
 
 
 # Create your views here.
@@ -146,10 +148,19 @@ def ChangePassword(request):
 
 
 def EventPlannerInfo(request,pk):
+    # unique_token = str(uuid.uuid4())
+    # request.session['chat_token'] = unique_token    
+    if request.method == 'POST':
+        message_form = MessageForm(request.POST)
+        if message_form.is_valid():
+            message_object = message_form.save(commit = False)
+            message_object.sender_id = request.user
+            message_object.save()
+    messages = Messages.objects.filter(sender_id=request.user)
     user = User.objects.get(id = pk)
     user_profile = UserProfile.objects.get(user = user)
     user_profile_form = UserProfileForm(instance = user_profile)
-    context = {'user_profile_form':user_profile_form,'user':user}
+    context = {'user_profile_form':user_profile_form,'user':user,'MessageForm':MessageForm,'messages':messages}
     return render(request,'EventPlanner/event-planner-info.html',context)
 
 def VenueInfo(request,pk):

@@ -10,12 +10,12 @@ This is full package page
 <div>{{venue.city}} {{venue.state}}</div>
 <br>
 <br>
-<br>
+<h3>Available vendors...</h3>
 
 {% for vendor,vendor_profile in vender_data.items %}
 
 <div>
-    <h4>{{vendor.first_name}} {{vendor.last_name}} (@{{vendor.username}})</h4>
+    <a href="/event-planner-info/{{vendor.id}}/"><h4>{{vendor.first_name}} {{vendor.last_name}}</h4></a>
 </div>
 <div><a href="/event-planner-info/{{vendor.id}}/">View profile</a></div>
 <div> Company : <a href="{{vendor_profile.website}}">{{vendor_profile.company_name}}</a> </div>

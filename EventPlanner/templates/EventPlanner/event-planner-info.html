@@ -2,15 +2,42 @@
 
 {% block content %}
 
-<div>
+<style>
+    .grid-div{
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+    }
 
+</style>
+
+<div class="grid-div">
     <div>
         <h3>{{user.first_name}} {{user.last_name}}</h3>
         {% for field in user_profile_form %}
         <h5>{{field.label_tag}}</h5>
         <p>{{field.value}}</p>
         {% endfor %}
+    </div>
 
+    <div>
+        <p>Chat with vendor here..</p>
+
+        <div>
+            {% for message in messages %}
+               <div><h3> {{message.sender_id.first_name}} {{message.sender_id.last_name}}</h3></div>
+               <div>{{message.message}}</div>
+            {% endfor %}
+        </div>
+
+        <div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{MessageForm.message}}
+                <input type="hidden" value="{{unique_token}}" name="unique-token">
+                <input type="submit" value="Send">
+            </form>
+           
+        </div>
     </div>
 
 </div>

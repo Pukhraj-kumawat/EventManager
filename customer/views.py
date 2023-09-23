@@ -28,10 +28,15 @@ def book(request,pk):
         vendor_first_name = request.GET.get('vendor-first-name')
         vendor_last_name = request.GET.get('vendor-last-name')
         try:
-            if venue_city:            
-                venues = Venue.objects.filter(category = category,city__icontains = venue_city)                            
-            if min_price and max_price:
+            if venue_city and not min_price:            
+                venues = Venue.objects.filter(category = category,city__icontains = venue_city)                                            
+            if min_price and max_price and not venue_city:
                 venues = Venue.objects.filter(category = category,min_price__lt = float(max_price),min_price__gte = float(min_price))
+                if not venues:
+                    venues = 'Exist'
+                    venues_on_price = 'unavailable'
+            if min_price and max_price and venue_city:
+                venues = Venue.objects.filter(category=category,city__icontains = venue_city,min_price__lt = float(max_price),min_price__gte = float(min_price))
                 if not venues:
                     venues = 'Exist'
                     venues_on_price = 'unavailable'
@@ -60,7 +65,7 @@ def book(request,pk):
         except:
             pass
     
-    context = {'error':error,'events':events,'venues':venues,'pk':pk,'venues_on_price':venues_on_price}
+    context = {'error':error,'events':events,'venues':venues,'pk':pk,'venues_on_price':venues_on_price,'venue_city':venue_city,'min_price':min_price,'max_price':max_price}
 
     return render(request,'customer/booking.html',context)
 
@@ -139,3 +144,4 @@ def delete_book(request):
         except:
             pass
     return redirect('/booked/')
+
