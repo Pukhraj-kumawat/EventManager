@@ -25,8 +25,8 @@
         
         <div>
             {% for message in messages %}
-            {% if message.receiver_id.id == pk %}
-               <div><h3> {{message.sender_id.first_name}} {{message.sender_id.last_name}}</h3></div>
+            {% if message.receiver.id == pk %}
+               <div><h3> {{message.sender.first_name}} {{message.sender.last_name}}</h3></div>
                <div>{{message.message}}</div>
             {% endif %}
             {% endfor %}
@@ -45,6 +45,7 @@
 
 </div>
 
-
+<br><br>
+{{error}}
 
 {% endblock %}

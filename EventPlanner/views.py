@@ -147,17 +147,17 @@ def ChangePassword(request):
     return render(request,'EventPlanner/change-password.html',context)
 
 
-def EventPlannerInfo(request,pk):  
-    if request.method == 'POST':
+def EventPlannerInfo(request,pk):      
+    if request.method == 'POST':        
         unique_token_form = request.POST.get('unique-token')
         unique_token_session = request.session.get('chat_token')
         if unique_token_form == unique_token_session:
             message_form = MessageForm(request.POST)
             if message_form.is_valid():
                 message_object = message_form.save(commit = False)
-                message_object.sender_id = request.user
+                message_object.sender = request.user
                 vendor = User.objects.get(id=int(pk))
-                message_object.receiver_id = vendor
+                message_object.receiver = vendor
                 message_object.save()
                 del request.session['chat_token']
                 return redirect(f'/event-planner-info/{pk}/')            
@@ -165,11 +165,12 @@ def EventPlannerInfo(request,pk):
         unique_token = str(uuid.uuid4())
         request.session['chat_token'] = unique_token        
 
-    messages = Messages.objects.filter(sender_id=request.user)
+    messages = Messages.objects.filter(sender = request.user)
     user = User.objects.get(id = pk)
     user_profile = UserProfile.objects.get(user = user)
     user_profile_form = UserProfileForm(instance = user_profile)
-    context = {'user_profile_form':user_profile_form,'user':user,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk}    
+    
+    context = {'user_profile_form':user_profile_form,'user':user,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,}    
 
     return render(request,'EventPlanner/event-planner-info.html',context)
 
