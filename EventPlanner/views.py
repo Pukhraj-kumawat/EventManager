@@ -21,8 +21,17 @@ def home(request):
     for category in categories:
         Events = Event.objects.filter(category = category)
         Venues = Venue.objects.filter(category = category)
-        if Events or Venues:
+        if Events and Venues:            
             categories_list.append(category)
+            categories = categories_list
+        elif Events and not Venues:            
+            categories_list.append(category)
+            categories = categories_list        
+        elif not Events and Venues:            
+            categories_list.append(category)
+            categories = categories_list
+        else:
+            pass     
     users = User.objects.all()
     if request.method == 'GET':
         try:

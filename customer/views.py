@@ -29,16 +29,13 @@ def book(request,pk):
         try:
             if venue_city and not min_price:            
                 venues = Venue.objects.filter(category = category,city__icontains = venue_city)    
-                # if not venues:
-                #     venues = 'Exist'                                                     
+                                                  
             if min_price and max_price and not venue_city:
                 venues = Venue.objects.filter(category = category,min_price__lt = float(max_price),min_price__gte = float(min_price))
-                # if not venues:
-                #     venues = 'Exist'                    
+                   
             if min_price and max_price and venue_city:
                 venues = Venue.objects.filter(category=category,city__icontains = venue_city,min_price__lt = float(max_price),min_price__gte = float(min_price))
-                # if not venues:
-                #     venues = 'Exist'                    
+
             if vendor_city:
                 userprofile_set = UserProfile.objects.filter(city__icontains = vendor_city)
                 if not userprofile_set:
@@ -48,8 +45,7 @@ def book(request,pk):
                     events_list = Event.objects.filter(event_planner = userprofile.user,category = category)
                     for event in events_list:
                         events.append(event)
-            # if not events:
-            #     events = 'Not exists'
+
                 null_events = Event.objects.filter(category = category)            
             if vendor_name:
                 user_set = User.objects.filter( Q(first_name__icontains = vendor_name) | Q(last_name__icontains = vendor_name))
@@ -123,11 +119,11 @@ def create_book(request):
         venue = Venue.objects.get(id = venue_id)
         vendor = User.objects.get(id = vendor_id)
         booking = Booking(venue=venue,vendor=vendor,user = request.user,date=date,time=time)        
-    if venue_id:
+    if venue_id and not vendor_id:
         venue = Venue.objects.get(id = venue_id)
         vendor = None
         booking = Booking(venue=venue,user = request.user,date=date,time=time)        
-    if vendor_id:
+    if vendor_id and not venue_id:
         vendor = User.objects.get(id = vendor_id)
         venue = None
         booking = Booking(vendor=vendor,user = request.user,date=date,time=time)  
