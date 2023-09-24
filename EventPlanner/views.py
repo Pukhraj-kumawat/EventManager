@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .models import Category,Event,UserProfile
+from .models import Category,Event,UserProfile,Venue
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
@@ -17,12 +17,20 @@ import uuid
 def home(request):
     filter  = None
     categories = Category.objects.all()
+    categories_list = []
+    for category in categories:
+        Events = Event.objects.filter(category = category)
+        Venues = Venue.objects.filter(category = category)
+        if Events or Venues:
+            categories_list.append(category)
     users = User.objects.all()
     if request.method == 'GET':
         try:
             event = request.GET.get('event')
             if event:
-                categories = Category.objects.filter(name__icontains=event)
+                categories = Category.objects.filter(name__icontains = event)
+                for category in categories:
+                    categories_list.append(category)
                 filter = 'Exists'
         except:
             pass

@@ -14,7 +14,6 @@ from django.db.models import Q
 
 def book(request,pk):    
     error = None
-    venues_on_price = 'Exist'
     category = Category.objects.get(id = pk)
     events = Event.objects.filter(category = category)    
     venues = Venue.objects.filter(category = category)
@@ -29,24 +28,29 @@ def book(request,pk):
         vendor_last_name = request.GET.get('vendor-last-name')
         try:
             if venue_city and not min_price:            
-                venues = Venue.objects.filter(category = category,city__icontains = venue_city)                                            
+                venues = Venue.objects.filter(category = category,city__icontains = venue_city)    
+                # if not venues:
+                #     venues = 'Exist'                                                     
             if min_price and max_price and not venue_city:
                 venues = Venue.objects.filter(category = category,min_price__lt = float(max_price),min_price__gte = float(min_price))
-                if not venues:
-                    venues = 'Exist'
-                    venues_on_price = 'unavailable'
+                # if not venues:
+                #     venues = 'Exist'                    
             if min_price and max_price and venue_city:
                 venues = Venue.objects.filter(category=category,city__icontains = venue_city,min_price__lt = float(max_price),min_price__gte = float(min_price))
-                if not venues:
-                    venues = 'Exist'
-                    venues_on_price = 'unavailable'
+                # if not venues:
+                #     venues = 'Exist'                    
             if vendor_city:
                 userprofile_set = UserProfile.objects.filter(city__icontains = vendor_city)
+                if not userprofile_set:
+                    vendor_city = 'unavailable'
                 events = []
                 for userprofile in userprofile_set:
                     events_list = Event.objects.filter(event_planner = userprofile.user,category = category)
                     for event in events_list:
                         events.append(event)
+            # if not events:
+            #     events = 'Not exists'
+                null_events = Event.objects.filter(category = category)            
             if vendor_name:
                 user_set = User.objects.filter( Q(first_name__icontains = vendor_name) | Q(last_name__icontains = vendor_name))
                 events = []
@@ -54,6 +58,7 @@ def book(request,pk):
                     events_list = Event.objects.filter(event_planner = user,category = category)
                     for event in events_list:
                         events.append(event)
+
             if vendor_first_name and vendor_last_name:
                 user_set = User.objects.filter(first_name = vendor_first_name,last_name = vendor_last_name)
                 events = []
@@ -65,7 +70,7 @@ def book(request,pk):
         except:
             pass
     
-    context = {'error':error,'events':events,'venues':venues,'pk':pk,'venues_on_price':venues_on_price,'venue_city':venue_city,'min_price':min_price,'max_price':max_price}
+    context = {'error':error,'events':events,'venues':venues,'pk':pk,'venue_city':venue_city,'min_price':min_price,'max_price':max_price,'vendor_city':vendor_city,}
 
     return render(request,'customer/booking.html',context)
 
