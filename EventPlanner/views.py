@@ -10,88 +10,112 @@ import re
 from customer.forms import MessageForm
 from customer.models import Messages,Booking
 import uuid
+from django.db import connection
 
 
 # Create your views here.
 
-def home(request):
-    bookings = Booking.objects.filter(vendor = request.user)
-    context = {'bookings':bookings}
-    return render(request,'EventPlanner/home.html',context)
+@login_required(login_url='/login-E/')
+def home(request):    
+    if request.user.userprofile.user_type == 'is_event_planner':
+        if request.method =='POST':
+            message = request.POST.get('message')
+            receiver = request.POST.get('receiver')
+            receiver_instance = User.objects.get(username = receiver)
+            Messages.objects.create(sender = request.user,receiver = receiver_instance, message =  message)            
+
+        bookings = Booking.objects.filter(vendor = request.user)
+
+        messages_as_receiver = Messages.objects.filter(receiver = request.user).order_by('sender')
+        sender_list = []
+        for message in messages_as_receiver:
+            sender_list.append(message.sender)    
+        sender_set = set(sender_list)
+
+        message_as_sender = Messages.objects.filter(sender = request.user).order_by('receiver')
+        receiver_list = []
+        for message in message_as_sender:
+            receiver_list.append(message.receiver)
+        receiver_set = set(receiver_list)
+
+        context = {'bookings':bookings,'messages_as_receiver':messages_as_receiver,'sender_list':sender_list,'sender_set':sender_set,'message_as_sender':message_as_sender,'receiver_list':receiver_list,'receiver_set':receiver_set}
+        return render(request,'EventPlanner/home.html',context)
 
 
-def planner(request):
-    return render(request,'EventPlanner/planner.html')
+# def planner(request):
+#     return render(request,'EventPlanner/planner.html')
 
-def book(request,pk):
-    category = Category.objects.get(id=pk)
-    events = Event.objects.filter(category=category)
-    context = {'events':events}
-    return render(request,'EventPlanner/booking.html',context)
+# def book(request,pk):
+#     category = Category.objects.get(id=pk)
+#     events = Event.objects.filter(category=category)
+#     context = {'events':events}
+#     return render(request,'EventPlanner/booking.html',context)
 
 def signUp(request,user_type):
-    validation_error = None
-    if request.method == 'POST':
-        try:
-            # access filled form instance
-            form = SignUpForm(request.POST)
+    if not request.user.is_authenticated:
+        validation_error = None
+        if request.method == 'POST':
+            try:
+                # access filled form instance
+                form = SignUpForm(request.POST)
 
-            if form.is_valid():
-                user = form.save(commit=False)
-                # save the form 
-                user.save()
-                # Check whther user is an event planner 
-                if user_type == 'is_event_planner':
-                # create the UserProfile for the above user
-                    UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_event_planner')
-                    # login the user
-                    login(request,user)
-                    # redirect the user to logged in page
-                    return redirect('/home-E/')                    
+                if form.is_valid():
+                    user = form.save(commit=False)
+                    # save the form 
+                    user.save()
+                    # Check whther user is an event planner 
+                    if user_type == 'is_event_planner':
+                    # create the UserProfile for the above user
+                        UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_event_planner')
+                        # login the user
+                        login(request,user)
+                        # redirect the user to logged in page
+                        return redirect('/home-E/')                    
+                    else:
+                        UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_customer')
+                        # login the user
+                        login(request,user)
+                        # redirect the user to logged in page
+                        return redirect('/logged-in-C/')      
                 else:
-                    UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_customer')
-                    # login the user
-                    login(request,user)
-                    # redirect the user to logged in page
-                    return redirect('/logged-in-C/')      
-            else:
-                # catch the error
-                validation_error = form.errors                
-        except:
-            pass
-    context = {'signUpForm':SignUpForm,'validation_error':validation_error,'user_type':user_type}
-    return render(request,'EventPlanner/sign-up.html',context)
+                    # catch the error
+                    validation_error = form.errors                
+            except:
+                pass
+        context = {'signUpForm':SignUpForm,'validation_error':validation_error,'user_type':user_type}
+        return render(request,'EventPlanner/sign-up.html',context)
     
-@login_required(login_url='/login-E/')
-def loggedIn(request):
-    return render(request,'EventPlanner/logged-in.html')
+# @login_required(login_url='/login-E/')
+# def loggedIn(request):
+#     return render(request,'EventPlanner/logged-in.html')
 
 
 def loginPage(request):
-    validation_error = False
-    if request.user.is_authenticated:
-        return redirect('/home-E/')
-    if request.method == 'POST':
-        try:
-            # fetch the data from HTML login form
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            # authenticate the user
-            user = authenticate(request,username=username,password=password)
-            if user:
-                if user.userprofile.user_type == 'is_event_planner':
-                    login(request,user)
-                    return redirect('/home-E/')
+    if not request.user.is_authenticated:
+        validation_error = False
+        if request.user.is_authenticated:
+            return redirect('/home-E/')
+        if request.method == 'POST':
+            try:
+                # fetch the data from HTML login form
+                username = request.POST.get('username')
+                password = request.POST.get('password')
+                # authenticate the user
+                user = authenticate(request,username=username,password=password)
+                if user:
+                    if user.userprofile.user_type == 'is_event_planner':
+                        login(request,user)
+                        return redirect('/home-E/')
+                    else:
+                        validation_error = True
                 else:
                     validation_error = True
-            else:
-                validation_error = True
-        except:
-            pass
-    context = {'validation_error':validation_error}
-    return render(request,'EventPlanner/login-page.html',context)
+            except:
+                pass
+        context = {'validation_error':validation_error}
+        return render(request,'EventPlanner/login-page.html',context)
 
-                
+@login_required(login_url='/login-C/')                
 def logoutPage(request):
     logout(request)
     return redirect('/login-E/')
@@ -141,39 +165,41 @@ def ChangePassword(request):
     return render(request,'EventPlanner/change-password.html',context)
 
 
-def EventPlannerInfo(request,pk):      
-    if request.method == 'POST':
-        if not request.user.is_authenticated:
-            return redirect('/login-C/')
-        unique_token_form = request.POST.get('unique-token')
-        unique_token_session = request.session.get('chat_token')
-        if unique_token_form == unique_token_session:
-            message_form = MessageForm(request.POST)
-            if message_form.is_valid():
-                message_object = message_form.save(commit = False)
-                message_object.sender = request.user
-                vendor = User.objects.get(id=int(pk))
-                message_object.receiver = vendor
-                message_object.save()
-                del request.session['chat_token']
-                return redirect(f'/event-planner-info/{pk}/')            
-    else:
-        unique_token = str(uuid.uuid4())
-        request.session['chat_token'] = unique_token        
-    if request.user.is_authenticated:
-        messages = Messages.objects.filter(sender = request.user)
-    else:
-        messages = None
-    vendor = User.objects.get(id = pk)
-    user_profile = UserProfile.objects.get(user = vendor)
-    user_profile_form = UserProfileForm(instance = user_profile)
-    
-    context = {'user_profile_form':user_profile_form,'vendor':vendor,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,}    
+def EventPlannerInfo(request,pk):    
+    if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':  
+        if request.method == 'POST':
+            if not request.user.is_authenticated:
+                return redirect('/login-C/')
+            unique_token_form = request.POST.get('unique-token')
+            unique_token_session = request.session.get('chat_token')
+            if unique_token_form == unique_token_session:
+                message_form = MessageForm(request.POST)
+                if message_form.is_valid():
+                    message_object = message_form.save(commit = False)
+                    message_object.sender = request.user
+                    vendor = User.objects.get(id=int(pk))
+                    message_object.receiver = vendor
+                    message_object.save()
+                    del request.session['chat_token']
+                    return redirect(f'/event-planner-info/{pk}/')            
+        else:
+            unique_token = str(uuid.uuid4())
+            request.session['chat_token'] = unique_token        
+        if request.user.is_authenticated:
+            messages = Messages.objects.filter(sender = request.user)
+        else:
+            messages = None
+        vendor = User.objects.get(id = pk)
+        user_profile = UserProfile.objects.get(user = vendor)
+        user_profile_form = UserProfileForm(instance = user_profile)
+        
+        context = {'user_profile_form':user_profile_form,'vendor':vendor,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,}    
 
-    return render(request,'EventPlanner/event-planner-info.html',context)
+        return render(request,'EventPlanner/event-planner-info.html',context)
 
 def VenueInfo(request,pk):
-    return render(request,'EventPlanner/venue-info.html')
+    if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':
+        return render(request,'EventPlanner/venue-info.html')
 
 @login_required(login_url='/login-E/')
 def DeleteAccount(request):

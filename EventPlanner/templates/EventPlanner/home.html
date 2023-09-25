@@ -16,5 +16,35 @@
     <hr>
 {% endfor %}
 
+<div>
+
+{% for sender_of_set in sender_set %}
+    <div><h4>{{sender_of_set}}</h4></div>
+        {% for message in messages_as_receiver %}
+            {% if message.sender == sender_of_set %}
+                <div>{{message.message}}</div>
+            {% endif %}
+        {% endfor %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type..">
+        <input type="hidden" name="receiver" value="{{sender_of_set}}">
+        <input type="submit" value="Send">
+    </form>
+{% endfor %}
+
+</div>
+<hr><hr><hr>
+<div>
+{% for receiver_of_set in receiver_set %}
+    <div><h4>{{receiver_of_set}}</h4></div>
+    {% for message in message_as_sender %}
+        {% if message.receiver == receiver_of_set %}            
+            <div>{{message.message}}</div>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+</div>
+
 {% endblock %}
 
