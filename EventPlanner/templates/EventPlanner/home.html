@@ -1,0 +1,20 @@
+{% extends 'navbar.html' %}
+
+
+{% block content %}
+
+<h2>Your bookings..</h2>
+{% for booking in bookings %}
+    <div>
+        <div><h4>Booked by</h4></div>
+        <div>{{booking.user.first_name}} {{booking.user.last_name}}</div>
+        <div><h4>Booking date and time</h4></div>
+        <div>{{booking.date}} {{booking.time}}</div>
+        <div><h4>Booking location</h4></div>
+        <div>{{booking.location}}</div>
+    </div>
+    <hr>
+{% endfor %}
+
+{% endblock %}
+

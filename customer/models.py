@@ -11,6 +11,7 @@ class Booking(models.Model):
     vendor = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
     date = models.DateField(null=True)
     time = models.TimeField(null=True)
+    location = models.CharField(max_length=150,null=True,blank=True)
 
 class Messages(models.Model):
     sender = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False)

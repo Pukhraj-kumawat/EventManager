@@ -12,8 +12,7 @@
 <a href="/">All categories</a>
 {% endif %}
 {% for category in categories %}
-    <p>{{category}} <a href="book/{{category.id}}">Book now</a></p>
+    <p>{{category}} <a href="/book/{{category.id}}">Book now</a></p>
 {% endfor %}
-
 
 {% endblock %}

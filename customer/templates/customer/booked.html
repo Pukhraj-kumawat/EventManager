@@ -1,4 +1,4 @@
-{% extends 'home.html' %}
+{% extends 'customer/home.html' %}
 
 {% block content %}
 
@@ -16,11 +16,12 @@
 <h1>Full package block </h1>
 
 <h2>booking.venue : => </h2>
-<h3>{{booking.venue.name}}</h3>
+
+<a href="/venue-info/{{booking.venue.id}}/"><h3>{{booking.venue.name}}</h3></a>
 <div>{{booking.venue.location}}</div>
 <div>{{booking.venue.city}} {{booking.venue.state}}</div>
 <h2>Vendor information : => </h2>
-<h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
+<a href="/event-planner-info/{{booking.vendor.id}}"><h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3></a>
 <div>{{booking.vendor.userprofile.contact_info}}</div>
 <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
 <div>{{booking.date}} {{booking.time}}</div>
@@ -37,7 +38,7 @@
 {% elif booking.venue %}
 
 <h2>Venue information: => </h2>
-<h3>{{booking.venue.name}}</h3>
+<a href="/venue-info/{{booking.venue.id}}/"><h3>{{booking.venue.name}}</h3></a>
 <div>{{booking.venue.location}}</div>
 <div>{{booking.venue.city}} {{booking.venue.state}}</div>
 <div>{{booking.date}} {{booking.time}}</div>
@@ -52,17 +53,19 @@
 
 {% else %}
 <h2>booking.vendor : => </h2>
-<h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
+<a href="/event-planner-info/{{booking.vendor.id}}"><h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3></a>
 <div>{{booking.vendor.userprofile.contact_info}}</div>
 <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
 <div>{{booking.date}} {{booking.time}}</div>
+<div> 
+    <h5>Location : => {{booking.location}}</h5>
+</div>
 
 <form action="/delete-book/" method="POST">
     {% csrf_token %}
     <input type="hidden" value="{{booking.id}}" name="booking_id">
     <input type="submit" value="Cancle booking">
 </form>
-
 {% endif %}
 
 {% endif %}

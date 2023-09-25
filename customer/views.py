@@ -12,6 +12,39 @@ from django.db.models import Q
 
 # Create your views here.
 
+def home(request):
+    filter  = None
+    categories = Category.objects.all()
+    categories_list = []
+    for category in categories:
+        Events = Event.objects.filter(category = category)
+        Venues = Venue.objects.filter(category = category)
+        if Events and Venues:            
+            categories_list.append(category)
+            categories = categories_list
+        elif Events and not Venues:            
+            categories_list.append(category)
+            categories = categories_list        
+        elif not Events and Venues:            
+            categories_list.append(category)
+            categories = categories_list
+        else:
+            pass     
+    users = User.objects.all()
+    if request.method == 'GET':
+        try:
+            event = request.GET.get('event')
+            if event:
+                categories = Category.objects.filter(name__icontains = event)
+                for category in categories:
+                    categories_list.append(category)
+                filter = 'Exists'
+        except:
+            pass
+    context = {'categories':categories,'users':users,'filter':filter}    
+    return render(request,'customer/home.html',context)
+
+
 def book(request,pk):    
     error = None
     category = Category.objects.get(id = pk)
@@ -75,15 +108,18 @@ def book(request,pk):
 def loginPage(request):
     validation_error = False
     if request.user.is_authenticated:
-        return redirect('/logged-in-C/')
+        return redirect('/home-C/')
     if request.method == 'POST':
         try:
             username = request.POST.get('username')
             password = request.POST.get('password')
             user = authenticate(request,username=username,password=password)
             if user:
-                login(request,user)
-                return redirect('/logged-in-C/')
+                if user.userprofile.user_type == 'is_customer':                
+                    login(request,user)
+                    return redirect('/home-C/')
+                else:
+                    validation_error = True
             else:
                 validation_error = True
         except:
@@ -111,6 +147,7 @@ def create_book(request):
     if request.method == 'POST':
         date = request.POST.get('date')
         time = request.POST.get('time')
+        location = request.POST.get('location')
         if not time:
             time = '00:00:00'
         venue_id = request.POST.get('venue_id')
@@ -118,15 +155,15 @@ def create_book(request):
     if venue_id and vendor_id :
         venue = Venue.objects.get(id = venue_id)
         vendor = User.objects.get(id = vendor_id)
-        booking = Booking(venue=venue,vendor=vendor,user = request.user,date=date,time=time)        
+        booking = Booking(venue=venue,vendor=vendor,user = request.user,date=date,time=time,location = location)        
     if venue_id and not vendor_id:
         venue = Venue.objects.get(id = venue_id)
         vendor = None
-        booking = Booking(venue=venue,user = request.user,date=date,time=time)        
+        booking = Booking(venue=venue,user = request.user,date=date,time=time,location = location)        
     if vendor_id and not venue_id:
         vendor = User.objects.get(id = vendor_id)
         venue = None
-        booking = Booking(vendor=vendor,user = request.user,date=date,time=time)  
+        booking = Booking(vendor=vendor,user = request.user,date=date,time=time,location = location)  
     booking.save()
     return redirect('/booked/')
 
@@ -136,6 +173,7 @@ def booked(request):
     context = {'bookings':bookings}
     return render(request,'customer/booked.html',context)
 
+@login_required(login_url='/login-C/')
 def delete_book(request):
     if request.method == 'POST':
         try:        

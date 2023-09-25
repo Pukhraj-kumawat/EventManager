@@ -8,43 +8,17 @@ from .forms import SignUpForm,UserProfileForm,UserForm
 from django.contrib.auth.forms import PasswordChangeForm
 import re
 from customer.forms import MessageForm
-from customer.models import Messages
+from customer.models import Messages,Booking
 import uuid
 
 
 # Create your views here.
 
 def home(request):
-    filter  = None
-    categories = Category.objects.all()
-    categories_list = []
-    for category in categories:
-        Events = Event.objects.filter(category = category)
-        Venues = Venue.objects.filter(category = category)
-        if Events and Venues:            
-            categories_list.append(category)
-            categories = categories_list
-        elif Events and not Venues:            
-            categories_list.append(category)
-            categories = categories_list        
-        elif not Events and Venues:            
-            categories_list.append(category)
-            categories = categories_list
-        else:
-            pass     
-    users = User.objects.all()
-    if request.method == 'GET':
-        try:
-            event = request.GET.get('event')
-            if event:
-                categories = Category.objects.filter(name__icontains = event)
-                for category in categories:
-                    categories_list.append(category)
-                filter = 'Exists'
-        except:
-            pass
-    context = {'categories':categories,'users':users,'filter':filter}    
-    return render(request,'home.html',context)
+    bookings = Booking.objects.filter(vendor = request.user)
+    context = {'bookings':bookings}
+    return render(request,'EventPlanner/home.html',context)
+
 
 def planner(request):
     return render(request,'EventPlanner/planner.html')
@@ -73,7 +47,7 @@ def signUp(request,user_type):
                     # login the user
                     login(request,user)
                     # redirect the user to logged in page
-                    return redirect('/logged-in-E/')                    
+                    return redirect('/home-E/')                    
                 else:
                     UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_customer')
                     # login the user
@@ -96,7 +70,7 @@ def loggedIn(request):
 def loginPage(request):
     validation_error = False
     if request.user.is_authenticated:
-        return redirect('/logged-in-C/')
+        return redirect('/home-E/')
     if request.method == 'POST':
         try:
             # fetch the data from HTML login form
@@ -105,8 +79,11 @@ def loginPage(request):
             # authenticate the user
             user = authenticate(request,username=username,password=password)
             if user:
-                login(request,user)
-                return redirect('/logged-in-E/')
+                if user.userprofile.user_type == 'is_event_planner':
+                    login(request,user)
+                    return redirect('/home-E/')
+                else:
+                    validation_error = True
             else:
                 validation_error = True
         except:
@@ -198,9 +175,11 @@ def EventPlannerInfo(request,pk):
 def VenueInfo(request,pk):
     return render(request,'EventPlanner/venue-info.html')
 
+@login_required(login_url='/login-E/')
 def DeleteAccount(request):
     return render(request,'EventPlanner/delete-account.html')
 
+@login_required(login_url='/login-E/')
 def confirmDelete(request):
     user = request.user
     user.delete()
