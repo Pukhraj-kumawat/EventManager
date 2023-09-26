@@ -17,13 +17,19 @@
 {% endfor %}
 
 <div>
-
+    <p><h3>Messages received to you =></h3></p>
 {% for sender_of_set in sender_set %}
     <div><h4>{{sender_of_set}}</h4></div>
-        {% for message in messages_as_receiver %}
-            {% if message.sender == sender_of_set %}
-                <div>{{message.message}}</div>
-            {% endif %}
+        {% for message_received in messages_as_receiver %}
+            
+
+
+                {% if message_received.sender == sender_of_set %}
+                    <div>{{message_received.message}}</div>
+                {% endif %}
+
+
+
         {% endfor %}
     <form action="" method="POST">
         {% csrf_token %}
@@ -36,6 +42,7 @@
 </div>
 <hr><hr><hr>
 <div>
+    <p><h3>Messages sent by you =></h3></p>
 {% for receiver_of_set in receiver_set %}
     <div><h4>{{receiver_of_set}}</h4></div>
     {% for message in message_as_sender %}
