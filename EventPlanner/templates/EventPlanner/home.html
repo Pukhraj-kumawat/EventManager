@@ -3,55 +3,80 @@
 
 {% block content %}
 
+
+<style>
+    .gird-div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border: 2px solid #000;
+        padding: 10px;
+    }
+
+</style>
+
 <h2>Your bookings..</h2>
 {% for booking in bookings %}
+<div>
     <div>
-        <div><h4>Booked by</h4></div>
-        <div>{{booking.user.first_name}} {{booking.user.last_name}}</div>
-        <div><h4>Booking date and time</h4></div>
-        <div>{{booking.date}} {{booking.time}}</div>
-        <div><h4>Booking location</h4></div>
-        <div>{{booking.location}}</div>
+        <h4>Booked by</h4>
     </div>
+    <div>{{booking.user.first_name}} {{booking.user.last_name}}</div>
+    <div>
+        <h4>Booking date and time</h4>
+    </div>
+    <div>{{booking.date}} {{booking.time}}</div>
+    <div>
+        <h4>Booking location</h4>
+    </div>
+    <div>{{booking.location}}</div>
+</div>
+<hr>
+{% endfor %}
+
+<div>
     <hr>
-{% endfor %}
 
-<div>
-    <p><h3>Messages received to you =></h3></p>
-{% for sender_of_set in sender_set %}
-    <div><h4>{{sender_of_set}}</h4></div>
-        {% for message_received in messages_as_receiver %}
-            
+    <div>{{received_dict}}</div>
+    <div>{{sent_dict}}</div>
+
+    <hr>
 
 
-                {% if message_received.sender == sender_of_set %}
-                    <div>{{message_received.message}}</div>
+
+    <div>
+        {% for sender,messages in received_dict.items %}
+        <div>
+            <h3>{{sender}}</h3>
+        </div>
+        <div class="gird-div">
+            <div>
+                {% for receiver,msgs in sent_dict.items %}
+                {% if receiver == sender %}
+                {% for msg in msgs %}
+                <div><b>{{msg}}</b></div>
+                {% endfor %}
                 {% endif %}
+                {% endfor %}
 
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="message" placeholder="Type..">
+                    <input type="hidden" name="receiver" value="{{sender}}">
+                    <input type="submit" value="Send">
+                </form>
+            </div>
 
+            <div>
 
+                {% for message in messages %}
+                <div>{{message}}</div>
+                {% endfor %}
+
+            </div>
+
+        </div>
         {% endfor %}
-    <form action="" method="POST">
-        {% csrf_token %}
-        <input type="text" name="message" placeholder="Type..">
-        <input type="hidden" name="receiver" value="{{sender_of_set}}">
-        <input type="submit" value="Send">
-    </form>
-{% endfor %}
+    </div>
 
-</div>
-<hr><hr><hr>
-<div>
-    <p><h3>Messages sent by you =></h3></p>
-{% for receiver_of_set in receiver_set %}
-    <div><h4>{{receiver_of_set}}</h4></div>
-    {% for message in message_as_sender %}
-        {% if message.receiver == receiver_of_set %}            
-            <div>{{message.message}}</div>
-        {% endif %}
-    {% endfor %}
-{% endfor %}
-</div>
 
-{% endblock %}
-
+    {% endblock %}

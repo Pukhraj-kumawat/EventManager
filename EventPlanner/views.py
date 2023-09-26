@@ -38,7 +38,27 @@ def home(request):
             receiver_list.append(message.receiver)
         receiver_set = set(receiver_list)
 
-        context = {'bookings':bookings,'messages_as_receiver':messages_as_receiver,'sender_list':sender_list,'sender_set':sender_set,'message_as_sender':message_as_sender,'receiver_list':receiver_list,'receiver_set':receiver_set}
+        received_dict = {}
+        sent_dict = {}
+
+        for sender_of_set in sender_set:
+            list_messages = []
+            for message_received in messages_as_receiver:
+                if sender_of_set == message_received.sender:
+                    list_messages.append(message_received.message)
+            received_dict[sender_of_set] = list_messages
+
+        for receiver_of_set in receiver_set:
+            list_messages = []
+            for message_sent in message_as_sender:
+                if receiver_of_set == message_sent.receiver:
+                    list_messages.append(message_sent.message)
+            sent_dict[receiver_of_set] = list_messages
+
+        Messages_display(received_dict,sent_dict)
+
+        context = {'bookings':bookings,'received_dict':received_dict,'sent_dict':sent_dict}
+
         return render(request,'EventPlanner/home.html',context)
 
 
@@ -210,3 +230,4 @@ def confirmDelete(request):
     user = request.user
     user.delete()
     return redirect('/')
+
