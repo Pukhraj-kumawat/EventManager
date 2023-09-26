@@ -4,4 +4,13 @@
 
 <h5>this is venue gallary</h5>
 
+<div>
+
+    {% for fields in venue_form %}
+        <div><b>{{fields.label_tag}}</b></div>
+        <div>{{fields.value}}</div>
+    {% endfor %}
+
+</div>
+
 {% endblock %}

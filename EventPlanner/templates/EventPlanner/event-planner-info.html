@@ -32,7 +32,7 @@
                 <div>
                     {% for message in messages %}
                     {% if message.receiver.id == pk %}                    
-                    <div>{{message.message}}</div>
+                    <div><b>{{message.message}}</b></div>
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -48,7 +48,7 @@
             </div>
 
             <div>
-                Messages received
+                
                     
                 {% for sender,messages in received_dict.items %}
                     {% if vendor.username == sender.username %}
@@ -64,13 +64,6 @@
 
 </div>
 
-<br><br>
-
-<hr>
-<div>{{received_dict}}</div>
-
-{{sent_dict}}
-<hr>
 
 {{error}}
 

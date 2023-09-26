@@ -1,0 +1,49 @@
+{% extends 'customer/home.html' %}
+
+
+{% block content %}
+<h4>This is profile page</h4>
+
+{% if request.user == user_profile.user %}
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <div>First name</div>
+    <div>{{user_form.first_name}}</div>
+
+    <div>Last name</div>
+    <div>{{user_form.last_name}}</div>
+
+
+    <div>Email</div>
+    <div>{{user_form.email}}</div>
+
+
+    <div class="hidden-div1">
+        <div>{{UserProfileForm.user}}</div>
+    </div>
+
+    <div class="hidden-div2">
+        <div>{{UserProfileForm.user_type}}</div>
+    </div>
+
+    {% if user_profile.user_type == 'is_event_planner' %}
+
+        {% for field in UserProfileForm %}
+            <div>{{field.label_tag}}</div>
+            <div>{{field}}</div>
+        {% endfor %}
+
+    {% endif %}
+
+    <input type="submit" value="Submit">
+
+</form>
+
+<div>
+    <a href="/change-password/">Change password</a>
+</div>
+
+
+{% endif %}
+{% endblock %}

@@ -26,7 +26,8 @@
         {% if request.user.userprofile.user_type == 'is_event_planner' %}
         <a href="/home-E/">Home</a>
         {% endif %}
-        <a href="/profile/{{request.user.id}}/">Your profile</a>
+
+        <a href="/profile/{{request.user.id}}/">Profile</a>
     {% endif %}
 
     {% if request.user.is_authenticated %}

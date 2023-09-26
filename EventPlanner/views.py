@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from customer import views
-from .forms import SignUpForm,UserProfileForm,UserForm
+from .forms import SignUpForm,UserProfileForm,UserForm,VenueForm
 from django.contrib.auth.forms import PasswordChangeForm
 import re
 from customer.forms import MessageForm
@@ -20,19 +20,28 @@ from django.db import connection
 @login_required(login_url='/login-E/')
 def home(request):    
     if request.user.userprofile.user_type == 'is_event_planner':
-        if request.method =='POST':
-            message = request.POST.get('message')
-            receiver = request.POST.get('receiver')
-            receiver_instance = User.objects.get(username = receiver)
-            Messages.objects.create(sender = request.user,receiver = receiver_instance, message =  message)            
+        # if request.method =='POST':
+        #     message = request.POST.get('message')
+        #     receiver = request.POST.get('receiver')    
+        #     receiver_instance = User.objects.get(username = receiver)
+        #     Messages.objects.create(sender = request.user,receiver = receiver_instance, message =  message)            
 
         bookings = Booking.objects.filter(vendor = request.user)
 
         received_dict,sent_dict =  Messages_display(request)
 
-        context = {'bookings':bookings,'received_dict':received_dict,'sent_dict':sent_dict}
+        context = {'bookings':bookings,'received_dict':received_dict,'sent_dict':sent_dict,'MessageForm':MessageForm}
 
         return render(request,'EventPlanner/home.html',context)
+
+
+def create_messages(request):
+    if request.method =='POST':
+            message = request.POST.get('message')
+            receiver = request.POST.get('receiver')    
+            receiver_instance = User.objects.get(username = receiver)
+            Messages.objects.create(sender = request.user,receiver = receiver_instance, message =  message)  
+    return redirect('/home-E/')
 
 
 # def planner(request):
@@ -115,7 +124,7 @@ def logoutPage(request):
 
 
 @login_required(login_url='/login-E/')
-def profile(request,pk):
+def edit_profile(request,pk):
     user_errors = None
     profile_errors = None
     user = User.objects.get(id=pk)
@@ -139,7 +148,7 @@ def profile(request,pk):
         except:
             pass        
     context = {'UserProfileForm':profile_form,'user_errors':user_errors,'profile_errors':profile_errors,'user_form':user_form,'user_profile':user_profile}
-    return render(request,'EventPlanner/profile.html',context)
+    return render(request,'EventPlanner/edit-profile.html',context)
 
 @login_required(login_url='/login-E/')
 def ChangePassword(request):
@@ -194,7 +203,10 @@ def EventPlannerInfo(request,pk):
 
 def VenueInfo(request,pk):
     if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':
-        return render(request,'EventPlanner/venue-info.html')
+        venue = Venue.objects.get(id = pk)
+        venue_form = VenueForm(instance = venue)
+        context = {'venue_form':venue_form}
+        return render(request,'EventPlanner/venue-info.html',context)
 
 @login_required(login_url='/login-E/')
 def DeleteAccount(request):
@@ -206,7 +218,7 @@ def confirmDelete(request):
     user.delete()
     return redirect('/')
 
-
+@login_required(login_url='/login-E/')
 def Messages_display(request):
         messages_as_receiver = Messages.objects.filter(receiver = request.user).order_by('sender')
         sender_list = []
@@ -238,3 +250,11 @@ def Messages_display(request):
             sent_dict[receiver_of_set] = list_messages
 
         return received_dict,sent_dict
+
+@login_required(login_url='/login-E/')
+def profile(request,pk):
+    user = User.objects.get(id = pk)
+    user_profile = UserProfile.objects.get(user = user)
+    userprofile_form = UserProfileForm(instance = user_profile)
+    context = {'user_profile':user_profile,'userprofile_form':userprofile_form}
+    return render(request,'EventPlanner/profile.html',context)

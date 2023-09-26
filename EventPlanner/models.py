@@ -29,7 +29,7 @@ class UserProfile(models.Model):
     contact_info = models.CharField(max_length=200,blank=True,null=True,verbose_name='Contact information')
     company_name = models.CharField(max_length=50,blank=True,null=True)
     website = models.URLField(max_length=200,blank=True,null=True)
-    bio = models.TextField(blank=True,null=True)
+    about = models.TextField(blank=True,null=True)
     city = models.CharField(max_length=20,null=False,blank=False)
     state = models.CharField(max_length=20,null=False,blank=False)
     location = models.TextField(blank=True,null=True)
@@ -42,6 +42,7 @@ venue_choices = (('Rajasthan','Rajasthan'),('Gujrat','Gujrat'),('Madhya pradesh'
 
 class Venue(models.Model):
     name = models.CharField(max_length=100,null=False,blank=False)
+    about = models.TextField(blank=True,null=True)
     min_price = models.DecimalField(max_digits=10, decimal_places=2,null=True,blank=True)
     max_capacity = models.IntegerField(null=False,blank=False)
     location = models.TextField(null=False,blank=False)
@@ -50,5 +51,6 @@ class Venue(models.Model):
     vendors = models.ManyToManyField(User,null=True,blank=True)
     category = models.ManyToManyField(Category)
     service_offered = models.TextField(null=True,blank=True)
+    contact_info = models.TextField(null=False,blank=False)
 
     

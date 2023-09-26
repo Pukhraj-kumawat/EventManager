@@ -1,55 +1,30 @@
 {% extends 'customer/home.html' %}
 
-
 {% block content %}
-<h4>This is profile page</h4>
+<h3>Your profile...</h3>
 
-{% if request.user == user_profile.user %}
-<form action="" method="POST">
-    {% csrf_token %}
-
-    <div>First name</div>
-    <div>{{user_form.first_name}}</div>
-
-    <div>Last name</div>
-    <div>{{user_form.last_name}}</div>
-
-
-    <div>Email</div>
-    <div>{{user_form.email}}</div>
-
-
-    <div class="hidden-div1">
-        <div>{{UserProfileForm.user}}</div>
-    </div>
-
-    <div class="hidden-div2">
-        <div>{{UserProfileForm.user_type}}</div>
-    </div>
+    <div><b>Name :</b></div>
+    <div>{{request.user.first_name}} {{request.user.last_name}}</div>
+    <div><b>Username:</b></div>
+    <div>{{request.user.username}}</div>
+    <div><b>Email address :</b></div>
+    <div>{{request.user.email}}</div>
 
     {% if user_profile.user_type == 'is_event_planner' %}
 
-        {% for field in UserProfileForm %}
-            <div>{{field.label_tag}}</div>
-            <div>{{field}}</div>
+        {% for fields in userprofile_form %}
+            <div><b>{{fields.label_tag}}</b></div>
+            <div>{{fields.value}}</div>
         {% endfor %}
-
     {% endif %}
+    <div><b>Password</b></div>
+    <div>.............</div>
 
-    <input type="submit" value="Submit">
+    <div><a href="/edit-profile/{{request.user.id}}/">Edit</a></div>
 
-</form>
+    <div><a href="/logout/">Logout</a></div>
 
-<div>
-    <a href="/logout/">Logout</a> 
-</div>
-<div>
-    <a href="/change-password/">Change password</a>
-</div>
+    <div><a href="/delete-account/">Delete acccount</a></div>
 
-<div>
-    <a href="/delete-account/">Delete account</a>
-</div>
 
-{% endif %}
 {% endblock %}

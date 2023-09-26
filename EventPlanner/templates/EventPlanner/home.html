@@ -34,13 +34,6 @@
 {% endfor %}
 
 <div>
-    <hr>
-
-    <div>{{received_dict}}</div>
-    <div>{{sent_dict}}</div>
-
-    <hr>
-
 
 
     <div>
@@ -51,14 +44,14 @@
         <div class="gird-div">
             <div>
                 {% for receiver,msgs in sent_dict.items %}
-                {% if receiver == sender %}
-                {% for msg in msgs %}
-                <div><b>{{msg}}</b></div>
-                {% endfor %}
-                {% endif %}
+                    {% if receiver == sender %}
+                        {% for msg in msgs %}
+                        <div><b>{{msg}}</b></div>
+                        {% endfor %}
+                    {% endif %}
                 {% endfor %}
 
-                <form action="" method="POST">
+                <form action="/create-message/" method="POST">
                     {% csrf_token %}
                     <input type="text" name="message" placeholder="Type..">
                     <input type="hidden" name="receiver" value="{{sender}}">
