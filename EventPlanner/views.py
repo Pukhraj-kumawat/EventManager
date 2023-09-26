@@ -15,6 +15,8 @@ from django.db import connection
 
 # Create your views here.
 
+
+
 @login_required(login_url='/login-E/')
 def home(request):    
     if request.user.userprofile.user_type == 'is_event_planner':
@@ -26,36 +28,7 @@ def home(request):
 
         bookings = Booking.objects.filter(vendor = request.user)
 
-        messages_as_receiver = Messages.objects.filter(receiver = request.user).order_by('sender')
-        sender_list = []
-        for message in messages_as_receiver:
-            sender_list.append(message.sender)    
-        sender_set = set(sender_list)
-
-        message_as_sender = Messages.objects.filter(sender = request.user).order_by('receiver')
-        receiver_list = []
-        for message in message_as_sender:
-            receiver_list.append(message.receiver)
-        receiver_set = set(receiver_list)
-
-        received_dict = {}
-        sent_dict = {}
-
-        for sender_of_set in sender_set:
-            list_messages = []
-            for message_received in messages_as_receiver:
-                if sender_of_set == message_received.sender:
-                    list_messages.append(message_received.message)
-            received_dict[sender_of_set] = list_messages
-
-        for receiver_of_set in receiver_set:
-            list_messages = []
-            for message_sent in message_as_sender:
-                if receiver_of_set == message_sent.receiver:
-                    list_messages.append(message_sent.message)
-            sent_dict[receiver_of_set] = list_messages
-
-        Messages_display(received_dict,sent_dict)
+        received_dict,sent_dict =  Messages_display(request)
 
         context = {'bookings':bookings,'received_dict':received_dict,'sent_dict':sent_dict}
 
@@ -212,8 +185,10 @@ def EventPlannerInfo(request,pk):
         vendor = User.objects.get(id = pk)
         user_profile = UserProfile.objects.get(user = vendor)
         user_profile_form = UserProfileForm(instance = user_profile)
+
+        received_dict,sent_dict = Messages_display(request)
         
-        context = {'user_profile_form':user_profile_form,'vendor':vendor,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,}    
+        context = {'user_profile_form':user_profile_form,'vendor':vendor,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,'received_dict':received_dict,'sent_dict':sent_dict}    
 
         return render(request,'EventPlanner/event-planner-info.html',context)
 
@@ -231,3 +206,35 @@ def confirmDelete(request):
     user.delete()
     return redirect('/')
 
+
+def Messages_display(request):
+        messages_as_receiver = Messages.objects.filter(receiver = request.user).order_by('sender')
+        sender_list = []
+        for message in messages_as_receiver:
+            sender_list.append(message.sender)    
+        sender_set = set(sender_list)
+
+        message_as_sender = Messages.objects.filter(sender = request.user).order_by('receiver')
+        receiver_list = []
+        for message in message_as_sender:
+            receiver_list.append(message.receiver)
+        receiver_set = set(receiver_list)
+
+        received_dict = {}
+        sent_dict = {}
+
+        for sender_of_set in sender_set:
+            list_messages = []
+            for message_received in messages_as_receiver:
+                if sender_of_set == message_received.sender:
+                    list_messages.append(message_received.message)
+            received_dict[sender_of_set] = list_messages
+
+        for receiver_of_set in receiver_set:
+            list_messages = []
+            for message_sent in message_as_sender:
+                if receiver_of_set == message_sent.receiver:
+                    list_messages.append(message_sent.message)
+            sent_dict[receiver_of_set] = list_messages
+
+        return received_dict,sent_dict

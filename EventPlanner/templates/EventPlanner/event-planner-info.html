@@ -5,9 +5,16 @@
 <style>
     .grid-div{
         display: grid;
-        grid-template-columns: 3fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    }
+    .inner-grid-div{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
     }
 
+    #id_message{
+        height: 20px;
+    }
 </style>
 
 <div class="grid-div">
@@ -19,28 +26,40 @@
         {% endfor %}
     </div>
 
-    <div>
-        <p>Chat with vendor here..</p>
-
+    <div class="inner-grid-div">
         
-        <div>
-            {% for message in messages %}
-            {% if message.receiver.id == pk %}
-               <div><h3> {{message.sender.first_name}} {{message.sender.last_name}}</h3></div>
-               <!-- <div>{{message.message}}</div> -->
-            {% endif %}
-            {% endfor %}
-        </div>
+            <div>
+                <div>
+                    {% for message in messages %}
+                    {% if message.receiver.id == pk %}                    
+                    <div>{{message.message}}</div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
 
-        <div>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{MessageForm.message}}
-                <input type="hidden" value="{{unique_token}}" name="unique-token">
-                <input type="submit" value="Send">
-            </form>
-           
-        </div>
+                <div>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{MessageForm.message}}
+                        <input type="hidden" value="{{unique_token}}" name="unique-token">
+                        <input type="submit" value="Send">
+                    </form>           
+                </div>
+            </div>
+
+            <div>
+                Messages received
+                    
+                {% for sender,messages in received_dict.items %}
+                    {% if vendor.username == sender.username %}
+                        {% for message in messages %}
+                            <div>{{message}}</div>
+                        {% endfor %}
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+
     </div>
 
 </div>
@@ -48,7 +67,7 @@
 <br><br>
 
 <hr>
-{{receive_dict}}
+<div>{{received_dict}}</div>
 
 {{sent_dict}}
 <hr>
