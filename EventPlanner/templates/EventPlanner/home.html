@@ -12,12 +12,21 @@
         padding: 10px;
     }
 
-    .accepted{
+    .accepted {
         color: green;
     }
 
-    .rejected{        
+    .rejected {
         color: red;
+    }
+
+    .outer-grid-div {
+        display: grid;
+        grid-template-columns: 0.8fr 1fr 1fr;
+    }
+
+    .event-div {
+        margin-left: 30px;
     }
 </style>
 
@@ -26,56 +35,57 @@
 <div>
     <a href="/create-event/">Upload an Event</a>
 </div>
-<h2>Booking requests</h2>
-{% for booking in bookings %}
-<div>
-    <div>
-        <h4>Booked by</h4>
-    </div>
-    <div>{{booking.user.first_name}} {{booking.user.last_name}}</div>
-    <div>
-        <h4>Booking date and time</h4>
-    </div>
-    <div>{{booking.date}} {{booking.time}}</div>
-    <div>
-        <h4>Booking location</h4>
-    </div>
-    <div>{{booking.location}}</div>
-</div>
-
-{% if booking.booking_accepted is None %}
-<button><a href="/accept-booking/{{booking.id}}/accepted/">Accept</a> </button>   
-<button><a href="/accept-booking/{{booking.id}}/rejected/">Reject</a></button>
-
-{% elif booking.booking_accepted is False %}
-    <p class="rejected">Rejected</p>
-{% else %}
-<p class="accepted">Accepted</p>
-
-{% endif %}
-
-{% endfor %}
 
 
-<hr>
-
-
-<div>
-
+<div class="outer-grid-div">
 
     <div>
-        {% for sender,messages in received_dict.items %}
+        <h2>Booking requests</h2>
+        {% for booking in bookings %}
         <div>
-            <h3>{{sender}}</h3>
+            <div>
+                <h4>Booked by</h4>
+            </div>
+            <div>{{booking.user.first_name}} {{booking.user.last_name}}</div>
+            <div>
+                <h4>Booking date and time</h4>
+            </div>
+            <div>{{booking.date}} {{booking.time}}</div>
+            <div>
+                <h4>Booking location</h4>
+            </div>
+            <div>{{booking.location}}</div>            
         </div>
+
+        {% if booking.booking_accepted is None %}
+        <button><a href="/accept-booking/{{booking.id}}/accepted/">Accept</a> </button>
+        <button><a href="/accept-booking/{{booking.id}}/rejected/">Reject</a></button>
+
+        {% elif booking.booking_accepted is False %}
+        <p class="rejected">Rejected</p>
+        {% else %}
+        <p class="accepted">Accepted</p>
+        <hr>
+        {% endif %}
+
+        {% endfor %}
+    </div>
+
+
+
+    <div>
+            <h2>Messages</h2>
+        {% for sender,messages in received_dict.items %}
+
+        
         <div class="gird-div">
             <div>
                 {% for receiver,msgs in sent_dict.items %}
-                    {% if receiver == sender %}
-                        {% for msg in msgs %}
-                        <div><b>{{msg}}</b></div>
-                        {% endfor %}
-                    {% endif %}
+                {% if receiver == sender %}
+                {% for msg in msgs %}
+                <div><b>{{msg}}</b></div>
+                {% endfor %}
+                {% endif %}
                 {% endfor %}
 
                 <form action="/create-message/" method="POST">
@@ -87,7 +97,7 @@
             </div>
 
             <div>
-
+                <h4>{{sender}}</h4>
                 {% for message in messages %}
                 <div>{{message}}</div>
                 {% endfor %}
@@ -99,4 +109,24 @@
     </div>
 
 
-    {% endblock %}
+    <div class="event-div">
+        <h2>Event posted</h2>
+
+        {% for event in events %}
+        <div><b>Name :</b></div>
+        <div>{{event.name}}</div>
+        <div><b>Category :</b></div>
+        <div>{{event.category}}</div>
+        <div><b>Description :</b></div>
+        <div>{{event.description}}</div>
+        <br>
+        <a href="/edit-event/{{event.id}}/">Edit</a>
+        <a href="/delete-event/{{event.id}}/">Delete</a>
+        <hr>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

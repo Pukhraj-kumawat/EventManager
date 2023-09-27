@@ -27,10 +27,11 @@ def home(request):
         #     Messages.objects.create(sender = request.user,receiver = receiver_instance, message =  message)            
 
         bookings = Booking.objects.filter(vendor = request.user)
-
+        events = Event.objects.filter(event_planner = request.user)
+        
         received_dict,sent_dict =  Messages_display(request)
 
-        context = {'bookings':bookings,'received_dict':received_dict,'sent_dict':sent_dict,'MessageForm':MessageForm}
+        context = {'bookings':bookings,'received_dict':received_dict,'sent_dict':sent_dict,'MessageForm':MessageForm,'events':events}
 
         return render(request,'EventPlanner/home.html',context)
 
@@ -268,6 +269,7 @@ def create_event(request):
                 event_form_instance = event_form.save(commit = False)
                 event_form_instance.event_planner = request.user
                 event_form_instance.save()
+                return redirect('/home-E/')
         context = {'EventForm':EventForm}
         return render(request,'EventPlanner/create-event.html',context)
 
@@ -281,4 +283,27 @@ def accept_booking(request,pk,status):
         else:
             booking_object.booking_accepted = False
             booking_object.save()            
+        return redirect('/home-E/')
+
+
+@login_required(login_url='/login-E/')
+def edit_event(request,pk):
+    if request.user.userprofile.user_type == 'is_event_planner':
+        event = Event.objects.get(id = int(pk))
+        event_form = EventForm(instance = event)
+
+        if request.method == 'POST':
+            event_form_instance = EventForm(request.POST,instance = event)
+            if event_form_instance.is_valid():
+                event_form_instance.save()
+                return redirect('/home-E/')
+        context = {'event_form':event_form,}
+        return render(request,'EventPlanner/edit-event.html',context)
+
+
+@login_required(login_url='/login-E/')
+def delete_event(request,pk):
+    if request.user.userprofile.user_type == 'is_event_planner':
+        event = Event.objects.get(id = int(pk))
+        event.delete()
         return redirect('/home-E/')

@@ -16,5 +16,7 @@ urlpatterns = [
     path('create-message/',views.create_messages),
     path('create-event/',views.create_event),
     path('accept-booking/<int:pk>/<str:status>/',views.accept_booking),
+    path('edit-event/<int:pk>/',views.edit_event),
+    path('delete-event/<int:pk>/',views.delete_event),
 ]
 

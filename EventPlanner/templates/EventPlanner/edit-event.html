@@ -1,0 +1,17 @@
+{% extends 'customer/home.html' %}
+
+
+{% block content %}
+
+    <h3>Edit your Event..</h3>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+    {% for field in event_form %}
+        <div>{{field.label_tag}}</div>
+        <div>{{field}}</div>
+    {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

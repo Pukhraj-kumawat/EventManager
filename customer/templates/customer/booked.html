@@ -31,14 +31,14 @@
         {% if booking.venue and booking.vendor %}
         <h1>Full package block </h1>
 
-        <h2>booking.venue : => </h2>
+        <h2>Venue booked: => </h2>
 
         <a href="/venue-info/{{booking.venue.id}}/">
             <h3>{{booking.venue.name}}</h3>
         </a>
         <div>{{booking.venue.location}}</div>
         <div>{{booking.venue.city}} {{booking.venue.state}}</div>
-        <h2>Vendor information : => </h2>
+        <h2>Vendor booked : => </h2>
         <a href="/event-planner-info/{{booking.vendor.id}}">
             <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
         </a>
@@ -57,7 +57,7 @@
 
         {% elif booking.venue %}
 
-        <h2>Venue information: => </h2>
+        <h2>Venue booked: => </h2>
         <a href="/venue-info/{{booking.venue.id}}/">
             <h3>{{booking.venue.name}}</h3>
         </a>
@@ -74,7 +74,7 @@
         <hr>
 
         {% else %}
-        <h2>booking.vendor : => </h2>
+        <h2>Vendor : => </h2>
         <a href="/event-planner-info/{{booking.vendor.id}}">
             <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
         </a>
