@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
-from .models import UserProfile,Venue
+from .models import UserProfile,Venue,Event
 
 
 class SignUpForm(UserCreationForm):
@@ -52,3 +52,9 @@ class VenueForm(ModelForm):
         model = Venue
         fields = '__all__'            
         exclude = ('vendors','category',)
+
+class EventForm(ModelForm):
+    class Meta:
+        model = Event
+        fields = '__all__'
+        exclude = ('event_planner',)

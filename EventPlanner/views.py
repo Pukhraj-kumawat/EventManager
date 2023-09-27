@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from customer import views
-from .forms import SignUpForm,UserProfileForm,UserForm,VenueForm
+from .forms import SignUpForm,UserProfileForm,UserForm,VenueForm,EventForm
 from django.contrib.auth.forms import PasswordChangeForm
 import re
 from customer.forms import MessageForm
@@ -258,3 +258,27 @@ def profile(request,pk):
     userprofile_form = UserProfileForm(instance = user_profile)
     context = {'user_profile':user_profile,'userprofile_form':userprofile_form}
     return render(request,'EventPlanner/profile.html',context)
+
+@login_required(login_url='/login-E/')
+def create_event(request):
+    if request.user.userprofile.user_type == 'is_event_planner':
+        if request.method == 'POST':
+            event_form = EventForm(request.POST)
+            if event_form.is_valid():
+                event_form_instance = event_form.save(commit = False)
+                event_form_instance.event_planner = request.user
+                event_form_instance.save()
+        context = {'EventForm':EventForm}
+        return render(request,'EventPlanner/create-event.html',context)
+
+@login_required(login_url='/login-E/')
+def accept_booking(request,pk,status):
+    if request.user.userprofile.user_type == 'is_event_planner':
+        booking_object  = Booking.objects.get(id = int(pk))
+        if status == 'accepted':
+            booking_object.booking_accepted = True
+            booking_object.save()            
+        else:
+            booking_object.booking_accepted = False
+            booking_object.save()            
+        return redirect('/home-E/')

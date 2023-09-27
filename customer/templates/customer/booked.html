@@ -2,74 +2,152 @@
 
 {% block content %}
 
-<h4>Your bookings ...</h4>
+<style>
+
+.grid-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.rejected{
+    color: red;
+}
+.accepted{
+    color: green;
+}
+</style>
+
+<div class="grid-div">
+    <div>
+
+        <h4>Bookings requests</h4>
+
+        {% for booking in bookings reversed %}
+
+        {% if booking.user == request.user %}
+
+        <hr>
 
 
-{% for booking in bookings reversed %}
+        {% if booking.venue and booking.vendor %}
+        <h1>Full package block </h1>
 
-{% if booking.user == request.user %}
+        <h2>booking.venue : => </h2>
 
-<hr>
-
-
-{% if booking.venue and booking.vendor %}
-<h1>Full package block </h1>
-
-<h2>booking.venue : => </h2>
-
-<a href="/venue-info/{{booking.venue.id}}/"><h3>{{booking.venue.name}}</h3></a>
-<div>{{booking.venue.location}}</div>
-<div>{{booking.venue.city}} {{booking.venue.state}}</div>
-<h2>Vendor information : => </h2>
-<a href="/event-planner-info/{{booking.vendor.id}}"><h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3></a>
-<div>{{booking.vendor.userprofile.contact_info}}</div>
-<div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
-<div>{{booking.date}} {{booking.time}}</div>
+        <a href="/venue-info/{{booking.venue.id}}/">
+            <h3>{{booking.venue.name}}</h3>
+        </a>
+        <div>{{booking.venue.location}}</div>
+        <div>{{booking.venue.city}} {{booking.venue.state}}</div>
+        <h2>Vendor information : => </h2>
+        <a href="/event-planner-info/{{booking.vendor.id}}">
+            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
+        </a>
+        <div>{{booking.vendor.userprofile.contact_info}}</div>
+        <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
+        <div>{{booking.date}} {{booking.time}}</div>
 
 
-<form action="/delete-book/" method="POST">
-    {% csrf_token %}
-    <input type="hidden" value="{{booking.id}}" name="booking_id">
-     <input type="submit" value="Cancle booking">
-</form>
+        <form action="/delete-book/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{booking.id}}" name="booking_id">
+            <input type="submit" value="Cancle booking">
+        </form>
 
-<hr>
+        <hr>
 
-{% elif booking.venue %}
+        {% elif booking.venue %}
 
-<h2>Venue information: => </h2>
-<a href="/venue-info/{{booking.venue.id}}/"><h3>{{booking.venue.name}}</h3></a>
-<div>{{booking.venue.location}}</div>
-<div>{{booking.venue.city}} {{booking.venue.state}}</div>
-<div>{{booking.date}} {{booking.time}}</div>
+        <h2>Venue information: => </h2>
+        <a href="/venue-info/{{booking.venue.id}}/">
+            <h3>{{booking.venue.name}}</h3>
+        </a>
+        <div>{{booking.venue.location}}</div>
+        <div>{{booking.venue.city}} {{booking.venue.state}}</div>
+        <div>{{booking.date}} {{booking.time}}</div>
 
-<form action="/delete-book/" method="POST">
-    {% csrf_token %}
-    <input type="hidden" value="{{booking.id}}" name="booking_id">
-    <input type="submit" value="Cancle booking">
-</form>
+        <form action="/delete-book/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{booking.id}}" name="booking_id">
+            <input type="submit" value="Cancle request">
+        </form>
 
-<hr>
+        <hr>
 
-{% else %}
-<h2>booking.vendor : => </h2>
-<a href="/event-planner-info/{{booking.vendor.id}}"><h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3></a>
-<div>{{booking.vendor.userprofile.contact_info}}</div>
-<div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
-<div>{{booking.date}} {{booking.time}}</div>
-<div> 
-    <h5>Location : => {{booking.location}}</h5>
+        {% else %}
+        <h2>booking.vendor : => </h2>
+        <a href="/event-planner-info/{{booking.vendor.id}}">
+            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
+        </a>
+        <div>{{booking.vendor.userprofile.contact_info}}</div>
+        <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
+        <div>{{booking.date}} {{booking.time}}</div>
+        <div>
+            <h5>Location : => {{booking.location}}</h5>
+        </div>
+
+        <form action="/delete-book/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{booking.id}}" name="booking_id">
+            <input type="submit" value="Cancle booking">
+        </form>
+        {% endif %}
+
+        {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+    <div>
+        <h4>Bookings accpeted </h4>
+
+        {% for booking in bookings reversed %}
+
+            {% if booking.user == request.user and booking.booking_accepted is True %}
+
+            <a href="/event-planner-info/{{booking.vendor.id}}">
+                <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
+            </a>
+            <div>{{booking.vendor.userprofile.contact_info}}</div>
+            <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
+            <div>{{booking.date}} {{booking.time}}</div>
+            <div>
+                <h5>Location : => {{booking.location}}</h5>
+            </div>
+            
+            <p class="accepted">Accepted</p>
+
+            {% endif %}
+
+            {% endfor %}
+    </div>
+
+    <div>
+
+        {% for booking in bookings reversed %}
+
+        {% if booking.user == request.user and booking.booking_accepted is False %}
+
+            <h4>Booking rejects</h4>
+
+            <a href="/event-planner-info/{{booking.vendor.id}}">
+                <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
+            </a>
+            <div>{{booking.vendor.userprofile.contact_info}}</div>
+            <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
+            <div>{{booking.date}} {{booking.time}}</div>
+            <div>
+                <h5>Location : => {{booking.location}}</h5>
+            </div>
+
+            <p class="rejected">Rejected</p>
+
+            {% endif %}
+
+            {% endfor %}            
+
+    </div>
+
 </div>
-
-<form action="/delete-book/" method="POST">
-    {% csrf_token %}
-    <input type="hidden" value="{{booking.id}}" name="booking_id">
-    <input type="submit" value="Cancle booking">
-</form>
-{% endif %}
-
-{% endif %}
-
-{% endfor %}
 
 {% endblock %}

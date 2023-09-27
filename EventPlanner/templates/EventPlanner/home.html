@@ -12,9 +12,21 @@
         padding: 10px;
     }
 
+    .accepted{
+        color: green;
+    }
+
+    .rejected{        
+        color: red;
+    }
 </style>
 
-<h2>Your bookings..</h2>
+<br>
+<br>
+<div>
+    <a href="/create-event/">Upload an Event</a>
+</div>
+<h2>Booking requests</h2>
 {% for booking in bookings %}
 <div>
     <div>
@@ -30,8 +42,23 @@
     </div>
     <div>{{booking.location}}</div>
 </div>
-<hr>
+
+{% if booking.booking_accepted is None %}
+<button><a href="/accept-booking/{{booking.id}}/accepted/">Accept</a> </button>   
+<button><a href="/accept-booking/{{booking.id}}/rejected/">Reject</a></button>
+
+{% elif booking.booking_accepted is False %}
+    <p class="rejected">Rejected</p>
+{% else %}
+<p class="accepted">Accepted</p>
+
+{% endif %}
+
 {% endfor %}
+
+
+<hr>
+
 
 <div>
 

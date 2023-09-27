@@ -15,8 +15,6 @@ class Event(models.Model):
     event_planner = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length=100)
     description = models.TextField(null=True,blank=True)
-    event_date_time = models.DateTimeField(null=True,blank=True)
-    location = models.CharField(max_length=255,null=True,blank=True)
 
     def __str__(self):
         return self.name

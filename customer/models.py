@@ -12,6 +12,7 @@ class Booking(models.Model):
     date = models.DateField(null=True)
     time = models.TimeField(null=True)
     location = models.CharField(max_length=150,null=True,blank=True)
+    booking_accepted = models.BooleanField(null=True,blank=True)
 
 class Messages(models.Model):
     sender = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False)

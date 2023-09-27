@@ -14,5 +14,7 @@ urlpatterns = [
     path('delete-account/',views.DeleteAccount),
     path('confirm-delete/',views.confirmDelete),
     path('create-message/',views.create_messages),
+    path('create-event/',views.create_event),
+    path('accept-booking/<int:pk>/<str:status>/',views.accept_booking),
 ]
 
