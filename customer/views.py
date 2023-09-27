@@ -135,31 +135,37 @@ def loginPage(request):
 
 def full_package(request,pk):
     if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':
-        venue = Venue.objects.get(id=pk)
+        venue = Venue.objects.get(id = pk)
         vendors = venue.vendors.all()
+        date = request.session.get('date')
+        time = request.session.get('time')
         vender_data = {}
         for vendor in vendors:
             vendor_profile = UserProfile.objects.get(user=vendor)
             vender_data[vendor] = vendor_profile 
         
-        context = {'venue':venue,'vendors':vendors,'vender_data':vender_data}
+        context = {'venue':venue,'vendors':vendors,'vender_data':vender_data,'date':date,'time':time}
         return render(request,'customer/full-package.html',context)
 
 @login_required(login_url='/login-C/')
 def create_book(request):
     if request.user.userprofile.user_type == 'is_customer':
         if request.method == 'POST':
-            date = request.POST.get('date')
-            time = request.POST.get('time')
+            date = request.session.get('date')
+            time = request.session.get('time')
             location = request.POST.get('location')
             if not time:
                 time = '00:00:00'
+            if not date:
+                date = '0000-00-00'
             venue_id = request.POST.get('venue_id')
             vendor_id = request.POST.get('vendor_id')       
         if venue_id and vendor_id :
             venue = Venue.objects.get(id = venue_id)
             vendor = User.objects.get(id = vendor_id)
-            booking = Booking(venue=venue,vendor=vendor,user = request.user,date=date,time=time,location = location)        
+            booking = Booking(venue=venue,vendor=vendor,user = request.user,date=date,time=time,location = location)
+            del request.session['date']        
+            del request.session['time']
         if venue_id and not vendor_id:
             venue = Venue.objects.get(id = venue_id)
             vendor = None
@@ -190,3 +196,14 @@ def delete_book(request):
                 pass
         return redirect('/booked/')
 
+@login_required(login_url='/login-C/')
+def save_date_time(request,pk):
+    if request.user.userprofile.user_type == 'is_customer':
+        if request.method == 'POST':
+            date = request.POST.get('date')
+            time = request.POST.get('time')
+            if not time:
+                time = '00:00:00'
+            request.session['date'] = date
+            request.session['time'] = time
+        return redirect(f'/full-package/{pk}/')

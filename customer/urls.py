@@ -10,4 +10,5 @@ urlpatterns = [
     path('create-book/',views.create_book),
     path('delete-book/',views.delete_book),
     path('booked/',views.booked),
+    path('save-date-time/<int:pk>/',views.save_date_time),
 ]

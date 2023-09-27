@@ -10,12 +10,31 @@ This is full package page
 <div>{{venue.city}} {{venue.state}}</div>
 <br>
 <br>
+<div><b>Pick date and time</b></div>
+<form action="/save-date-time/{{venue.id}}/" id="date-form" method="POST">
+    {% csrf_token %}
+    <input type="date" name="date" placeholder="date" required>
+    <input type="time" name="time" placeholder="time">
+    <input type="submit" value="SET">
+</form>
+
+<br>
+
+{% if date and time %}
+<div><b>Date and time picked:</b></div>
+<div>{{date}}  {{time}}</div>
+
+{% endif %}
+
+<br>
 <h3>Available vendors...</h3>
 
 {% for vendor,vendor_profile in vender_data.items %}
 
 <div>
-    <a href="/event-planner-info/{{vendor.id}}/"><h4>{{vendor.first_name}} {{vendor.last_name}}</h4></a>
+    <a href="/event-planner-info/{{vendor.id}}/">
+        <h4>{{vendor.first_name}} {{vendor.last_name}}</h4>
+    </a>
 </div>
 <div><a href="/event-planner-info/{{vendor.id}}/">View profile</a></div>
 <div> Company : <a href="{{vendor_profile.website}}">{{vendor_profile.company_name}}</a> </div>
@@ -25,13 +44,16 @@ This is full package page
 
 {% if request.user.userprofile.user_type == 'is_customer' %}
 
-<form action="/create-book/" method="POST">
+<form action="/create-book/" method="POST" id="vendor-form">
     {% csrf_token %}
     <input type="hidden" value="{{venue.id}}" name="venue_id">
     <input type="hidden" value="{{vendor.id}}" name="vendor_id">
-    <input type="date" name="date" placeholder="date" required>
-    <input type="time" name="time" placeholder="time">
+
+    {% if date %}
     <button type="submit">Book now</button>
+
+    {% endif %}
+
 </form>
 
 {% endif %}
@@ -44,5 +66,11 @@ This is full package page
 
 
 {% endfor %}
+
+
+<script>
+
+
+</script>
 
 {% endblock %}
