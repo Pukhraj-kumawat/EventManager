@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm,FileInput
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -37,6 +37,7 @@ class SignUpForm(UserCreationForm):
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
+        widgets = {'profile_picture':FileInput()}
         fields = '__all__' 
         exclude = ('user_type','user',)
                       

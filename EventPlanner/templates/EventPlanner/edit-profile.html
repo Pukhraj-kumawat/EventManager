@@ -4,10 +4,20 @@
 {% block content %}
 <h4>This is profile page</h4>
 
-{% if request.user == user_profile.user %}
-<form action="" method="POST">
+
+<form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
+{% if request.user.userprofile.user_type == 'is_event_planner' %}
+        {% if request.user.userprofile.profile_picture %}
+            <img src="{{UserProfileForm.instance.profile_picture.url}}" alt="">               
+            <div> {{UserProfileForm.profile_picture}}</div>
+        {% else %}
+            <img src="/media/images/No profile.jpeg" alt="">
+            <div> {{UserProfileForm.profile_picture}}</div>
+        {% endif %}
+{% endif %}
+        
     <div>First name</div>
     <div>{{user_form.first_name}}</div>
 
@@ -27,11 +37,13 @@
         <div>{{UserProfileForm.user_type}}</div>
     </div>
 
-    {% if user_profile.user_type == 'is_event_planner' %}
+    {% if request.user.userprofile.user_type == 'is_event_planner' %}
 
         {% for field in UserProfileForm %}
-            <div>{{field.label_tag}}</div>
-            <div>{{field}}</div>
+            {% if field.name != 'profile_picture' %}
+                <div>{{field.label_tag}}</div>
+                <div>{{field}}</div>
+            {% endif %}
         {% endfor %}
 
     {% endif %}
@@ -45,5 +57,4 @@
 </div>
 
 
-{% endif %}
 {% endblock %}

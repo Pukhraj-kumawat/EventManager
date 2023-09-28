@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventManagement</title>
 </head>
+
 <body>
 
     {% if not request.user.is_authenticated %}
@@ -19,24 +21,45 @@
     </h5>
 
     {% else %}
-        {% if request.user.userprofile.user_type == 'is_customer' %}
-        <a href="/booked/">Your booking</a>
-        <a href="/home-C/">Home</a>
-        {% endif %}
-        {% if request.user.userprofile.user_type == 'is_event_planner' %}
-        <a href="/home-E/">Home</a>
+    {% if request.user.userprofile.user_type == 'is_customer' %}
+    <a href="/booked/">Your booking</a>
+    <a href="/home-C/">Home</a>
+    {% endif %}
+    {% if request.user.userprofile.user_type == 'is_event_planner' %}
+    <a href="/home-E/">Home</a>
+    {% endif %}
+
+
+    {% if request.user.userprofile.user_type == 'is_event_planner' %}
+
+        {% if request.user.userprofile.profile_picture %}
+        <a href="/profile/">
+            <img src="{{request.user.userprofile.profile_picture.url}}" alt="">
+        </a>
+        
+        {% else %}
+        <a href="/profile/">
+            <img src="/media/images/No profile.jpeg" alt="">
+        </a>
+        
         {% endif %}
 
-        <a href="/profile/{{request.user.id}}/">Profile</a>
+    {% else %}
+        <a href="/profile/">Profile</a>
+        
+    {% endif %}
+
+
     {% endif %}
 
     {% if request.user.is_authenticated %}
-        welocome to <b>{{request.user.first_name}}</b>
+    welocome to <b>{{request.user.first_name}}</b>
     {% endif %}
 
     {% block content %}
-        <h3>This is block content</h3>
+    <h3>This is block content</h3>
     {% endblock %}
 
 </body>
+
 </html>

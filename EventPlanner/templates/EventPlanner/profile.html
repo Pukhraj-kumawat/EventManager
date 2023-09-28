@@ -3,6 +3,16 @@
 {% block content %}
 <h3>Your profile...</h3>
 
+    
+{% if user_profile.user_type == 'is_event_planner' %}
+    {% if request.user.userprofile.profile_picture %}
+    <img src="{{request.user.userprofile.profile_picture.url}}" alt="">               
+    {% else %}
+        <img src="/media/images/No profile.jpeg" alt="">
+    {% endif %}
+{% endif %}
+
+
     <div><b>Name :</b></div>
     <div>{{request.user.first_name}} {{request.user.last_name}}</div>
     <div><b>Username:</b></div>
@@ -20,7 +30,7 @@
     <div><b>Password</b></div>
     <div>.............</div>
 
-    <div><a href="/edit-profile/{{request.user.id}}/">Edit</a></div>
+    <div><a href="/edit-profile/">Edit</a></div>
 
     <div><a href="/logout/">Logout</a></div>
 

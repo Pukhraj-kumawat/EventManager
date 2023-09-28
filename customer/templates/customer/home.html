@@ -2,6 +2,33 @@
 
 
 {% block content %}
+
+<style>
+
+    .grid-div{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .event-div {
+        border: 2px solid #000;
+        padding: 10px;
+    }
+
+    .photo{
+        width: 300px; 
+        height: 200px;
+        overflow: hidden;
+    }
+    .grid-div img {
+    max-width: 100%; 
+    max-height: 100%;
+    display: block; 
+    }
+    
+    </style>
+
+
 <h3>This is home page</h3>
 
 <form action="" method="GET">
@@ -11,8 +38,14 @@
 {% if filter %}
 <a href="/home-C/">All categories</a>
 {% endif %}
+
+<div class="grid-div">
 {% for category in categories %}
-    <p>{{category}} <a href="/book/{{category.id}}">Book now</a></p>
+   <div class="event-div">
+    {{category}} <a href="/book/{{category.id}}">Book now</a>
+    <img class="photo" src="/media/images/{{category}}.jpeg" alt="">
+</div>
 {% endfor %}
+</div>
 
 {% endblock %}

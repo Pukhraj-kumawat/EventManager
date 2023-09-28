@@ -32,6 +32,7 @@ class UserProfile(models.Model):
     state = models.CharField(max_length=20,null=False,blank=False)
     location = models.TextField(blank=True,null=True)
     service_offered = models.TextField(blank=True,null=True)
+    profile_picture = models.ImageField(upload_to = 'images/', height_field=None, width_field=None, max_length=None,null=True,blank = True)
 
     def __str__(self):
         return self.user.username

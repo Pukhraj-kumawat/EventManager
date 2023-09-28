@@ -125,25 +125,28 @@ def logoutPage(request):
 
 
 @login_required(login_url='/login-E/')
-def edit_profile(request,pk):
+def edit_profile(request):
     user_errors = None
     profile_errors = None
-    user = User.objects.get(id=pk)
-    user_profile = UserProfile.objects.get(user = user)
-    profile_form = UserProfileForm(instance=user_profile,initial={'website': user_profile.website if user_profile.website else 'https://'})
-    user_form = UserForm(instance = user)
-    if request.method == 'POST':
-        try:
-            profile_form = UserProfileForm(request.POST,instance=user_profile)
-            user_form = UserForm(request.POST,instance=user)
-            if user_form.is_valid():
+    user_profile = UserProfile.objects.get(user = request.user)
+    profile_form = UserProfileForm(instance = user_profile,initial={'website': user_profile.website if user_profile.website else 'https://'})
+    user_form = UserForm(instance = request.user)
+    if request.method == 'POST':                  
+        try:            
+            profile_form = UserProfileForm(request.POST,request.FILES,instance = user_profile)                   
+            user_form = UserForm(request.POST,instance = request.user)                              
+            if user_form.is_valid():                   
                 user_form.save()
+                if request.user.userprofile.user_type =='is_customer':
+                    return redirect('/profile/')                                     
             else:
-                user_errors = user_form.errors
-            if profile_form.is_valid():
-                form_data = profile_form.save(commit=False)
+                user_errors = user_form.errors            
+                        
+            if profile_form.is_valid():                                                
+                form_data = profile_form.save(commit = False)
                 form_data.user = request.user            
                 form_data.save()
+                return redirect('/profile/')
             else:
                 profile_errors = profile_form.errors
         except:
@@ -253,9 +256,8 @@ def Messages_display(request):
         return received_dict,sent_dict
 
 @login_required(login_url='/login-E/')
-def profile(request,pk):
-    user = User.objects.get(id = pk)
-    user_profile = UserProfile.objects.get(user = user)
+def profile(request):    
+    user_profile = UserProfile.objects.get(user = request.user)
     userprofile_form = UserProfileForm(instance = user_profile)
     context = {'user_profile':user_profile,'userprofile_form':userprofile_form}
     return render(request,'EventPlanner/profile.html',context)
