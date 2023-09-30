@@ -141,7 +141,7 @@ def full_package(request,pk):
         time = request.session.get('time')
         vender_data = {}
         for vendor in vendors:
-            vendor_profile = UserProfile.objects.get(user=vendor)
+            vendor_profile = UserProfile.objects.get(user = vendor)
             vender_data[vendor] = vendor_profile 
         
         context = {'venue':venue,'vendors':vendors,'vender_data':vender_data,'date':date,'time':time}
@@ -151,8 +151,8 @@ def full_package(request,pk):
 def create_book(request):
     if request.user.userprofile.user_type == 'is_customer':
         if request.method == 'POST':
-            date = request.session.get('date')
-            time = request.session.get('time')
+            date = request.POST.get('date')            
+            time = request.POST.get('time')
             location = request.POST.get('location')
             if not time:
                 time = '00:00:00'
@@ -161,9 +161,11 @@ def create_book(request):
             venue_id = request.POST.get('venue_id')
             vendor_id = request.POST.get('vendor_id')       
         if venue_id and vendor_id :
+            date = request.session.get('date')
+            time = request.session.get('time')
             venue = Venue.objects.get(id = venue_id)
             vendor = User.objects.get(id = vendor_id)
-            booking = Booking(venue=venue,vendor=vendor,user = request.user,date=date,time=time,location = location)
+            booking = Booking(venue=venue,vendor=vendor,user = request.user,date = date,time = time,location = location)
             del request.session['date']        
             del request.session['time']
         if venue_id and not vendor_id:

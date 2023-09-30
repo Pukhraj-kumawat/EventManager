@@ -78,6 +78,9 @@
         {% else %}
         <h2>Vendor : => </h2>
 
+        {{booking.vendor.userprofile.profie_picture}}
+
+
         {% if booking.vendor.userprofile.profie_picture %}
         <a href="/event-planner-info/{{booking.vendor.id}}">
 
