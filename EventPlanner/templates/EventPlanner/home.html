@@ -3,6 +3,8 @@
 
 {% block content %}
 
+{% load static %}
+
 
 <style>
     .gird-div {
@@ -57,6 +59,7 @@
             <div>{{booking.location}}</div>            
         </div>
             
+
         
         {% if booking.booking_accepted is None %}
         <button><a href="/accept-booking/{{booking.id}}/accepted/">Accept</a> </button>
@@ -70,6 +73,8 @@
         {% endif %}
 
         {% endfor %}
+
+        <hr>
     </div>
 
 

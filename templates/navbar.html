@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventManagement</title>
+    {% load static %}
 </head>
 
 <body>
@@ -32,10 +33,15 @@
 
     {% if request.user.userprofile.user_type == 'is_event_planner' %}
 
-    <a href="/profile/">
-            <img src="{{request.user.userprofile.profile_picture.url}}" alt="">
+        {% if request.user.userprofile.profile_picture %}
+    <a href="/profile/">        
+            <img src="{{request.user.userprofile.profile_picture.url}}" alt="" width="35" height="35">
+    </a>
+        {% else %}
+        <a href="/profile/">        
+            <img src="/static/images/No profile.jpeg" alt="" width="35" height="35">
         </a>
-
+        {% endif %}
 
     {% else %}
     <a href="/profile/">Profile</a>
@@ -49,7 +55,7 @@
     welocome to <b>{{request.user.first_name}}</b>
     {% endif %}
 
-    {{request.user.userprofile.profile_picture}}
+
 
     {% block content %}
     <h3>This is block content</h3>

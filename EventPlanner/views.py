@@ -141,10 +141,10 @@ def edit_profile(request):
             user_form = UserForm(request.POST,instance = request.user)
             button_clicked = request.POST.get('button-clicked')                                                      
             if button_clicked:                                   
-                default_profile = open('media/images/No profile.jpeg','rb')                                             
+                # default_profile = open('media/images/No profile.jpeg','rb')                                             
                 request.user.userprofile.profile_picture.delete()                
-                request.user.userprofile.profile_picture.save('default_profile',File(default_profile))            
-                default_profile.close()
+                # request.user.userprofile.profile_picture.save('default_profile',File(default_profile))            
+                # default_profile.close()
                 return redirect('/profile/')  
             if user_form.is_valid():                   
                 user_form.save()
