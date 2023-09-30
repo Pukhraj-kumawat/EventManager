@@ -1,7 +1,10 @@
 {% extends 'navbar.html' %}
 
-
 {% block content %}
+
+{% load static %}
+
+
 
 <style>
 
@@ -40,12 +43,19 @@
 {% endif %}
 
 <div class="grid-div">
+
 {% for category in categories %}
    <div class="event-div">
     {{category}} <a href="/book/{{category.id}}">Book now</a>
-    <img class="photo" src="/media/images/{{category}}.jpeg" alt="">
+    <img class="photo" src="/static/images/{{category}}.jpeg" alt="">
+
 </div>
 {% endfor %}
+
 </div>
+
+
+
+
 
 {% endblock %}

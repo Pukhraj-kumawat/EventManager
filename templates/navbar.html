@@ -32,21 +32,14 @@
 
     {% if request.user.userprofile.user_type == 'is_event_planner' %}
 
-        {% if request.user.userprofile.profile_picture %}
-        <a href="/profile/">
-            <img src="{{request.user.userprofile.profile_picture.url}}" alt="">
-        </a>
-        
-        {% else %}
-        <a href="/profile/">
-            <img src="/media/images/No profile.jpeg" alt="">
-        </a>
-        
-        {% endif %}
+    <a href="/profile/">
+        <img src="{{request.user.userprofile.profile_picture.url}}" alt="">
+    </a>
+
 
     {% else %}
-        <a href="/profile/">Profile</a>
-        
+    <a href="/profile/">Profile</a>
+
     {% endif %}
 
 
@@ -55,6 +48,8 @@
     {% if request.user.is_authenticated %}
     welocome to <b>{{request.user.first_name}}</b>
     {% endif %}
+
+    {{request.user.userprofile.profile_picture}}
 
     {% block content %}
     <h3>This is block content</h3>

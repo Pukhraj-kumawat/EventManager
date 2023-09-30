@@ -12,6 +12,9 @@ from customer.models import Messages,Booking
 import uuid
 from django.db import connection
 
+from django.conf import settings
+from django.core.files import File
+
 
 # Create your views here.
 
@@ -127,14 +130,21 @@ def logoutPage(request):
 @login_required(login_url='/login-E/')
 def edit_profile(request):
     user_errors = None
-    profile_errors = None
+    profile_errors = None    
+    button_clicked = None
     user_profile = UserProfile.objects.get(user = request.user)
     profile_form = UserProfileForm(instance = user_profile,initial={'website': user_profile.website if user_profile.website else 'https://'})
     user_form = UserForm(instance = request.user)
-    if request.method == 'POST':                  
+    if request.method == 'POST':
+                             
         try:            
             profile_form = UserProfileForm(request.POST,request.FILES,instance = user_profile)                   
-            user_form = UserForm(request.POST,instance = request.user)                              
+            user_form = UserForm(request.POST,instance = request.user)
+            button_clicked = request.POST.get('button-clicked')                                                      
+            if button_clicked:                                                                
+                user_profile = request.user.userprofile
+                                              
+                return redirect('/profile/')
             if user_form.is_valid():                   
                 user_form.save()
                 if request.user.userprofile.user_type =='is_customer':
@@ -142,8 +152,13 @@ def edit_profile(request):
             else:
                 user_errors = user_form.errors            
                         
-            if profile_form.is_valid():                                                
-                form_data = profile_form.save(commit = False)
+            if profile_form.is_valid():                
+                changed_fields = profile_form.changed_data 
+                if 'profile_picture' in changed_fields:                    
+                    if request.user.userprofile.profile_picture:                        
+                        request.user.userprofile.profile_picture.delete()                        
+
+                form_data = profile_form.save(commit = False)                
                 form_data.user = request.user            
                 form_data.save()
                 return redirect('/profile/')
@@ -151,7 +166,7 @@ def edit_profile(request):
                 profile_errors = profile_form.errors
         except:
             pass        
-    context = {'UserProfileForm':profile_form,'user_errors':user_errors,'profile_errors':profile_errors,'user_form':user_form,'user_profile':user_profile}
+    context = {'UserProfileForm':profile_form,'user_errors':user_errors,'profile_errors':profile_errors,'user_form':user_form,'user_profile':user_profile,'button_clicked':button_clicked}
     return render(request,'EventPlanner/edit-profile.html',context)
 
 @login_required(login_url='/login-E/')

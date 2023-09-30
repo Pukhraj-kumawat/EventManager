@@ -5,19 +5,24 @@
 <h4>This is profile page</h4>
 
 
-<form action="" method="POST" enctype="multipart/form-data">
+<form id="profile-form" action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
 {% if request.user.userprofile.user_type == 'is_event_planner' %}
-        {% if request.user.userprofile.profile_picture %}
+        <!-- {% if request.user.userprofile.profile_picture %} -->
             <img src="{{UserProfileForm.instance.profile_picture.url}}" alt="">               
-            <div> {{UserProfileForm.profile_picture}}</div>
-        {% else %}
-            <img src="/media/images/No profile.jpeg" alt="">
-            <div> {{UserProfileForm.profile_picture}}</div>
+            <div> {{UserProfileForm.profile_picture}}</div>            
+            <input type="hidden" value="" id="button-clicked" name="button-clicked">
+            <input id="remove-profile" type="button" value="Remove profile">
+         {% else %}
+        <!-- <img src="/static/images/No profile.jpeg" alt="">
+            <div> {{UserProfileForm.profile_picture}}</div> -->
         {% endif %}
+
+
+
 {% endif %}
-        
+    
     <div>First name</div>
     <div>{{user_form.first_name}}</div>
 
@@ -55,6 +60,28 @@
 <div>
     <a href="/change-password/">Change password</a>
 </div>
+
+
+<script>
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("profile-form");
+    const submitButton = document.getElementById("remove-profile");
+    const buttonClicked = document.getElementById('button-clicked')
+    
+
+    submitButton.addEventListener("click", function () {
+        // Manually trigger the form submission
+        buttonClicked.value = 'clicked';        
+        form.submit();   
+             
+    });
+
+});
+
+
+</script>
 
 
 {% endblock %}
