@@ -268,7 +268,11 @@ def Messages_display(request):
                 if receiver_of_set == message_sent.receiver:
                     list_messages.append(message_sent.message)
             sent_dict[receiver_of_set] = list_messages
-
+        # if not received_dict:
+        #     received_dict = None
+        # if not sent_dict:
+        #     sent_dict = None
+            
         return received_dict,sent_dict
 
 @login_required(login_url='/login-E/')
