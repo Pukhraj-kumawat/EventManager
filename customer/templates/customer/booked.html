@@ -42,7 +42,7 @@
         <div>{{booking.venue.city}} {{booking.venue.state}}</div>
         <h2>Vendor booked : => </h2>
 
-        {% if booking.vendor.userprofile.profie_picture %}
+        {% if booking.vendor.userprofile.profile_picture %}
         <a href="/event-planner-info/{{booking.vendor.id}}">            
             <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40">
         </a>
@@ -58,7 +58,7 @@
         </a>
         {% endif %}
 
-        <div>{{booking.vendor.userprofile.contact_info}}</div>
+        <div>{{booking.vendor.userprofile.contact_info}}</div>        
         <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
         <div>{{booking.date}} {{booking.time}}</div>
 
@@ -94,12 +94,8 @@
         <h2>Vendor : => </h2>
 
         
-        <hr>
-        here photo url..
-        {{booking.vendor.userprofile.profie_picture}}
-        <hr>
 
-        {% if booking.vendor.userprofile.profie_picture %}
+        {% if booking.vendor.userprofile.profile_picture %}
         <a href="/event-planner-info/{{booking.vendor.id}}">            
             <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40">
         </a>
@@ -143,7 +139,7 @@
         {% if booking.user == request.user and booking.booking_accepted is True %}
 
 
-        {% if booking.vendor.userprofile.profie_picture %}
+        {% if booking.vendor.userprofile.profile_picture %}
         <a href="/event-planner-info/{{booking.vendor.id}}">
             <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40">
         </a>
@@ -182,7 +178,7 @@
         <h4>Booking rejects</h4>
 
 
-        {% if booking.vendor.userprofile.profie_picture %}
+        {% if booking.vendor.userprofile.profile_picture %}
         <a href="/event-planner-info/{{booking.vendor.id}}">
             <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40">
         </a>

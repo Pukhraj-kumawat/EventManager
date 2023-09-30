@@ -175,12 +175,18 @@
             <div class="event-info-div">
                 {% if event.event_planner.userprofile.profile_picture %}
                 <a href="/event-planner-info/{{event.event_planner.id}}/">
-                    <div> <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40"><h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4></div>
+                    <div> <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40"></div>
+                </a>    
+                <a href="/event-planner-info/{{event.event_planner.id}}/">
+                    <div><h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4></div>
                 </a>
                 {% else %}
 
                 <a href="/event-planner-info/{{event.event_planner.id}}/">
-                    <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40"><h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4></div>
+                    <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40"></div>
+                </a>
+                <a href="/event-planner-info/{{event.event_planner.id}}/">
+                        <div><h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4></div>
                 </a>
 
                 
