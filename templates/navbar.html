@@ -33,8 +33,8 @@
     {% if request.user.userprofile.user_type == 'is_event_planner' %}
 
     <a href="/profile/">
-        <img src="{{request.user.userprofile.profile_picture.url}}" alt="">
-    </a>
+            <img src="{{request.user.userprofile.profile_picture.url}}" alt="">
+        </a>
 
 
     {% else %}

@@ -5,16 +5,9 @@
 
     
 {% if user_profile.user_type == 'is_event_planner' %}
-    <!-- {% if request.user.userprofile.profile_picture %} -->
     <img src="{{request.user.userprofile.profile_picture.url}}" alt="">               
-    <!-- {% else %}
-        <img src="/static/images/No profile.jpeg" alt="">        
-    {% endif %} -->
 {% endif %}
 
-<hr>
-{{request.user.userprofile.profile_picture}}
-<hr>
 
     <div><b>Name :</b></div>
     <div>{{request.user.first_name}} {{request.user.last_name}}</div>

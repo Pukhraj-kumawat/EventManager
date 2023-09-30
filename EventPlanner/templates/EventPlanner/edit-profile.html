@@ -9,17 +9,10 @@
     {% csrf_token %}
 
 {% if request.user.userprofile.user_type == 'is_event_planner' %}
-        <!-- {% if request.user.userprofile.profile_picture %} -->
-            <img src="{{UserProfileForm.instance.profile_picture.url}}" alt="">               
+            <img src="{{UserProfileForm.instance.profile_picture.url}}" alt="" id="profile_picture">               
             <div> {{UserProfileForm.profile_picture}}</div>            
             <input type="hidden" value="" id="button-clicked" name="button-clicked">
             <input id="remove-profile" type="button" value="Remove profile">
-         {% else %}
-        <!-- <img src="/static/images/No profile.jpeg" alt="">
-            <div> {{UserProfileForm.profile_picture}}</div> -->
-        {% endif %}
-
-
 
 {% endif %}
     
@@ -79,6 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+// document.getElementById('profile_picture')
+//     .
 
 
 </script>

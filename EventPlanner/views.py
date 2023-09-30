@@ -12,8 +12,8 @@ from customer.models import Messages,Booking
 import uuid
 from django.db import connection
 
-from django.conf import settings
 from django.core.files import File
+
 
 
 # Create your views here.
@@ -135,16 +135,17 @@ def edit_profile(request):
     user_profile = UserProfile.objects.get(user = request.user)
     profile_form = UserProfileForm(instance = user_profile,initial={'website': user_profile.website if user_profile.website else 'https://'})
     user_form = UserForm(instance = request.user)
-    if request.method == 'POST':
-                             
+    if request.method == 'POST':                           
         try:            
             profile_form = UserProfileForm(request.POST,request.FILES,instance = user_profile)                   
             user_form = UserForm(request.POST,instance = request.user)
             button_clicked = request.POST.get('button-clicked')                                                      
-            if button_clicked:                                                                
-                user_profile = request.user.userprofile
-                                              
-                return redirect('/profile/')
+            if button_clicked:                                   
+                default_profile = open('media/images/No profile.jpeg','rb')                                             
+                request.user.userprofile.profile_picture.delete()                
+                request.user.userprofile.profile_picture.save('default_profile',File(default_profile))            
+                default_profile.close()
+                return redirect('/profile/')  
             if user_form.is_valid():                   
                 user_form.save()
                 if request.user.userprofile.user_type =='is_customer':
