@@ -18,6 +18,7 @@ urlpatterns = [
     path('accept-booking/<int:pk>/<str:status>/',views.accept_booking),
     path('edit-event/<int:pk>/',views.edit_event),
     path('delete-event/<int:pk>/',views.delete_event),
+    path('vendor-images/',views.vendor_images),
     
 ]
 

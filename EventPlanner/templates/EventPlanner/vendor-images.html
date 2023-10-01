@@ -1,0 +1,43 @@
+{% extends 'customer/home.html' %}
+
+
+{% block content %}
+
+<style>
+    .grid-div{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+</style>
+
+<h3>Add images here..</h3>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ImageForm}}
+    <input type="submit" value="POST">
+</form>
+
+<hr>
+
+<div>
+    <div class="grid-div">
+    {% for image_object in images %}
+    <div>
+        <img src="{{image_object.image.url}}" alt="" width="200" height="200">
+
+        <form action="" method="POST">      
+            {% csrf_token %}     
+            <input type="hidden" value="{{image_object.id}}" name="delete-image-id">
+            <input type="submit" value="Delete">
+
+        </form>
+    </div>
+    {% endfor %}
+    </div>
+
+</div>
+
+
+
+{% endblock %}

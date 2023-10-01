@@ -1,10 +1,10 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .models import Category,Event,UserProfile,Venue
+from .models import Category,Event,UserProfile,Venue,Image
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
 from customer import views
-from .forms import SignUpForm,UserProfileForm,UserForm,VenueForm,EventForm
+from .forms import SignUpForm,UserProfileForm,UserForm,VenueForm,EventForm,ImageForm
 from django.contrib.auth.forms import PasswordChangeForm
 import re
 from customer.forms import MessageForm
@@ -329,3 +329,27 @@ def delete_event(request,pk):
         event = Event.objects.get(id = int(pk))
         event.delete()
         return redirect('/home-E/')
+
+@login_required(login_url='/login-E/')
+def vendor_images(request):
+    if request.user.userprofile.user_type == 'is_event_planner':
+        images = Image.objects.filter(user_profile = request.user.userprofile)
+        if request.method == 'POST':
+            image_form = ImageForm(request.POST,request.FILES)
+            if image_form.is_valid():
+                image_form_instance = image_form.save(commit = False)
+                image_form_instance.user_profile = request.user.userprofile
+                if image_form_instance.image:                                
+                    image_form_instance.save()                
+                    return redirect('/vendor-images/')
+                                
+            delete_image_id = request.POST.get('delete-image-id')  
+            
+            if delete_image_id:                                 
+                image_to_delete  = Image.objects.get(id = int(delete_image_id)) 
+                if image_to_delete:                       
+                    image_to_delete.delete()                                                    
+                    return redirect('/vendor-images/')                
+            return redirect('/vendor-images/')    
+        context = {'ImageForm':ImageForm,'images':images,}
+        return render(request, 'EventPlanner/vendor-images.html',context)

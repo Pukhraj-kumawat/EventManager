@@ -24,16 +24,25 @@
     <div>{{request.user.username}}</div>
     <div><b>Email address :</b></div>
     <div>{{request.user.email}}</div>
+    <div><b>Password</b></div>
+    <div>.............</div>
 
     {% if user_profile.user_type == 'is_event_planner' %}
 
-        {% for fields in userprofile_form %}
-            <div><b>{{fields.label_tag}}</b></div>
-            <div>{{fields.value}}</div>
+        {% for field in userprofile_form %}
+            {% if not field.name == 'vendor_images' and not field.name == 'profile_picture' %}
+            <div><b>{{field.label_tag}}</b></div>
+            <div>{{field.value}}</div>
+            {% endif %}
         {% endfor %}
+
+        <hr>
+
+        <a href="/vendor-images/">Upload portfolio images</a>
+        <br>
+        <br>
+
     {% endif %}
-    <div><b>Password</b></div>
-    <div>.............</div>
 
     <div><a href="/edit-profile/">Edit</a></div>
 

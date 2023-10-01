@@ -21,6 +21,12 @@ class Event(models.Model):
     
 user_type_choices = (('is_customer','is_customer'),('is_event_planner','is_event_planner'))
 
+class Image(models.Model):
+    user_profile = models.ForeignKey('userprofile',on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/',null = True,blank = True)
+    upload_date = models.DateTimeField(auto_now = True)
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     user_type = models.CharField(choices=user_type_choices,max_length=50)
@@ -33,7 +39,8 @@ class UserProfile(models.Model):
     location = models.TextField(blank=True,null=True)
     service_offered = models.TextField(blank=True,null=True)
     profile_picture = models.ImageField(upload_to = 'images/',null=True,blank = True)
-    
+    vendor_images = models.ManyToManyField('Image', blank=True,null = True)
+
 
     def __str__(self):
         return self.user.username
@@ -52,5 +59,6 @@ class Venue(models.Model):
     category = models.ManyToManyField(Category)
     service_offered = models.TextField(null=True,blank=True)
     contact_info = models.TextField(null=False,blank=False)
+    venue_images = models.ManyToManyField('Image', blank=True,null = True)
 
     
