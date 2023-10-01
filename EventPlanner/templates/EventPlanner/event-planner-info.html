@@ -27,8 +27,10 @@
 
         <h3>{{vendor.first_name}} {{vendor.last_name}}</h3>
         {% for field in user_profile_form %}
-        <h5>{{field.label_tag}}</h5>
-        <p>{{field.value}}</p>
+            {% if not field.name == 'profile_picture' %}
+            <h5>{{field.label_tag}}</h5>
+                <p>{{field.value}}</p>
+                {% endif %}
         {% endfor %}
     </div>
 
@@ -38,7 +40,8 @@
                 <div>
                     {% for message in messages %}
                     {% if message.receiver.id == pk %}                    
-                    <div><b>{{message.message}}</b></div>
+                    <div><b>{{message.message}}</b> <br>({{message.created}})</div> 
+                    <br>                   
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -59,7 +62,8 @@
                 {% for sender,messages in received_dict.items %}
                     {% if vendor.username == sender.username %}
                         {% for message in messages %}
-                            <div>{{message}}</div>
+                            <div>{{message.message}} <br>({{message.created}})</div>                            
+                            <br>
                         {% endfor %}
                     {% endif %}
 
@@ -70,9 +74,13 @@
 
 </div>
 
+<hr>
+{{received_dict}}
+<hr>
+
 
 {{error}}
-
+{{messages}}
 
 
 {% endblock %}

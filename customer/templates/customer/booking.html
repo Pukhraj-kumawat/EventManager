@@ -145,7 +145,12 @@
         <p>Sorry no venues avaialble for the given location or price</p>
 
         <br><br><br>
+
+        {% if venues_on_category %}
+
         <a href="/book/{{pk}}/">View available options</a>
+
+        {% endif %}
 
     </div>
     {% endif %}
@@ -230,7 +235,10 @@
         <p>Sorry no vendors avaialble for the given location</p>
 
         <br><br><br>
+
+        {% if events_on_category %}
         <a href="/book/{{pk}}/">View available options</a>
+        {% endif %}
     </div>
 
     {% endif %}

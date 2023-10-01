@@ -46,9 +46,9 @@
 
 {% for category in categories %}
    <div class="event-div">
-    {{category}} <a href="/book/{{category.id}}">Book now</a>
-    <img class="photo" src="/static/images/{{category}}.jpeg" alt="">
-
+    <a href="/book/{{category.id}}">{{category}} </a>
+    <a href="/book/{{category.id}}"> <img class="photo" src="/static/images/{{category}}.jpeg" alt=""></a>
+    <a href="/book/{{category.id}}">Explore</a>
 </div>
 {% endfor %}
 

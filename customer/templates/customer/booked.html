@@ -133,6 +133,7 @@
 
     <div>
         <h4>Bookings accpeted </h4>
+        <hr>
 
         {% for booking in bookings reversed %}
 
@@ -176,7 +177,7 @@
         {% if booking.user == request.user and booking.booking_accepted is False %}
 
         <h4>Booking rejects</h4>
-
+        <hr>
 
         {% if booking.vendor.userprofile.profile_picture %}
         <a href="/event-planner-info/{{booking.vendor.id}}">

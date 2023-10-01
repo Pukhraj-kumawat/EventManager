@@ -51,8 +51,10 @@ def book(request,pk):
     if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':        
         error = None
         category = Category.objects.get(id = pk)
+        events_on_category = Event.objects.filter(category = category)
         events = Event.objects.filter(category = category)    
         venues = Venue.objects.filter(category = category)
+        venues_on_category = Venue.objects.filter(category = category)
 
         if request.method == 'GET':
             venue_city = request.GET.get('venue-city')
@@ -97,12 +99,11 @@ def book(request,pk):
                     for user in user_set:
                         events_list = Event.objects.filter(event_planner = user,category = category)
                         for event in events_list:
-                            events.append(event)
-
+                            events.append(event)                
             except:
                 pass
         
-        context = {'error':error,'events':events,'venues':venues,'pk':pk,'venue_city':venue_city,'min_price':min_price,'max_price':max_price,'vendor_city':vendor_city,}
+        context = {'error':error,'events':events,'venues':venues,'pk':pk,'venue_city':venue_city,'min_price':min_price,'max_price':max_price,'vendor_city':vendor_city,'events_on_category':events_on_category,'venues_on_category':venues_on_category}
 
         return render(request,'customer/booking.html',context)
 

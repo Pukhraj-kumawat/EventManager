@@ -259,7 +259,7 @@ def Messages_display(request):
             list_messages = []
             for message_received in messages_as_receiver:
                 if sender_of_set == message_received.sender:
-                    list_messages.append(message_received.message)
+                    list_messages.append(message_received)
             received_dict[sender_of_set] = list_messages
 
         for receiver_of_set in receiver_set:
