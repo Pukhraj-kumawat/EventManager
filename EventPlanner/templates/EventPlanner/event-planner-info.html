@@ -17,6 +17,8 @@
     }
 </style>
 
+<p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
+
 <div class="grid-div">
     <div>
         {% if vendor.userprofile.profile_picture %}
@@ -74,13 +76,9 @@
 
 </div>
 
-<hr>
-{{received_dict}}
-<hr>
 
 
 {{error}}
-{{messages}}
 
 
 {% endblock %}
