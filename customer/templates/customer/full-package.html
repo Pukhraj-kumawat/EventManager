@@ -3,6 +3,10 @@
 
 {% block content %}
 
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'customer/css/full-package.css' %}">
+
 <p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 
 This is full package page
@@ -70,9 +74,7 @@ This is full package page
 {% endfor %}
 
 
-<script>
+<script src="{% static 'js/full-package.js' %}"></script>
 
-
-</script>
 
 {% endblock %}

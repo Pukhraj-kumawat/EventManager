@@ -11,7 +11,7 @@ from customer.forms import MessageForm
 from customer.models import Messages,Booking
 import uuid
 from django.db import connection
-
+import os
 from django.core.files import File
 
 
@@ -224,8 +224,9 @@ def EventPlannerInfo(request,pk):
 def VenueInfo(request,pk):
     if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':
         venue = Venue.objects.get(id = pk)
+        images = Image.objects.filter(venue_object = venue)
         venue_form = VenueForm(instance = venue)
-        context = {'venue_form':venue_form}
+        context = {'venue_form':venue_form,'images':images}
         return render(request,'EventPlanner/venue-info.html',context)
 
 @login_required(login_url='/login-E/')
@@ -279,7 +280,8 @@ def Messages_display(request):
 def profile(request):    
     user_profile = UserProfile.objects.get(user = request.user)
     userprofile_form = UserProfileForm(instance = user_profile)
-    context = {'user_profile':user_profile,'userprofile_form':userprofile_form}
+    images = Image.objects.filter(user_profile = request.user.userprofile)
+    context = {'user_profile':user_profile,'userprofile_form':userprofile_form,'images':images}
     return render(request,'EventPlanner/profile.html',context)
 
 @login_required(login_url='/login-E/')
@@ -348,7 +350,10 @@ def vendor_images(request):
             if delete_image_id:                                 
                 image_to_delete  = Image.objects.get(id = int(delete_image_id)) 
                 if image_to_delete:                       
-                    image_to_delete.delete()                                                    
+                    image_to_delete.delete()
+                    # remove image from media folder too.
+                    if os.path.isfile(image_to_delete.image.path):
+                        os.remove(image_to_delete.image.path)                                                     
                     return redirect('/vendor-images/')                
             return redirect('/vendor-images/')    
         context = {'ImageForm':ImageForm,'images':images,}

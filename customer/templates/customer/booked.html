@@ -3,20 +3,8 @@
 {% block content %}
 
 {% load static %}
-<style>
-    .grid-div {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-    }
 
-    .rejected {
-        color: red;
-    }
-
-    .accepted {
-        color: green;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'customer/css/booked.css' %}">
 
 <p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 <div class="grid-div">
@@ -213,5 +201,7 @@
     </div>
 
 </div>
+
+<script src="{% static 'js/booked.js' %}"></script>
 
 {% endblock %}

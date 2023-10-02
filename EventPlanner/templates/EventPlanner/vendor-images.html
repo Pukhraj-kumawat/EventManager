@@ -3,12 +3,9 @@
 
 {% block content %}
 
-<style>
-    .grid-div{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    }
-</style>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'EventPlanner/css/vendor-images.css' %}">
 
 <h3>Add images here..</h3>
 
@@ -30,7 +27,6 @@
             {% csrf_token %}     
             <input type="hidden" value="{{image_object.id}}" name="delete-image-id">
             <input type="submit" value="Delete">
-
         </form>
     </div>
     {% endfor %}
@@ -38,6 +34,6 @@
 
 </div>
 
-
+<script src="{% static 'js/vendor-images.js' %}"></script>
 
 {% endblock %}

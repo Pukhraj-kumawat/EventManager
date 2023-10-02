@@ -1,0 +1,9 @@
+.login-form-div {
+    display: flex;
+    justify-content: center;
+
+}
+.validation-error-div{
+    display: flex;
+    justify-content: center;
+}

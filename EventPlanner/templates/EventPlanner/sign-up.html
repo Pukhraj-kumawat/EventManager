@@ -3,34 +3,9 @@
 
 {% block content %}
 
-<style>
+{% load static %}
 
-    body{
-        padding-bottom: 1000px;
-    }
-
-    #id_first_name,
-    #id_last_name,
-    #id_email,
-    #id_username,
-    #id_password1,
-    #id_password2 {
-        width: 200px;
-    }
-
-    .form-div{
-
-        display: flex;
-        justify-content: center;
-    }
-
-    .sign-up-button-div{
-        display: flex;
-        justify-content: center;
-    }
-
-
-</style>
+<link rel="stylesheet" href="{% static 'EventPlanner/css/sign-up.css' %}">
 
 <div class="form-div">
 
@@ -65,5 +40,7 @@
 
 <hr>
 {{errors}}
+
+<script src="{% static 'js/sign-up.js' %}"></script>
 
 {% endblock %}

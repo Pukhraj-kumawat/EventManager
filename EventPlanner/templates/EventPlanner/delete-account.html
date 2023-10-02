@@ -2,8 +2,14 @@
 
 {% block content %}
 
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'EventPlanner/css/delete-account.css' %}">
+
 <h5>Do you really want to delete your account ?</h5>
-<a href="/profile/{{request.user.id}}/">Back</a>
+<a href="/profile/">Back</a>
 <a href="/confirm-delete/">Confirm</a>
+
+<script src="{% static 'js/delete-account.js' %}"></script>
 
 {% endblock %}

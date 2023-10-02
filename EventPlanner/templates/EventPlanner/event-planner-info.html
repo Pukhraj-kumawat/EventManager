@@ -2,20 +2,9 @@
 
 {% block content %}
 
-<style>
-    .grid-div{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-    .inner-grid-div{
-        display:grid;
-        grid-template-columns: 1fr 1fr;
-    }
+{% load static %}
 
-    #id_message{
-        height: 20px;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'EventPlanner/css/event-planner-info.css' %}">
 
 <p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 
@@ -29,11 +18,12 @@
 
         <h3>{{vendor.first_name}} {{vendor.last_name}}</h3>
         {% for field in user_profile_form %}
-            {% if not field.name == 'profile_picture' %}
+            {% if not field.name == 'profile_picture' and not field.name == 'vendor_images' %}
             <h5>{{field.label_tag}}</h5>
                 <p>{{field.value}}</p>
                 {% endif %}
         {% endfor %}
+        
     </div>
 
     <div class="inner-grid-div">
@@ -80,5 +70,6 @@
 
 {{error}}
 
+<script src="{% static 'js/event-planner-info.js' %}"></script>
 
 {% endblock %}

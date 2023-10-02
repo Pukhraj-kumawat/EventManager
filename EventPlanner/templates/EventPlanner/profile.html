@@ -2,6 +2,10 @@
 
 {% block content %}
 
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'EventPlanner/css/profile.css' %}">
+
 <p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 
 <h3>Your profile...</h3>
@@ -12,7 +16,7 @@
     <img src="{{request.user.userprofile.profile_picture.url}}" alt="" width="100" height="100">               
     {% else %}
     <a href="/profile/">        
-        <img src="/static/images/No profile.jpeg" alt="" width="100" height="100">
+        <img src="{% static 'images/No profile.jpeg' %}" alt="" width="100" height="100">
     </a>
     {% endif %}
 {% endif %}
@@ -36,12 +40,6 @@
             {% endif %}
         {% endfor %}
 
-        <hr>
-
-        <a href="/vendor-images/">Upload portfolio images</a>
-        <br>
-        <br>
-
     {% endif %}
 
     <div><a href="/edit-profile/">Edit</a></div>
@@ -49,6 +47,18 @@
     <div><a href="/logout/">Logout</a></div>
 
     <div><a href="/delete-account/">Delete acccount</a></div>
+    <hr>
+    {% if request.user.userprofile.user_type == 'is_event_planner' %}
+    <a href="/vendor-images/">Update portfolio images</a>
+    {% endif %}
+    <div>
 
+        {% for image in images %}
+            <img src="{{image.image.url}}" alt="">
+        {% endfor %}
+
+    </div>
+
+    <script src="{% static 'js/profile.js' %}"></script>
 
 {% endblock %}

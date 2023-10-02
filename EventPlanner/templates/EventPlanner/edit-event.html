@@ -3,6 +3,10 @@
 
 {% block content %}
 
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'EventPlanner/css/edit-event.css' %}">
+
     <h3>Edit your Event..</h3>
 
     <form action="" method="POST">
@@ -14,4 +18,7 @@
     {% endfor %}
         <input type="submit" value="Submit">
     </form>
+
+    <script src="{% static 'js/edit-event.js' %}"></script>
+
 {% endblock %}

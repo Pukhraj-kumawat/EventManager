@@ -2,17 +2,37 @@
 
 {% block content %}
 
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'EventPlanner/css/venue-info.css' %}">
+
 <p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 
 <h5>this is venue gallary</h5>
 
-<div>
+<div class="grid-div">
+    <div>
 
-    {% for fields in venue_form %}
-        <div><b>{{fields.label_tag}}</b></div>
-        <div>{{fields.value}}</div>
+        {% for field in venue_form %}
+            {% if not field.name == 'venue_images' %}
+            <div><b>{{field.label_tag}}</b></div>
+            <div>{{field.value}}</div>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+
+    <div>
+        <div><b>Images</b></div>
+    {% for image in images %}
+
+    <img src="{{image.image.url}}" alt="">
+
     {% endfor %}
+    </div>
 
 </div>
+
+<script src="{% static 'js/venue-info.js' %}"></script>
 
 {% endblock %}

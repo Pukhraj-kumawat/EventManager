@@ -2,6 +2,11 @@
 
 
 {% block content %}
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'EventPlanner/css/edit-profile.css' %}">
+
 <h4>This is profile page</h4>
 
 
@@ -14,7 +19,7 @@
             <div> {{UserProfileForm.profile_picture}}</div>            
     {% else %}
     <a href="/profile/">        
-        <img id="default-profile" src="/static/images/No profile.jpeg" alt="" width="100" height="100">
+        <img id="default-profile" src="{% static 'images/No profile.jpeg' %}" alt="" width="100" height="100">
     </a>
         <div> {{UserProfileForm.profile_picture}}</div>       
     {% endif %}
@@ -45,7 +50,7 @@
     {% if request.user.userprofile.user_type == 'is_event_planner' %}
 
         {% for field in UserProfileForm %}
-            {% if field.name != 'profile_picture' %}
+            {% if not field.name == 'profile_picture' and not field.name == 'vendor_images' %}
                 <div>{{field.label_tag}}</div>
                 <div>{{field}}</div>
             {% endif %}
@@ -61,34 +66,7 @@
     <a href="/change-password/">Change password</a>
 </div>
 
-
-<script>
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("profile-form");
-    const submitButton = document.getElementById("remove-profile");
-    const buttonClicked = document.getElementById('button-clicked')
-    
-
-    submitButton.addEventListener("click", function () {
-        // Manually trigger the form submission
-        buttonClicked.value = 'clicked';        
-        form.submit();   
-             
-    });
-
-});
-
-if (document.getElementById('default-profile').src === 'http://127.0.0.1:8000/static/images/No%20profile.jpeg'){
-
-    document.getElementById('remove-profile').style.visibility = 'hidden';
-
-
-}
-
-
-</script>
+<script src="{% static 'js/edit-profile.js' %}"></script>
 
 
 {% endblock %}

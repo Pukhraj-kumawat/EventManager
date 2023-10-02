@@ -5,32 +5,9 @@
 
 {% load static %}
 
+<link rel="stylesheet" href="{% static 'EventPlanner/css/home.css' %}">
 
-<style>
-    .gird-div {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        border: 2px solid #000;
-        padding: 10px;
-    }
 
-    .accepted {
-        color: green;
-    }
-
-    .rejected {
-        color: red;
-    }
-
-    .outer-grid-div {
-        display: grid;
-        grid-template-columns: 0.8fr 1fr 1fr;
-    }
-
-    .event-div {
-        margin-left: 30px;
-    }
-</style>
 
 <br>
 <br>
@@ -135,5 +112,6 @@
 
 </div>
 
+<script src="{% static 'js/home.js' %}"></script>
 
 {% endblock %}
