@@ -1,15 +1,13 @@
-{% extends 'customer/home.html' %}
-
-{% block content %}
-
 {% load static %}
 
+<link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'customer/css/booking.css' %}">
 
+<div class="navbar-div">
+{% include 'navbar.html' %}
+</div>
 
 <p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
-
-<h3>This is booking page </h3>
 
 
 <div class="grid-div">
@@ -220,5 +218,3 @@
 
 <script src="{% static 'js/booking.js' %}"></script>
 
-
-{% endblock %}

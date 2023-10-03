@@ -1,8 +1,47 @@
-body{
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    }
+.logo{
+    position: absolute;
+    z-index: 2;
+    left: 30px;
+    top: 15px;
+}
+
+.logo-image{
+    width: 80px;
+    height: 30px;
+}
+.your-booking{
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    right: 100px;
+    text-decoration: none;
+    padding: 2px 10px;
+    border: 1px solid #000000;
+    color: white;
+    font-weight: bold;
+    
+}
+.welcome-message{
+    position: absolute;
+    z-index: 2;
+    left: 140px;
+    top: 22px;
+    font-weight: bold;
+    color: rgb(51, 0, 103);
+    background-color:rgb(128, 119, 161);
+    /* text-decoration: underline; */
 
 }
-a {
+.default-profile-image{
+    position: absolute;
+    z-index: 2;
+    right: 30px;
 }
+
 .grid-div{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -24,9 +63,10 @@ max-height: 100%;
 display: block; 
 }
 
+
 #event-image{
     position: relative;
-    top: -25px;
-    z-index: 1;
+    top: -28;
+    z-index: 0;
     filter: blur(1px);
 }

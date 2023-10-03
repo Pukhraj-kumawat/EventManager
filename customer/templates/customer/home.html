@@ -1,49 +1,48 @@
-{% extends 'navbar.html' %}
-
-{% block content %}
-
-{% load static %}
-
-
-<link rel="stylesheet" type="text/css" href="{% static 'customer/css/home.css' %}">
-
-
-<div class="home-image">
-    <img src="{% static 'images/events.png' %}" alt="" id="event-image" width="100%" height="400px">
-</div>
-
-<br>
-<br>
-<br>
-<br>
-
-<form action="" method="GET">
-    <input type="text" placeholder="Search event.." name="event">
-</form>
-
-{% if filter %}
-<a href="/home-C/">All categories</a>
-{% endif %}
-
-<div class="grid-div">
-
-{% for category in categories %}
-   <div class="event-div">
-    <a href="/book/{{category.id}}">{{category}} </a>
-
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'customer/css/home.css' %}">    
     
-    <a href="/book/{{category.id}}"> <img class="photo" src="/static/images/{{category}}.jpeg" alt=""></a>
+
+</head>
+
+<body>
+    <div class="navbar-div">
+    {% include 'navbar.html' %}
+    </div>
+    <div class="home-image">
+        <img src="{% static 'images/events.png' %}" alt="" id="event-image" width="100%" height="400px">
+    </div>
 
 
-    <a href="/book/{{category.id}}">Explore</a>
-</div>
-{% endfor %}
+    <div class="home-div">
 
-</div>
+        <form action="" method="GET">
+            <input type="text" placeholder="Search event.." name="event">
+        </form>
+
+        {% if filter %}
+        <a href="/home-C/">All categories</a>
+        {% endif %}
+
+        <div class="grid-div">
+
+            {% for category in categories %}
+            <div class="event-div">
+                <a href="/book/{{category.id}}">{{category}} </a>
 
 
-<script src="{% static 'js/home.js' %}"></script>
+                <a href="/book/{{category.id}}"> <img class="photo" src="/static/images/{{category}}.jpeg" alt=""></a>
 
 
+                <a href="/book/{{category.id}}">Explore</a>
+            </div>
+            {% endfor %}
 
-{% endblock %}
+        </div>
+
+
+        <script src="{% static 'js/home.js' %}"></script>
+
+    </div>
+
+</body>

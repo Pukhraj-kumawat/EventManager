@@ -1,13 +1,14 @@
-{% extends 'customer/home.html' %}
-
-
-{% block content %}
 
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'EventPlanner/css/sign-up.css' %}">
+<link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
 
-<div class="form-div">
+<div class="navbar-div">
+{% include 'navbar.html' %}
+</div>
+
+<div class="sign-up-form">
 
     <form action="" method="POST">
         {% csrf_token %}
@@ -26,11 +27,11 @@
 
         {% if user_type == 'is_customer' %}
         <h4>
-            Already Signed up? <a href="/login-C/">Sign in</a>
+            Already Signed up? <a href="/login/">Sign in</a>
         </h4>
         {% else %}
         <h4>
-            Already Signed up? <a href="/login-E/">Sign in</a>
+            Already Signed up? <a href="/login/">Sign in</a>
         </h4>
         {% endif %}
 
@@ -43,4 +44,3 @@
 
 <script src="{% static 'js/sign-up.js' %}"></script>
 
-{% endblock %}
