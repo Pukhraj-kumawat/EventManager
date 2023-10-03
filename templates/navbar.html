@@ -5,56 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventManagement</title>
+
+    <style>
+        .navbar-container{
+            position: relative;
+            width: 100%;
+        }
+
+        .navbar{
+            position: absolute;
+            z-index: 2;
+        }
+
+        .become-event-planner{
+            top: 2px;
+            right: 120px;
+            color: white;
+            text-decoration: none;
+        }
+        .sign-in-event-planner{
+            right: 120px;
+            top: 20px;
+            color: white;
+            text-decoration: none;
+        }
+        .sign-in-customer{            
+            right: 60px;
+            z-index: 3;
+            top: 2px;
+        }
+        .logo{
+            left: 10px;
+        }
+
+    </style>
+
     {% load static %}
 </head>
 
 <body>
+    <div class="navbar-container">
+        {% if not request.user.is_authenticated %}
+        <h5>
+            <img src="{% static 'images/logo.png' %}" alt="" width="90" height="50" class="logo navbar">
+            <!-- <a href="/sign-up-is_customer/" class="create-account navbar">Create account </a> -->
+            <a href="/login/" class="sign-in-customer navbar">
+                <img src="{% static 'images/No profile.jpeg' %}" alt="" class="default-profile-image navbar" width="35" height="35" >    
+            </a>
+        </h5>
 
-    {% if not request.user.is_authenticated %}
-    <h5>
-        <a href="/sign-up-is_customer/">Create account </a>
-        <a href="/login-C/">Sign in </a>
-    </h5>
-
-    <h5>
-        <a href="/sign-up-is_event_planner/">Want to become Event planner</a>
-        <a href="/login-E/">Sign in </a>
-    </h5>
-
-    {% else %}
-    {% if request.user.userprofile.user_type == 'is_customer' %}
-    <a href="/booked/">Your booking</a>
-    <a href="/home-C/">Home</a>
-    {% endif %}
-    {% if request.user.userprofile.user_type == 'is_event_planner' %}
-    <a href="/home-E/">Home</a>
-    {% endif %}
+        
+            <a href="/sign-up-is_event_planner/" class="become-event-planner navbar">List your business</a>            
 
 
-    {% if request.user.userprofile.user_type == 'is_event_planner' %}
-
-        {% if request.user.userprofile.profile_picture %}
-    <a href="/profile/">        
-            <img src="{{request.user.userprofile.profile_picture.url}}" alt="" width="35" height="35">
-    </a>
         {% else %}
-        <a href="/profile/">        
-            <img src="{% static 'images/No profile.jpeg' %}" alt="" width="35" height="35">
-        </a>
+        {% if request.user.userprofile.user_type == 'is_customer' %}
+        <a href="/booked/" class="your-booking navbar">Your booking</a>
+        <a href="/home-C/" class="home navbar">Home</a>
+        {% endif %}
+        {% if request.user.userprofile.user_type == 'is_event_planner' %}
+        <a href="/home-E/" class="home navbar">Home</a>
         {% endif %}
 
-    {% else %}
-    <a href="/profile/">Profile</a>
 
-    {% endif %}
+        {% if request.user.userprofile.user_type == 'is_event_planner' %}
+
+            {% if request.user.userprofile.profile_picture %}
+        <a href="/profile/">        
+                <img src="{{request.user.userprofile.profile_picture.url}}" alt="" width="35" height="35" id="profile-image">
+        </a>
+            {% else %}
+            <a href="/profile/">        
+                <img src="{% static 'images/No profile.jpeg' %}" alt="" width="35" height="35" id="default-profile-image">
+            </a>
+            {% endif %}
+
+        {% else %}
+        <a href="/profile/">Profile</a>
+
+        {% endif %}
 
 
-    {% endif %}
+        {% endif %}
+
+
+    </div>
 
     {% if request.user.is_authenticated %}
     welocome to <b>{{request.user.first_name}}</b>
     {% endif %}
-
 
 
     {% block content %}

@@ -20,7 +20,7 @@ from django.core.files import File
 
 
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def home(request):    
     if request.user.userprofile.user_type == 'is_event_planner':
         # if request.method =='POST':
@@ -91,7 +91,7 @@ def signUp(request,user_type):
         context = {'signUpForm':SignUpForm,'validation_error':validation_error,'user_type':user_type}
         return render(request,'EventPlanner/sign-up.html',context)
     
-# @login_required(login_url='/login-E/')
+# @login_required(login_url='/login/')
 # def loggedIn(request):
 #     return render(request,'EventPlanner/logged-in.html')
 
@@ -107,13 +107,14 @@ def loginPage(request):
                 username = request.POST.get('username')
                 password = request.POST.get('password')
                 # authenticate the user
-                user = authenticate(request,username=username,password=password)
+                user = authenticate(request,username = username,password = password)                
                 if user:
                     if user.userprofile.user_type == 'is_event_planner':
                         login(request,user)
                         return redirect('/home-E/')
-                    else:
-                        validation_error = True
+                    if user.userprofile.user_type == 'is_customer':                        
+                        login(request,user)                        
+                        return redirect('/home-C')
                 else:
                     validation_error = True
             except:
@@ -121,13 +122,13 @@ def loginPage(request):
         context = {'validation_error':validation_error}
         return render(request,'EventPlanner/login-page.html',context)
 
-@login_required(login_url='/login-C/')                
+@login_required(login_url='/login/')                
 def logoutPage(request):
     logout(request)
-    return redirect('/login-E/')
+    return redirect('/login/')
 
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def edit_profile(request):
     user_errors = None
     profile_errors = None    
@@ -170,7 +171,7 @@ def edit_profile(request):
     context = {'UserProfileForm':profile_form,'user_errors':user_errors,'profile_errors':profile_errors,'user_form':user_form,'user_profile':user_profile,'button_clicked':button_clicked}
     return render(request,'EventPlanner/edit-profile.html',context)
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def ChangePassword(request):
     errors = None
     password_form = PasswordChangeForm(request.user)
@@ -191,7 +192,7 @@ def EventPlannerInfo(request,pk):
     if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':  
         if request.method == 'POST':
             if not request.user.is_authenticated:
-                return redirect('/login-C/')
+                return redirect('/login/')
             unique_token_form = request.POST.get('unique-token')
             unique_token_session = request.session.get('chat_token')
             if unique_token_form == unique_token_session:
@@ -214,9 +215,11 @@ def EventPlannerInfo(request,pk):
         vendor = User.objects.get(id = pk)
         user_profile = UserProfile.objects.get(user = vendor)
         user_profile_form = UserProfileForm(instance = user_profile)
-
-        received_dict,sent_dict = Messages_display(request)
-        
+        try:
+            received_dict,sent_dict = Messages_display(request)
+        except:
+            received_dict = None
+            sent_dict = None
         context = {'user_profile_form':user_profile_form,'vendor':vendor,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,'received_dict':received_dict,'sent_dict':sent_dict}    
 
         return render(request,'EventPlanner/event-planner-info.html',context)
@@ -229,17 +232,17 @@ def VenueInfo(request,pk):
         context = {'venue_form':venue_form,'images':images}
         return render(request,'EventPlanner/venue-info.html',context)
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def DeleteAccount(request):
     return render(request,'EventPlanner/delete-account.html')
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def confirmDelete(request):
     user = request.user
     user.delete()
     return redirect('/')
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def Messages_display(request):
         messages_as_receiver = Messages.objects.filter(receiver = request.user).order_by('sender')
         sender_list = []
@@ -276,7 +279,7 @@ def Messages_display(request):
             
         return received_dict,sent_dict
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def profile(request):    
     user_profile = UserProfile.objects.get(user = request.user)
     userprofile_form = UserProfileForm(instance = user_profile)
@@ -284,7 +287,7 @@ def profile(request):
     context = {'user_profile':user_profile,'userprofile_form':userprofile_form,'images':images}
     return render(request,'EventPlanner/profile.html',context)
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def create_event(request):
     if request.user.userprofile.user_type == 'is_event_planner':
         if request.method == 'POST':
@@ -297,7 +300,7 @@ def create_event(request):
         context = {'EventForm':EventForm}
         return render(request,'EventPlanner/create-event.html',context)
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def accept_booking(request,pk,status):
     if request.user.userprofile.user_type == 'is_event_planner':
         booking_object  = Booking.objects.get(id = int(pk))
@@ -310,7 +313,7 @@ def accept_booking(request,pk,status):
         return redirect('/home-E/')
 
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def edit_event(request,pk):
     if request.user.userprofile.user_type == 'is_event_planner':
         event = Event.objects.get(id = int(pk))
@@ -325,14 +328,14 @@ def edit_event(request,pk):
         return render(request,'EventPlanner/edit-event.html',context)
 
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def delete_event(request,pk):
     if request.user.userprofile.user_type == 'is_event_planner':
         event = Event.objects.get(id = int(pk))
         event.delete()
         return redirect('/home-E/')
 
-@login_required(login_url='/login-E/')
+@login_required(login_url='/login/')
 def vendor_images(request):
     if request.user.userprofile.user_type == 'is_event_planner':
         images = Image.objects.filter(user_profile = request.user.userprofile)

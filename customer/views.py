@@ -108,29 +108,29 @@ def book(request,pk):
         return render(request,'customer/booking.html',context)
 
 
-def loginPage(request):
-    validation_error = False
-    if request.user.is_authenticated:
-        return redirect('/home-C/')
-    if request.method == 'POST':
-        try:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = authenticate(request,username=username,password=password)
-            if user:
-                if user.userprofile.user_type == 'is_customer':                
-                    login(request,user)
-                    return redirect('/home-C/')
-                else:
-                    validation_error = True
-            else:
-                validation_error = True
-        except:
-            pass
-    context = {'validation_error':validation_error}
-    return render(request,'customer/login-page.html',context)
+# def loginPage(request):
+#     validation_error = False
+#     if request.user.is_authenticated:
+#         return redirect('/home-C/')
+#     if request.method == 'POST':
+#         try:
+#             username = request.POST.get('username')
+#             password = request.POST.get('password')
+#             user = authenticate(request,username=username,password=password)
+#             if user:
+#                 if user.userprofile.user_type == 'is_customer':                
+#                     login(request,user)
+#                     return redirect('/home-C/')
+#                 else:
+#                     validation_error = True
+#             else:
+#                 validation_error = True
+#         except:
+#             pass
+#     context = {'validation_error':validation_error}
+#     return render(request,'customer/login-page.html',context)
 
-# @login_required(login_url='/login-C/')
+# @login_required(login_url='/login/')
 # def loggedIn(request):
 #     return render(request,'customer/logged-in.html')
 
@@ -148,7 +148,7 @@ def full_package(request,pk):
         context = {'venue':venue,'vendors':vendors,'vender_data':vender_data,'date':date,'time':time}
         return render(request,'customer/full-package.html',context)
 
-@login_required(login_url='/login-C/')
+@login_required(login_url='/login/')
 def create_book(request):
     if request.user.userprofile.user_type == 'is_customer':
         if request.method == 'POST':
@@ -180,14 +180,14 @@ def create_book(request):
         booking.save()
         return redirect('/booked/')
 
-@login_required(login_url='/login-C/')
+@login_required(login_url='/login/')
 def booked(request):  
     if request.user.userprofile.user_type == 'is_customer':
         bookings = Booking.objects.all()
         context = {'bookings':bookings}
         return render(request,'customer/booked.html',context)
 
-@login_required(login_url='/login-C/')
+@login_required(login_url='/login/')
 def delete_book(request):
     if request.user.userprofile.user_type == 'is_customer':
         if request.method == 'POST':
@@ -199,7 +199,7 @@ def delete_book(request):
                 pass
         return redirect('/booked/')
 
-@login_required(login_url='/login-C/')
+@login_required(login_url='/login/')
 def save_date_time(request,pk):
     if request.user.userprofile.user_type == 'is_customer':
         if request.method == 'POST':
