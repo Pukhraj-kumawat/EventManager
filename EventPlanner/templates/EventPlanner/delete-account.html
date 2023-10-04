@@ -2,10 +2,16 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'EventPlanner/css/delete-account.css' %}">
+<link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
+<div class="navbar-div">
+{% include 'navbar.html' %}
+</div>
+
+<p class="go-back"><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 
 <h5>Do you really want to delete your account ?</h5>
 <a href="/profile/">Back</a>
 <a href="/confirm-delete/">Confirm</a>
 
-<script src="{% static 'js/delete-account.js' %}"></script>
+<script src="{% static 'EventPlanner/js/delete-account.js' %}"></script>
 

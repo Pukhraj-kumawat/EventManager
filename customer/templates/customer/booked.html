@@ -3,8 +3,13 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'customer/css/booked.css' %}">
+<link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
+<div class="navbar-div">
+{% include 'navbar.html' %}
+</div>
 
-<p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
+
+<p class="go-back"><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 <div class="grid-div">
     
     <div>

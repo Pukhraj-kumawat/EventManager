@@ -1,9 +1,13 @@
 
 {% load static %}
-
+<link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
 <link rel="stylesheet" href="{% static 'EventPlanner/css/event-planner-info.css' %}">
 
-<p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
+<div class="navbar-div">
+    {% include 'navbar.html' %}
+</div>
+
+<p class="go-back"><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 
 <div class="grid-div">
     <div>
@@ -67,5 +71,5 @@
 
 {{error}}
 
-<script src="{% static 'js/event-planner-info.js' %}"></script>
+<script src="{% static 'EventPlanner/js/event-planner-info.js' %}"></script>
 

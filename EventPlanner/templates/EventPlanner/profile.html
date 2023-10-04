@@ -3,8 +3,12 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'EventPlanner/css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
+<div class="navbar-div">
+{% include 'navbar.html' %}
+</div>
 
-<p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
+<p class="go-back"> <a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 
 <h3>Your profile...</h3>
 
@@ -57,5 +61,5 @@
 
     </div>
 
-    <script src="{% static 'js/profile.js' %}"></script>
+    <script src="{% static 'EventPlanner/js/profile.js' %}"></script>
 

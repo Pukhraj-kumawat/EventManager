@@ -1,8 +1,13 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'customer/css/full-package.css' %}">
+<link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
 
-<p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
+
+<div class="navbar-div">
+    {% include 'navbar.html' %}
+</div>
+<p class="go-back"><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 
 This is full package page
 

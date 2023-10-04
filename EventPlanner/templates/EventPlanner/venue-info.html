@@ -1,10 +1,14 @@
 
-
 {% load static %}
 
+<link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
 <link rel="stylesheet" href="{% static 'EventPlanner/css/venue-info.css' %}">
 
-<p><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
+<div class="navbar-div">
+    {% include 'navbar.html' %}
+</div>
+
+<p class="go-back"><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
 
 <h5>this is venue gallary</h5>
 
@@ -31,5 +35,5 @@
 
 </div>
 
-<script src="{% static 'js/venue-info.js' %}"></script>
+<script src="{% static 'EventPlanner/js/venue-info.js' %}"></script>
 

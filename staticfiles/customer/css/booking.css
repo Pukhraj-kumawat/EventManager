@@ -12,9 +12,12 @@
 .grid-div {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    
 
 }
-
+.go-back{
+    margin-top: 100px;
+}
 .filter-div-event {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
