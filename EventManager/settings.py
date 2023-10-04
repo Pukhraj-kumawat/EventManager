@@ -37,16 +37,22 @@ STATIC_URL = 'static'
 
 # used for development ==>
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 STATICFILES_DIRS = [
-    BASE_DIR / "static",  
-    os.path.join(BASE_DIR, "customer/static"), 
-    os.path.join(BASE_DIR, "EventPlanner/static"),
+    os.path.join(BASE_DIR, 'staticfiles'),  
 ]
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # settings.py

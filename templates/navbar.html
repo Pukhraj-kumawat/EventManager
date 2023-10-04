@@ -22,41 +22,47 @@
         {% if not request.user.is_authenticated %}
         <div class="unauth-navbar">
             <h5>            
-                <a href="/home-C/" class="logo">
+                <a href="/home-C/" class="unauth-logo unauth-logo-2">
                     <img src="{% static 'images/logo.png' %}" alt="" width="80" height="30" class="logo-image">
                 </a>
-                <!-- <a href="/sign-up-is_customer/" class="create-account navbar">Create account </a> -->
-                <a href="/login/" class="default-profile-image">
+
+                <a href="/login/" class="unauth-default-profile unauth-default-profile-2">
                     <img src="{% static 'images/No profile.jpeg' %}" alt=""  width="35" height="35" >    
                 </a>
             </h5>
-                <a href="/sign-up-is_event_planner/" class="list-your-business">List your business</a>            
+                <a href="/sign-up-is_event_planner/" class="list-your-business list-your-business-2">List your business</a>            
         </div>
         {% else %}
 
             {% if request.user.userprofile.user_type == 'is_customer' %}
                 <div class="customer-navbar">
-                    <a href="/home-C/" class="logo">
+                    <a href="/home-C/" class="logo logo-2">
                         <img src="{% static 'images/logo.png' %}" alt="" width="90" height="50" class="logo-image">
                     </a>
-                    <a href="/booked/" class="your-booking">Your bookings</a>    
-                    <a href="/profile/" class="default-profile-image">
+                    <a href="/booked/" class="your-booking your-booking-2">Your bookings</a>    
+                    <a href="/profile/" class="default-profile default-profile-2">
                         <img src="{% static 'images/No profile.jpeg' %}" alt="" width="35" height="35" >  
                     </a>
+                    {% if request.user.is_authenticated %}
+                    <span class="welcome-message welcome-message-2">welocome to <b>{{request.user.first_name}}</b></span>
+                    {% endif %}
                 </div>
             {% endif %}
 
             {% if request.user.userprofile.user_type == 'is_event_planner' %}
                 <div class="vendor-navbar">
-                    <a href="/home-E/" class="logo">
+                    <a href="/home-E/" class="logo logo-2">
                         <img src="{% static 'images/logo.png' %}" alt="" width="90" height="50" class="logo-image">
-                    </a>             
+                    </a>    
+                    {% if request.user.is_authenticated %}
+                    <span class="welcome-message welcome-message-2">welocome to <b>{{request.user.first_name}}</b></span>
+                    {% endif %}         
                     {% if request.user.userprofile.profile_picture %}            
-                    <a href="/profile/" class="profile-image">        
+                    <a href="/profile/" class="profile-image profile-image-2">        
                         <img src="{{request.user.userprofile.profile_picture.url}}" alt="" width="35" height="35" >
                     </a>
                     {% else %}      
-                    <a href="/profile/" class="default-profile-image">        
+                    <a href="/profile/" class="default-profile default-profile-2">        
                         <img src="{% static 'images/No profile.jpeg' %}" alt="" width="35" height="35" class="profile">
                     </a>                
                     {% endif %} 
@@ -64,14 +70,10 @@
             {% endif %}        
 
         {% endif %}
-
-        {% if request.user.is_authenticated %}
-        <span class="welcome-message">welocome to <b>{{request.user.first_name}}</b></span>
-        {% endif %}
+       
 
     </div>
     
-
 </body>
 
 </html>

@@ -1,0 +1,182 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    }
+
+.welcome-message{
+    position: absolute;
+    z-index: 2;
+    left: 140px;
+    top: 18px;
+    font-weight: bold;
+    color: rgb(51, 0, 103);
+    background-color:rgb(128, 119, 161);
+    /* text-decoration: underline; */
+
+}
+.default-profile{
+    position: absolute;
+    z-index: 2;
+    top: 12px;
+    right: 30px;
+}
+
+.grid-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.event-div {
+    border: 2px solid #000;
+    padding: 10px;
+}
+
+.photo{
+    width: 300px; 
+    height: 200px;
+    overflow: hidden;
+}
+.grid-div img {
+max-width: 100%; 
+max-height: 100%;
+display: block; 
+}
+
+.logo{
+    position: absolute;
+    left: 20px;
+    top: 12px;
+    z-index: 5;
+}
+
+.logo-image{
+    width: 80px;
+    height: 30px;
+}
+
+#event-image{
+    position: relative;
+    top: -50px;
+    z-index: 0;
+    filter: blur(1px);
+    
+    
+}
+
+/* Upone scrolling => */
+
+.customer-navbar{
+    position: fixed;
+    background-color:lightpink;
+    width: 100%;
+    height: 50px;
+    z-index: 10;
+    top: 0;
+}
+
+.logo-2{
+    position: absolute;
+    left: 20px;
+    top: 12px;
+    z-index: 5;
+}
+
+.default-profile-2{
+    position: absolute;
+    right: 30px;
+    top: 8px;
+    z-index: 5;
+}
+
+.your-booking-2{
+    position: absolute;
+    right: 100px;
+    top: 10px;
+    text-decoration: none;
+    border: 1.5px solid black;    
+    padding: 5px 10px;
+    color: rgb(51, 0, 255);
+    font-weight: bold;
+    z-index: 5;
+}
+
+.welcome-message-2{
+    background-color: rgb(229, 147, 160);
+    position: absolute;
+    z-index: 5;
+}
+
+
+
+
+/* CSS for Un authenticated == > */
+
+.unauth-logo{
+    position: absolute;
+    left: 20px;
+    top: 12px;
+    z-index: 5;
+}
+.unauth-default-profile{
+    position: absolute;
+    right: 30px;
+    top: 8px;
+    z-index: 5;
+}
+
+.list-your-business{
+    position: absolute;
+    right: 100px;
+    top: 10px;
+    text-decoration: none;
+    border: 1.5px solid black;    
+    padding: 5px 10px;
+    color: rgb(51, 0, 255);
+    font-weight: bold;
+    z-index: 5;
+}
+
+
+
+
+
+
+/* Upone scrolling for unauth => */
+
+
+.unauth-navbar{
+    position: fixed;
+    background-color:lightpink;
+    width: 100%;
+    height: 50px;
+    z-index: 10;
+    top: 0;
+}
+
+.unauth-logo-2{
+    position: absolute;
+    left: 20px;
+    top: 12px;
+    z-index: 5;
+}
+.unauth-default-profile-2{
+    position: absolute;
+    right: 30px;
+    top: 8px;
+    z-index: 5;
+}
+
+.list-your-business{
+    position: absolute;
+    right: 100px;
+    top: 10px;
+    text-decoration: none;
+    border: 1.5px solid black;    
+    padding: 5px 10px;
+    color: rgb(51, 0, 255);
+    font-weight: bold;
+    z-index: 5;
+}
+
+
+
