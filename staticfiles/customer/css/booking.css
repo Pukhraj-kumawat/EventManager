@@ -37,24 +37,148 @@
 
 .grid-div {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    
+    grid-template-columns: 1fr 1fr;    
 
 }
+
+/* .venue-div{
+    
+}
+.vendor-div{
+
+} */
+
+.no-venue-div,.no-vendor-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #000;
+    height: 200px;
+
+}
+.view-options-div{
+    position: relative;
+    top: 40px;
+    right: 200px;
+}
+
+.sorry-message{
+    position: relative;
+    left: 60px;
+}
+
 .go-back{
     margin-top: 100px;
 }
 .filter-div-event {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1.2fr;
 }
 
 .filter-div-vendor {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    height: 134px;
 }
 
 .filter {
     border: 2px solid #000;
     padding: 10px;
+}
+
+.price-range{
+ text-decoration: none;   
+}
+
+.venue-price-range{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+}
+
+.venue-price-range a{
+    color:rgb(7, 71, 210);
+}
+
+.venue-price-range a:hover{
+    text-decoration:underline;
+    color: rgb(255, 109, 131);
+}
+
+.all-price-range{
+    text-decoration: none;
+    color:rgb(7, 71, 210);
+}
+.all-price-range:hover{
+    text-decoration:underline;
+    color: rgb(255, 109, 131);
+}
+
+.all-city{
+    text-decoration: none;
+    color:rgb(7, 71, 210);
+}
+.all-city:hover{
+    text-decoration:underline;
+    color: rgb(255, 109, 131);
+}
+
+
+.venue-city,.vendor-city{
+    text-decoration: none;    
+    color:rgb(7, 71, 210);
+}
+
+.venue-city:hover{
+    text-decoration:underline;
+    color: rgb(255, 109, 131);
+}
+.vendor-city:hover{
+    text-decoration:underline;
+    color: rgb(255, 109, 131);
+}
+.search-bar-city{
+    height: 25px;
+    border: 1px solid #000;
+    border-radius: 2px;
+}
+.venue-name,.complete-gallary,.complete-portfolio,.view{
+    text-decoration: none;
+    color: rgb(136, 0, 0);
+    font-weight: bold;
+}
+.venue-name:hover{
+    text-decoration: underline;
+    color: blue;
+}
+.complete-gallary:hover{
+    text-decoration: underline;
+    color: blue;
+}
+.complete-portfolio:hover{
+    text-decoration: underline;
+    color: blue;
+}
+
+.view:hover{
+    text-decoration: underline;
+    color: blue;
+}
+
+.book-now-button{
+    color: rgb(0, 0, 0);
+    background-color: white;
+    color:darkred;
+    border: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    width: 100px;
+    height: 30px;
+
+}
+
+.book-now-button:hover{
+    color: white;
+    background-color: rgb(127, 127, 255);    
+
 }

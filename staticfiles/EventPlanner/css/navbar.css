@@ -73,7 +73,8 @@
     right: 100px;
     top: 12px;
     text-decoration: none;
-    border: 1.5px solid black;    
+    border: 1.5px solid black;
+    border-radius: 3px;    
     padding: 5px 10px;
     color: rgb(51, 0, 255);
     font-weight: bold;

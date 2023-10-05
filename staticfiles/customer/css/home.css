@@ -1,6 +1,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
+    
     }
 .slogan-search {
     position: absolute;
@@ -152,7 +153,7 @@ display: block;
     border: 1.5px solid black;  
     border-radius: 3px;  
     padding: 5px 10px;
-    color: rgb(136, 0, 0);
+    color: rgb(51, 0, 255);
     font-weight: bold;
     z-index: 5;
 
@@ -161,7 +162,7 @@ display: block;
 
 .your-booking-2:active{
     color: white;
-    background-color:rgb(136, 0, 0);
+    background-color:rgb(51, 0, 255);
     
 }
 
@@ -178,7 +179,7 @@ display: block;
 
 .category-name{
     text-decoration: none;
-    color: rgb(136, 0, 0);
+    color:rgb(7, 71, 210);
     font-weight: bold;
 
 }

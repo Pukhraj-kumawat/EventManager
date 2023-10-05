@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <link rel="stylesheet" type="text/css" href="{% static 'customer/css/booking.css' %}">
 <link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
 <div class="navbar-div">
@@ -14,55 +13,82 @@
     
     {% if venues %}
 
-    <div>
-        <h1>Venues</h1>
+  
+    <div class="venue-div">        
 
         <div class="filter-div-event">
 
             <div class="filter">
                 <form action="" method="GET">
-                    <input type="text" placeholder="Search city" name="venue-city">
+                    <input type="text" placeholder="Search city" name="venue-city" class="search-bar-city" >
                 </form>
-                <a href="/book/{{pk}}/">All</a>
+                <a href="/book/{{pk}}/" class="all-city">All</a>
+                <br><br>
 
                 {% for venue in venues %}
-                {% if not min_price %}
-                <a href="/book/{{pk}}/?venue-city={{venue.city}}"
-                    class="venue-{{venue.city}} venue-city">{{venue.city}}</a>
-
-                {% else %}
-                <a href="/book/{{pk}}/?min_price={{min_price}}&max_price={{max_price}}&venue-city={{venue.city}}"
-                    class="venue-{{venue.city}} venue-city">{{venue.city}}</a>
-                {% endif %}
+                    {% if not min_price %}
+                    <a href="/book/{{pk}}/?venue-city={{venue.city}}"
+                        class="venue-{{venue.city}} venue-city">{{venue.city}}</a>
+                    {% else %}
+                    <a href="/book/{{pk}}/?min_price={{min_price}}&max_price={{max_price}}&venue-city={{venue.city}}"
+                        class="venue-{{venue.city}} venue-city">{{venue.city}}</a>
+                    {% endif %}
                 {% endfor %}
 
             </div>
 
 
             <div class="filter">
-                <a href="/book/{{pk}}/">All</a>
-
+                <a href="/book/{{pk}}/" class="all-price-range">All</a>
+                <br><br>
+                
                 {% if not venue_city %}
-                <div>
-                    <a href="/book/{{pk}}/?min_price=0&max_price=9999">Below Rs 10,000</a>
-                    <a href="/book/{{pk}}/?min_price=10000&max_price=19999">Rs 10,000 to Rs 20,000</a>
-                    <a href="/book/{{pk}}/?min_price=20000&max_price=29999">Rs 20,000 to Rs 30,000</a>
-                    <a href="/book/{{pk}}/?min_price=30000&max_price=39999">Rs 30,000 to Rs 40,000</a>
-                    <a href="/book/{{pk}}/?min_price=40000&max_price=49999">Rs 40,000 to Rs 50,000</a>
-                    <a href="/book/{{pk}}/?min_price=50000&max_price=10000000000">Above Rs 50,000</a>
+                <div class="venue-price-range">
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=0&max_price=9999" class="price-range">Below Rs 10,000</a>
+                    </div>
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=10000&max_price=19999" class="price-range">Rs 10,000 - Rs 20,000</a>
+                    </div>
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=20000&max_price=29999" class="price-range">Rs 20,000 - Rs 30,000</a>
+                    </div>
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=30000&max_price=39999" class="price-range">Rs 30,000 - Rs 40,000</a>
+                    </div>
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=40000&max_price=49999" class="price-range">Rs 40,000 - Rs 50,000</a>
+                    </div>
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=50000&max_price=10000000000" class="price-range">Above Rs 50,000</a>
+                    </div>
                 </div>
                 {% else %}
-                <a href="/book/{{pk}}/?min_price=0&max_price=9999&venue-city={{venue_city}}">Below Rs 10,000</a>
-                <a href="/book/{{pk}}/?min_price=10000&max_price=19999&venue-city={{venue_city}}">Rs 10,000 to Rs
-                    20,000</a>
-                <a href="/book/{{pk}}/?min_price=20000&max_price=29999&venue-city={{venue_city}}">Rs 20,000 to Rs
-                    30,000</a>
-                <a href="/book/{{pk}}/?min_price=30000&max_price=39999&venue-city={{venue_city}}">Rs 30,000 to Rs
-                    40,000</a>
-                <a href="/book/{{pk}}/?min_price=40000&max_price=49999&venue-city={{venue_city}}">Rs 40,000 to Rs
-                    50,000</a>
-                <a href="/book/{{pk}}/?min_price=50000&max_price=10000000000&venue-city={{venue_city}}">Above Rs
-                    50,000</a>
+                <div class="venue-price-range">
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=0&max_price=9999&venue-city={{venue_city}}" class="price-range">Below Rs 10,000</a>
+                    </div>
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=10000&max_price=19999&venue-city={{venue_city}}" class="price-range">Rs 10,000 - Rs
+                        20,000</a>
+                    </div>    
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=20000&max_price=29999&venue-city={{venue_city}}" class="price-range">Rs 20,000 - Rs
+                        30,000</a>
+                    </div>
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=30000&max_price=39999&venue-city={{venue_city}}" class="price-range">Rs 30,000 - Rs
+                        40,000</a>
+                    </div>
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=40000&max_price=49999&venue-city={{venue_city}}" class="price-range">Rs 40,000 - Rs
+                        50,000</a>
+                    </div>    
+                    <div>
+                        <a href="/book/{{pk}}/?min_price=50000&max_price=10000000000&venue-city={{venue_city}}" class="price-range">Above Rs
+                        50,000</a>
+                    </div>
+                </div>
                 {% endif %}
 
             </div>
@@ -74,9 +100,10 @@
         <div class="event-info-div">
             <div class="venue-info-container">
                 <div>
-                    <a href="/venue-info/{{venue.id}}/">
-                        <h4>{{venue.name}}</h4>
+                    <a href="/venue-info/{{venue.id}}/" class="venue-name">
+                        {{venue.name}}
                     </a>
+                    <br><br>
                     <div>{{venue.location}}</div>
                     <div>{{venue.city}} {{venue.state}}</div>
                     <br>
@@ -84,7 +111,7 @@
                     <div>Minimum price : {{venue.min_price}}</div>
                     <h5>
                         {% if venue.vendors.all %}
-                        <div> Book full packege (Venue + Vendor)<a href="/full-package/{{venue.id}}/">View</a></div>
+                        <div> Book full packege <a href="/full-package/{{venue.id}}/" class="view">View</a></div>
                         {% endif %}
                     </h5>
                     {% if request.user.is_authenticated %}
@@ -96,12 +123,13 @@
                         <input type="date" name="date" placeholder="date" required>
                         <input type="time" name="time" placeholder="time">
                         <input type="hidden" value="{{venue.id}}" name="venue_id">
-                        <button type="submit">Book now</button>
+                        <br><br><br>
+                        <button type="submit" class="book-now-button">Book now</button>
 
                         {% endif %}
 
                         {% else %}
-                        <button class="un-auth-book"><a href="/login/">Book now</a></button>
+                        <button class="un-auth-book"><a href="/login/" class="book-now-button">Book now</a></button>
                         {% endif %}
                 </div>      
                 <div class="portfolio-div">                    
@@ -119,7 +147,7 @@
                     {% endfor %}
                     {% if venue.venue_images.all %}
                     <div class="all-portfolio">
-                        <a href="/venue-info/{{venue.id}}/">See complete gallary</a>
+                        <a href="/venue-info/{{venue.id}}/" class="complete-gallary">Complete gallary</a>
                     </div>
                     {% endif %}
                 </div>  
@@ -130,17 +158,18 @@
 
 
     </div>
+    
 
     {% else %}
-    <div>
+    <div class="no-venue-div">
         
-        <p>Sorry no venues avaialble for the given location or price</p>
+        <p class="sorry-message">Sorry no venues avaialble for the given location or price</p>
 
-        <br><br><br>
+        
 
         {% if venues_on_category %}
 
-        <a href="/book/{{pk}}/">View available options</a>
+        <div class="view-options-div"><a href="/book/{{pk}}/">View available options</a></div>
 
         {% endif %}
 
@@ -148,17 +177,24 @@
     {% endif %}
 
 
+
+
+
+
+
+
+
     {% if events %}
 
-    <div>
-        <h1>Vendors</h1>
+    <div class="vendor-div">        
 
         <div class="filter-div-vendor">
             <div class="filter">
                 <form action="" method="GET">
-                    <input type="text" placeholder="Search city" name="vendor-city">
+                    <input type="text" placeholder="Search city" name="vendor-city" class="search-bar-city">
                 </form>
-                <a href="/book/{{pk}}/">All</a>
+                <a href="/book/{{pk}}/" class="all-city">All</a>
+                <br><br>
                 {% for event in events %}
                 <a href="/book/{{pk}}/?vendor-city={{event.event_planner.userprofile.city}}"
                     class="vendor-{{event.event_planner.userprofile.city}} vendor-city">{{event.event_planner.userprofile.city}}
@@ -171,23 +207,25 @@
             {% for event in events %}
             <div class="event-info-div">
                 <div class="vendor-info-container">
-                <div>
-                    {% if event.event_planner.userprofile.profile_picture %}
-                    <a href="/event-planner-info/{{event.event_planner.id}}/">
-                        <div> <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40"></div>
-                    </a>    
-                    <a href="/event-planner-info/{{event.event_planner.id}}/">
-                        <div><h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4></div>
-                    </a>
-                    {% else %}
+                    <div>
+                        {% if event.event_planner.userprofile.profile_picture %}
+                        <a href="/event-planner-info/{{event.event_planner.id}}/">
+                            
+                                <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40">
+                            
+                        </a>    
+                        <a href="/event-planner-info/{{event.event_planner.id}}/">
+                            {{event.event_planner.first_name}} {{event.event_planner.last_name}}
+                        </a>
+                        {% else %}
 
-                    <a href="/event-planner-info/{{event.event_planner.id}}/">
-                        <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40"></div>
-                    </a>
-                    <a href="/event-planner-info/{{event.event_planner.id}}/">
-                            <div><h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4></div>
-                    </a>
-
+                        <a href="/event-planner-info/{{event.event_planner.id}}/">
+                            <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40"></div>
+                        </a>
+                        <a href="/event-planner-info/{{event.event_planner.id}}/">
+                                {{event.event_planner.first_name}} {{event.event_planner.last_name}}                            
+                        </a>
+                    </div>
                     
                     {% endif %}
 
@@ -208,21 +246,25 @@
                             {% if request.user.userprofile.user_type == 'is_customer' %}
                             <form action="/create-book/" method="POST">
                                 {% csrf_token %}
-                                <div><b>Select your location :</b> <input type="text" name="location" placeholder="location" required></div>
-                                <br>
+                                <div><b>Enter venue location :</b> </div>                                
+                                <input type="text" name="location" placeholder="Location" required>
+                                <br><br>
+                                <div><b>Select date and time for event</b></div>
                                 <input type="date" name="date" placeholder="date" required>
                                 <input type="time" name="time" placeholder="time">
                                 <input type="hidden" value="{{event.event_planner.id}}" name="vendor_id">
-                                <button type="submit">Request booking</button>
+                                <br><br>
+                                <button type="submit" class="request-booking-button">Request booking</button>
                             </form>
                             {% endif %}
                         {% else %}
                         <button class="un-auth-book"><a href="/login/">Request booking</a></button>
                         {% endif %}
-                     </div>
+                </div>
+
+
                         <div class="portfolio-div">
-                            
-                            
+                                                    
                             
                             {% for image in event.event_planner.userprofile.vendor_images.all %}  
                             
@@ -239,7 +281,7 @@
                             {% endfor %}
                                 {% if event.event_planner.userprofile.vendor_images.all %}
                                 <div class="all-portfolio">
-                                    <a href="/event-planner-info/{{event.event_planner.id}}/">See complete portfolio</a>
+                                    <a href="/event-planner-info/{{event.event_planner.id}}/" class="complete-portfolio">Complete portfolio</a>
                                 </div>
                                 {% endif %}
                         </div>  
@@ -251,14 +293,16 @@
 
     {% else %}
 
-    <div>
+    <div class="no-vendor-div">
         
-        <p>Sorry no vendors avaialble for the given location</p>
+        <p class="sorry-message">Sorry no vendors avaialble for the given location</p>
 
         <br><br><br>
 
         {% if events_on_category %}
+        <div class="view-options-div">
         <a href="/book/{{pk}}/">View available options</a>
+        </div>
         {% endif %}
     </div>
 
