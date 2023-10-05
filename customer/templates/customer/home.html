@@ -7,7 +7,8 @@
     {% load static %}
     
     <link rel="stylesheet" type="text/css" href="{% static 'customer/css/home.css' %}">
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+
 </head>
 
 <body>
@@ -23,25 +24,27 @@
 
     <div class="home-div">
 
-        <form action="" method="GET">
-            <input type="text" placeholder="Search event.." name="event">
-        </form>
+        <div class="slogan-search">            
+            <p class="slogan-first"> "Transforming Dreams into Unforgettable Events"</p>
+            <p class="slogan-second">"Book the Best with Us!"</p>
+            <form action="" method="GET">
+                <input type="text" placeholder="Search event.." name="event" class="search-event">
+            </form>
+            <a href="/home-C/" class="all-categories">All</a>
+        </div>
 
-        {% if filter %}
+        <!-- {% if filter %}
         <a href="/home-C/">All categories</a>
-        {% endif %}
+        {% endif %} -->
 
         <div class="grid-div">
 
             {% for category in categories %}
             <div class="event-div">
-                <a href="/book/{{category.id}}">{{category}} </a>
+                <a href="/book/{{category.id}}" class="category-name">{{category}} </a>
 
+                <a href="/book/{{category.id}}"> <img class="photo" src="/static/images/{{category}}.jpeg" alt="" id="category-photo"></a>
 
-                <a href="/book/{{category.id}}"> <img class="photo" src="/static/images/{{category}}.jpeg" alt=""></a>
-
-
-                <a href="/book/{{category.id}}">Explore</a>
             </div>
             {% endfor %}
 

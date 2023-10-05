@@ -2,6 +2,62 @@ body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     }
+.slogan-search {
+    position: absolute;
+    font-weight: bold;
+    color: rgb(136, 0, 0);
+    top: 140px;    
+    
+}
+
+.slogan-search ::placeholder{
+    display: flex;
+
+
+}
+.slogan-first{
+    position: absolute;
+    left: 400px;
+    width: 555px;
+    font-size: 25px;
+    background-color: rgb(249, 235, 237);
+    border-radius: 3px;
+    padding-left: 2px;
+}
+.slogan-second{
+    position: absolute;    
+    left: 560px;
+    width: 220px;
+    top: 40px;
+    font-size: 20px;
+    padding-left: 2px;
+    background-color: rgb(249, 235, 237);
+    border-radius: 3px;
+}
+
+.search-event{
+    position: absolute;    
+    left: 480px;
+    top: 130px;
+    width: 420px;
+    height: 25px;
+    background-color: rgb(249, 235, 237);
+    border: none;
+    border-radius: 3px;
+}
+.all-categories{
+    position: absolute;
+    left: 440px;
+    top:130px ;
+    background-color: rgb(249, 235, 237);
+    text-decoration: none;
+    color: rgb(24, 23, 23);
+    width: 20px;
+    /* height: 22px; */
+    padding: 4px 5px;
+    border-radius: 3px;    
+
+}
 
 .welcome-message{
     position: absolute;
@@ -17,7 +73,7 @@ body {
 .default-profile{
     position: absolute;
     z-index: 2;
-    top: 12px;
+    top: 10px;
     right: 30px;
 }
 
@@ -91,13 +147,22 @@ display: block;
 .your-booking-2{
     position: absolute;
     right: 100px;
-    top: 15px;
+    top: 10px;
     text-decoration: none;
-    border: 1.5px solid black;    
+    border: 1.5px solid black;  
+    border-radius: 3px;  
     padding: 5px 10px;
-    color: rgb(51, 0, 255);
+    color: rgb(136, 0, 0);
     font-weight: bold;
     z-index: 5;
+
+}
+
+
+.your-booking-2:active{
+    color: white;
+    background-color:rgb(136, 0, 0);
+    
 }
 
 .welcome-message-2{
@@ -106,6 +171,17 @@ display: block;
     z-index: 5;
 }
 
+#category-photo{
+    width: 100%;
+    height: auto;
+}
+
+.category-name{
+    text-decoration: none;
+    color: rgb(136, 0, 0);
+    font-weight: bold;
+
+}
 
 
 
