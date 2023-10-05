@@ -40,7 +40,8 @@ class UserProfile(models.Model):
     location = models.TextField(blank = True,null = True)
     service_offered = models.TextField(blank = True,null = True)
     profile_picture = models.ImageField(upload_to = 'images/',null = True,blank = True)
-    vendor_images = models.ManyToManyField('Image', blank = True,null = True)
+    vendor_images = models.ManyToManyField('Image', blank = True,null = True,related_name = 'portfolio_images')
+    # showcase_image = models.OneToOneField('Image',blank = True,null = True,on_delete=models.CASCADE)
 
 
     def __str__(self):

@@ -70,38 +70,61 @@
         </div>
 
 
-        {% for venue in venues %}
+    {% for venue in venues %}
         <div class="event-info-div">
-            <a href="/venue-info/{{venue.id}}/">
-                <h4>{{venue.name}}</h4>
-            </a>
-            <div>{{venue.location}}</div>
-            <div>{{venue.city}} {{venue.state}}</div>
-            <br>
-            <div>Maximum capacity: {{venue.max_capacity}}</div>
-            <div>Minimum price : {{venue.min_price}}</div>
-            <h5>
-                {% if venue.vendors.all %}
-                <div> Book full packege (Venue + Vendor)<a href="/full-package/{{venue.id}}/">View</a></div>
-                {% endif %}
-            </h5>
-            {% if request.user.is_authenticated %}
+            <div class="venue-info-container">
+                <div>
+                    <a href="/venue-info/{{venue.id}}/">
+                        <h4>{{venue.name}}</h4>
+                    </a>
+                    <div>{{venue.location}}</div>
+                    <div>{{venue.city}} {{venue.state}}</div>
+                    <br>
+                    <div>Maximum capacity: {{venue.max_capacity}}</div>
+                    <div>Minimum price : {{venue.min_price}}</div>
+                    <h5>
+                        {% if venue.vendors.all %}
+                        <div> Book full packege (Venue + Vendor)<a href="/full-package/{{venue.id}}/">View</a></div>
+                        {% endif %}
+                    </h5>
+                    {% if request.user.is_authenticated %}
 
-            {% if request.user.userprofile.user_type == 'is_customer' %}
+                    {% if request.user.userprofile.user_type == 'is_customer' %}
 
-            <form action="/create-book/" method="POST">
-                {% csrf_token %}
-                <input type="date" name="date" placeholder="date" required>
-                <input type="time" name="time" placeholder="time">
-                <input type="hidden" value="{{venue.id}}" name="venue_id">
-                <button type="submit">Book now</button>
+                    <form action="/create-book/" method="POST">
+                        {% csrf_token %}
+                        <input type="date" name="date" placeholder="date" required>
+                        <input type="time" name="time" placeholder="time">
+                        <input type="hidden" value="{{venue.id}}" name="venue_id">
+                        <button type="submit">Book now</button>
 
-                {% endif %}
+                        {% endif %}
 
-                {% else %}
-                <button class="un-auth-book"><a href="/login/">Book now</a></button>
-                {% endif %}
+                        {% else %}
+                        <button class="un-auth-book"><a href="/login/">Book now</a></button>
+                        {% endif %}
+                </div>      
+                <div class="portfolio-div">                    
 
+                    {% for image in venue.venue_images.all %}
+                        {% if forloop.counter == 1 %}
+                        <div><img src="{{image.image.url}}" alt="" ></div>                        
+                        {% endif %}
+                        {% if forloop.counter == 2 %}
+                        <div><img src="{{image.image.url}}" alt="" ></div>                        
+                        {% endif %}
+                        {% if forloop.counter == 3 %}
+                        <div><img src="{{image.image.url}}" alt="" ></div>                        
+                        {% endif %}
+                    {% endfor %}
+                    {% if venue.venue_images.all %}
+                    <div class="all-portfolio">
+                        <a href="/venue-info/{{venue.id}}/">See complete gallary</a>
+                    </div>
+                    {% endif %}
+                </div>  
+            </div>
+            
         </div>
         {% endfor %}
 
@@ -147,52 +170,80 @@
 
             {% for event in events %}
             <div class="event-info-div">
-                {% if event.event_planner.userprofile.profile_picture %}
-                <a href="/event-planner-info/{{event.event_planner.id}}/">
-                    <div> <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40"></div>
-                </a>    
-                <a href="/event-planner-info/{{event.event_planner.id}}/">
-                    <div><h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4></div>
-                </a>
-                {% else %}
-
-                <a href="/event-planner-info/{{event.event_planner.id}}/">
-                    <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40"></div>
-                </a>
-                <a href="/event-planner-info/{{event.event_planner.id}}/">
+                <div class="vendor-info-container">
+                <div>
+                    {% if event.event_planner.userprofile.profile_picture %}
+                    <a href="/event-planner-info/{{event.event_planner.id}}/">
+                        <div> <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40"></div>
+                    </a>    
+                    <a href="/event-planner-info/{{event.event_planner.id}}/">
                         <div><h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4></div>
-                </a>
-
-                
-                {% endif %}
-
-                <div>
-                    <h5>{{event.name}}</h5>
-                </div>
-                <div>
-                    {{event.event_planner.userprofile.location}}
-                </div>
-                <div>
-                    {{event.event_planner.userprofile.city}} {{event.event_planner.userprofile.state}}
-                </div>
-                <br>
-                <div>{{event.description}}</div>
-                <br>
-                    {% if request.user.is_authenticated %}
-                        {% if request.user.userprofile.user_type == 'is_customer' %}
-                        <form action="/create-book/" method="POST">
-                            {% csrf_token %}
-                            <div><b>Select your location :</b> <input type="text" name="location" placeholder="location" required></div>
-                            <br>
-                            <input type="date" name="date" placeholder="date" required>
-                            <input type="time" name="time" placeholder="time">
-                            <input type="hidden" value="{{event.event_planner.id}}" name="vendor_id">
-                            <button type="submit">Request booking</button>
-                        </form>
-                        {% endif %}
+                    </a>
                     {% else %}
-                    <button class="un-auth-book"><a href="/login/">Request booking</a></button>
+
+                    <a href="/event-planner-info/{{event.event_planner.id}}/">
+                        <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40"></div>
+                    </a>
+                    <a href="/event-planner-info/{{event.event_planner.id}}/">
+                            <div><h4>{{event.event_planner.first_name}} {{event.event_planner.last_name}}</h4></div>
+                    </a>
+
+                    
                     {% endif %}
+
+                    <div>
+                        <h5>{{event.name}}</h5>
+                    </div>
+                    <div>
+                        {{event.event_planner.userprofile.location}}
+                    </div>
+                    <div>
+                        {{event.event_planner.userprofile.city}} {{event.event_planner.userprofile.state}}
+                    </div>
+                    
+                    <br>
+                    <div>{{event.description}}</div>
+                    <br>
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.userprofile.user_type == 'is_customer' %}
+                            <form action="/create-book/" method="POST">
+                                {% csrf_token %}
+                                <div><b>Select your location :</b> <input type="text" name="location" placeholder="location" required></div>
+                                <br>
+                                <input type="date" name="date" placeholder="date" required>
+                                <input type="time" name="time" placeholder="time">
+                                <input type="hidden" value="{{event.event_planner.id}}" name="vendor_id">
+                                <button type="submit">Request booking</button>
+                            </form>
+                            {% endif %}
+                        {% else %}
+                        <button class="un-auth-book"><a href="/login/">Request booking</a></button>
+                        {% endif %}
+                     </div>
+                        <div class="portfolio-div">
+                            
+                            
+                            
+                            {% for image in event.event_planner.userprofile.vendor_images.all %}  
+                            
+                                {% if forloop.counter == 1 %}
+                                <div><img src="{{image.image.url}}" alt="" ></div>                                
+                                {% endif %}
+                                {% if forloop.counter == 2 %}
+                                <div><img src="{{image.image.url}}" alt="" ></div>                                
+                                {% endif %}
+                                {% if forloop.counter == 3 %}
+                                <div><img src="{{image.image.url}}" alt="" ></div>                                
+                                {% endif %}
+                            
+                            {% endfor %}
+                                {% if event.event_planner.userprofile.vendor_images.all %}
+                                <div class="all-portfolio">
+                                    <a href="/event-planner-info/{{event.event_planner.id}}/">See complete portfolio</a>
+                                </div>
+                                {% endif %}
+                        </div>  
+
             </div>
             {% endfor %}
 

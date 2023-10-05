@@ -5,7 +5,7 @@ from .models import Booking
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from EventPlanner.models import UserProfile,Category,Event,Venue
+from EventPlanner.models import UserProfile,Category,Event,Venue,Image
 from EventPlanner.forms import SignUpForm
 from django.db.models import Q
 
@@ -54,7 +54,8 @@ def book(request,pk):
         events_on_category = Event.objects.filter(category = category)
         events = Event.objects.filter(category = category)    
         venues = Venue.objects.filter(category = category)
-        venues_on_category = Venue.objects.filter(category = category)
+        venues_on_category = Venue.objects.filter(category = category)        
+                
 
         if request.method == 'GET':
             venue_city = request.GET.get('venue-city')
@@ -103,36 +104,10 @@ def book(request,pk):
             except:
                 pass
         
-        context = {'error':error,'events':events,'venues':venues,'pk':pk,'venue_city':venue_city,'min_price':min_price,'max_price':max_price,'vendor_city':vendor_city,'events_on_category':events_on_category,'venues_on_category':venues_on_category}
+        context = {'error':error,'events':events,'venues':venues,'pk':pk,'venue_city':venue_city,'min_price':min_price,'max_price':max_price,'vendor_city':vendor_city,'events_on_category':events_on_category,'venues_on_category':venues_on_category,}
 
         return render(request,'customer/booking.html',context)
 
-
-# def loginPage(request):
-#     validation_error = False
-#     if request.user.is_authenticated:
-#         return redirect('/home-C/')
-#     if request.method == 'POST':
-#         try:
-#             username = request.POST.get('username')
-#             password = request.POST.get('password')
-#             user = authenticate(request,username=username,password=password)
-#             if user:
-#                 if user.userprofile.user_type == 'is_customer':                
-#                     login(request,user)
-#                     return redirect('/home-C/')
-#                 else:
-#                     validation_error = True
-#             else:
-#                 validation_error = True
-#         except:
-#             pass
-#     context = {'validation_error':validation_error}
-#     return render(request,'customer/login-page.html',context)
-
-# @login_required(login_url='/login/')
-# def loggedIn(request):
-#     return render(request,'customer/logged-in.html')
 
 def full_package(request,pk):
     if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':

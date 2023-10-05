@@ -189,7 +189,10 @@ def ChangePassword(request):
 
 
 def EventPlannerInfo(request,pk):    
-    if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':  
+    if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':
+        user = User.objects.get(id = int(pk))
+        user_profile = UserProfile.objects.get(user = user)
+        images = Image.objects.filter(user_profile = user_profile)  
         if request.method == 'POST':
             if not request.user.is_authenticated:
                 return redirect('/login/')
@@ -220,7 +223,7 @@ def EventPlannerInfo(request,pk):
         except:
             received_dict = None
             sent_dict = None
-        context = {'user_profile_form':user_profile_form,'vendor':vendor,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,'received_dict':received_dict,'sent_dict':sent_dict}    
+        context = {'user_profile_form':user_profile_form,'vendor':vendor,'MessageForm':MessageForm,'messages':messages,'unique_token':unique_token,'pk':pk,'received_dict':received_dict,'sent_dict':sent_dict,'images':images}    
 
         return render(request,'EventPlanner/event-planner-info.html',context)
 
@@ -345,7 +348,8 @@ def vendor_images(request):
                 image_form_instance = image_form.save(commit = False)
                 image_form_instance.user_profile = request.user.userprofile
                 if image_form_instance.image:                                
-                    image_form_instance.save()                
+                    image_form_instance.save()
+                    request.user.userprofile.vendor_images.add(image_form_instance)                                    
                     return redirect('/vendor-images/')
                                 
             delete_image_id = request.POST.get('delete-image-id')  
