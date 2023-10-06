@@ -136,7 +136,7 @@
     text-decoration: underline;
     color: blue;
 }
-.go-back{
+.go-back{    
     position: relative;
     top: 70px;
     left: 7px;
@@ -177,9 +177,9 @@
     left: 250px;
 }
 
-.venue-location,.vendor-location{
+/* .venue-location,.vendor-location{
     background-color: rgb(255, 236, 239);
-}
+} */
 
 .showcase-img,.all-portfolio{    
     display: flex;
@@ -193,4 +193,17 @@
 }
 .complete-gallary,.complete-portfolio{
     font-size: medium;
+}
+.avaialble-options{
+    color: rgb(136, 0, 0);
+    text-decoration: none;
+}
+.avaialble-options:hover{
+    color:rgb(7, 71, 210);
+    text-decoration: underline;
+}
+
+.profile-image,.default-profile-image{
+    border-radius: 50%;
+    overflow: hidden;
 }

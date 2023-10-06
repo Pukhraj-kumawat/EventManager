@@ -8,12 +8,11 @@
     {% include 'navbar.html' %}
 </div>
 
-<p class="go-back"><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
+<a href="{{request.META.HTTP_REFERER}}" class="go-back">Go back</a>
 
-<h5>this is venue gallary</h5>
 
 <div class="grid-div">
-    <div>
+    <div class="venue-info-div">
 
         {% for field in venue_form %}
             {% if not field.name == 'venue_images' %}
@@ -24,11 +23,11 @@
 
     </div>
 
-    <div>
-        <div><b>Images</b></div>
+    <div class="venue-image-div">
+        
     {% for image in images %}
 
-    <img src="{{image.image.url}}" alt="">
+    <img src="{{image.image.url}}" alt="" width="400px">
 
     {% endfor %}
     </div>

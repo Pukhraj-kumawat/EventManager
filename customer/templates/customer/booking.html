@@ -7,7 +7,10 @@
 </div>
 
 
-<a href="{{request.META.HTTP_REFERER}}" class="go-back">Go back</a>
+<a href="{{request.META.HTTP_REFERER}}" class="go-back">
+    
+    <img src="/static/images/go back.jpeg" alt="" width="50px" height="20px">
+</a>
 
 <div class="grid-div">
     
@@ -109,8 +112,8 @@
                         <div>{{venue.city}} {{venue.state}}</div>
                     </div>
                     <br>
-                    <div>Maximum capacity: {{venue.max_capacity}}</div>
-                    <div>Minimum price : {{venue.min_price}}</div>
+                    <small><b>Capacity:  </b>{{venue.max_capacity}} persons</small>
+                    <div><small><b>Minimum price :</b> Rs {{venue.min_price}}</small></div>
                     <h5>
                         {% if venue.vendors.all %}
                         <div><b> Book full packege</b> <a href="/full-package/{{venue.id}}/" class="view">View</a></div>
@@ -179,7 +182,7 @@
 
         {% if venues_on_category %}
 
-        <div class="view-options-div"><a href="/book/{{pk}}/">View available options</a></div>
+        <div class="view-options-div"><a href="/book/{{pk}}/" class="avaialble-options">View available options</a></div>
 
         {% endif %}
 
@@ -220,12 +223,12 @@
                     <div>
                         {% if event.event_planner.userprofile.profile_picture %}
                         <a href="/event-planner-info/{{event.event_planner.id}}/">                            
-                                <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40">
+                                <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40" class="profile-image">
                         </a>    
                         {% else %}
 
                         <a href="/event-planner-info/{{event.event_planner.id}}/">
-                            <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40"></div>
+                            <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40" class="default-profile"></div>
                         </a>
                         {% endif %}
                     
@@ -308,7 +311,7 @@
 
         {% if events_on_category %}
         <div class="view-options-div">
-        <a href="/book/{{pk}}/">View available options</a>
+        <a href="/book/{{pk}}/" class="avaialble-options">View available options</a>
         </div>
         {% endif %}
     </div>
