@@ -7,7 +7,7 @@
 </div>
 
 
-<p class="go-back"><a href="{{request.META.HTTP_REFERER}}">Go back</a></p>
+<a href="{{request.META.HTTP_REFERER}}" class="go-back">Go back</a>
 
 <div class="grid-div">
     
@@ -104,24 +104,26 @@
                         {{venue.name}}
                     </a>
                     <br><br>
-                    <div>{{venue.location}}</div>
-                    <div>{{venue.city}} {{venue.state}}</div>
+                    <div class="venue-location">
+                        <div>{{venue.location}}</div>
+                        <div>{{venue.city}} {{venue.state}}</div>
+                    </div>
                     <br>
                     <div>Maximum capacity: {{venue.max_capacity}}</div>
                     <div>Minimum price : {{venue.min_price}}</div>
                     <h5>
                         {% if venue.vendors.all %}
-                        <div> Book full packege <a href="/full-package/{{venue.id}}/" class="view">View</a></div>
+                        <div><b> Book full packege</b> <a href="/full-package/{{venue.id}}/" class="view">View</a></div>
                         {% endif %}
                     </h5>
                     {% if request.user.is_authenticated %}
 
                     {% if request.user.userprofile.user_type == 'is_customer' %}
-
+                    <p>Select date and time</p>
                     <form action="/create-book/" method="POST">
                         {% csrf_token %}
-                        <input type="date" name="date" placeholder="date" required>
-                        <input type="time" name="time" placeholder="time">
+                        <input type="date" name="date" placeholder="date" required class="date-input">
+                        <input type="time" name="time" placeholder="time" class="time-input">
                         <input type="hidden" value="{{venue.id}}" name="venue_id">
                         <br><br><br>
                         <button type="submit" class="book-now-button">Book now</button>
@@ -136,13 +138,13 @@
 
                     {% for image in venue.venue_images.all %}
                         {% if forloop.counter == 1 %}
-                        <div><img src="{{image.image.url}}" alt="" ></div>                        
+                        <div class="showcase-img"><img src="{{image.image.url}}" alt="" ></div>                        
                         {% endif %}
                         {% if forloop.counter == 2 %}
-                        <div><img src="{{image.image.url}}" alt="" ></div>                        
+                        <div class="showcase-img"><img src="{{image.image.url}}" alt="" ></div>                        
                         {% endif %}
                         {% if forloop.counter == 3 %}
-                        <div><img src="{{image.image.url}}" alt="" ></div>                        
+                        <div class="showcase-img"><img src="{{image.image.url}}" alt="" ></div>                        
                         {% endif %}
                     {% endfor %}
                     {% if venue.venue_images.all %}
@@ -151,7 +153,14 @@
                     </div>
                     {% endif %}
                 </div>  
+                <div>
+
+                </div>
+                <div>
+                    
+                </div>
             </div>
+
             
         </div>
         {% endfor %}
@@ -209,51 +218,45 @@
                 <div class="vendor-info-container">
                     <div>
                         {% if event.event_planner.userprofile.profile_picture %}
-                        <a href="/event-planner-info/{{event.event_planner.id}}/">
-                            
+                        <a href="/event-planner-info/{{event.event_planner.id}}/">                            
                                 <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40">
-                            
                         </a>    
-                        <a href="/event-planner-info/{{event.event_planner.id}}/">
-                            {{event.event_planner.first_name}} {{event.event_planner.last_name}}
-                        </a>
                         {% else %}
 
                         <a href="/event-planner-info/{{event.event_planner.id}}/">
                             <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40"></div>
                         </a>
-                        <a href="/event-planner-info/{{event.event_planner.id}}/">
-                                {{event.event_planner.first_name}} {{event.event_planner.last_name}}                            
-                        </a>
-                    </div>
+                        {% endif %}
                     
-                    {% endif %}
+                        <a href="/event-planner-info/{{event.event_planner.id}}/" class="vendor-name">
+                            {{event.event_planner.first_name}} {{event.event_planner.last_name}}                            
+                        </a>                    
 
-                    <div>
-                        <h5>{{event.name}}</h5>
+                    <p>
+                       <b>{{event.name}}</b>
+                    </p>
+                    <div class="vendor-location">
+                        <div>
+                            {{event.event_planner.userprofile.location}}
+                        </div>
+                        <div>
+                            {{event.event_planner.userprofile.city}} {{event.event_planner.userprofile.state}}
+                        </div>
                     </div>
-                    <div>
-                        {{event.event_planner.userprofile.location}}
-                    </div>
-                    <div>
-                        {{event.event_planner.userprofile.city}} {{event.event_planner.userprofile.state}}
-                    </div>
-                    
                     <br>
-                    <div>{{event.description}}</div>
-                    <br>
+                    <div>{{event.description}}</div>                    
                         {% if request.user.is_authenticated %}
                             {% if request.user.userprofile.user_type == 'is_customer' %}
                             <form action="/create-book/" method="POST">
                                 {% csrf_token %}
-                                <div><b>Enter venue location :</b> </div>                                
+                                <p><b>Enter venue location :</b> </p>                                
                                 <input type="text" name="location" placeholder="Location" required>
-                                <br><br>
-                                <div><b>Select date and time for event</b></div>
-                                <input type="date" name="date" placeholder="date" required>
-                                <input type="time" name="time" placeholder="time">
+                                
+                                <p><b>Select date and time for event</b></p>
+                                <input type="date" name="date" placeholder="date" required class="date-input">
+                                <input type="time" name="time" placeholder="time" class="time-input">
                                 <input type="hidden" value="{{event.event_planner.id}}" name="vendor_id">
-                                <br><br>
+                                <br><br><br>
                                 <button type="submit" class="request-booking-button">Request booking</button>
                             </form>
                             {% endif %}
@@ -269,13 +272,13 @@
                             {% for image in event.event_planner.userprofile.vendor_images.all %}  
                             
                                 {% if forloop.counter == 1 %}
-                                <div><img src="{{image.image.url}}" alt="" ></div>                                
+                                <div class="showcase-img"><img src="{{image.image.url}}" alt="" ></div>                                
                                 {% endif %}
                                 {% if forloop.counter == 2 %}
-                                <div><img src="{{image.image.url}}" alt="" ></div>                                
+                                <div class="showcase-img"><img src="{{image.image.url}}" alt="" ></div>                                
                                 {% endif %}
                                 {% if forloop.counter == 3 %}
-                                <div><img src="{{image.image.url}}" alt="" ></div>                                
+                                <div class="showcase-img"><img src="{{image.image.url}}" alt="" ></div>                                
                                 {% endif %}
                             
                             {% endfor %}

@@ -8,6 +8,7 @@
 }
 .portfolio-div{
  display: grid;
+ height: 220px;
  grid-template-columns: 1fr  1fr;
  grid-row-gap: 0px;   
  gap: 10px;
@@ -20,7 +21,7 @@
 }
 
 .portfolio-div img{
-    width: 100%;
+    width: 90%;
     height: auto;
 }
 
@@ -38,6 +39,7 @@
 .grid-div {
     display: grid;
     grid-template-columns: 1fr 1fr;    
+    margin-top: 80px;
 
 }
 
@@ -67,9 +69,6 @@
     left: 60px;
 }
 
-.go-back{
-    margin-top: 100px;
-}
 .filter-div-event {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -109,76 +108,79 @@
     text-decoration: none;
     color:rgb(7, 71, 210);
 }
-.all-price-range:hover{
-    text-decoration:underline;
-    color: rgb(255, 109, 131);
-}
 
-.all-city{
-    text-decoration: none;
-    color:rgb(7, 71, 210);
-}
-.all-city:hover{
+.all-price-range:hover,.all-city:hover,.venue-city:hover,.vendor-city:hover,.complete-gallary:hover,.complete-portfolio:hover{
     text-decoration:underline;
     color: rgb(255, 109, 131);
 }
 
 
-.venue-city,.vendor-city{
+.venue-city,.vendor-city,.all-city,.complete-gallary,.complete-portfolio{
     text-decoration: none;    
     color:rgb(7, 71, 210);
 }
 
-.venue-city:hover{
-    text-decoration:underline;
-    color: rgb(255, 109, 131);
-}
-.vendor-city:hover{
-    text-decoration:underline;
-    color: rgb(255, 109, 131);
-}
 .search-bar-city{
     height: 25px;
     border: 1px solid #000;
     border-radius: 2px;
 }
-.venue-name,.complete-gallary,.complete-portfolio,.view{
+.venue-name,.view,.vendor-name,.go-back{
     text-decoration: none;
     color: rgb(136, 0, 0);
     font-weight: bold;
 }
-.venue-name:hover{
+.venue-name:hover,.vendor-name:hover,.view:hover,.go-back:hover{
     text-decoration: underline;
     color: blue;
 }
-.complete-gallary:hover{
-    text-decoration: underline;
-    color: blue;
+.go-back{
+    position: relative;
+    top: 70px;
+    left: 7px;
+    text-decoration: none;
 }
-.complete-portfolio:hover{
-    text-decoration: underline;
-    color: blue;
-}
-
-.view:hover{
-    text-decoration: underline;
-    color: blue;
+.vendor-name{
+    position: relative;
+    bottom: 10px;
 }
 
-.book-now-button{
+.book-now-button,.request-booking-button{
+    font-weight: bold;
     color: rgb(0, 0, 0);
     background-color: white;
     color:darkred;
-    border: solid;
+    border: solid rgb(0, 0, 0);
     border-width: 1px;
     border-radius: 3px;
-    width: 100px;
-    height: 30px;
+    width: 80px;
+    height: 25px;
 
 }
-
-.book-now-button:hover{
+.request-booking-button{
+    width: 130px;
+    height: 30px;
+}
+.book-now-button:hover ,.request-booking-button:hover{
     color: white;
     background-color: rgb(127, 127, 255);    
 
+}
+
+.venue-location,.vendor-location{
+    background-color: rgb(255, 236, 239);
+}
+
+.showcase-img,.all-portfolio{    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px black;
+    background-color: rgb(255, 236, 239);    
+}
+.all-portfolio{
+    width: 100%;
+}
+.complete-gallary,.complete-portfolio{
+    font-size: medium;
 }
