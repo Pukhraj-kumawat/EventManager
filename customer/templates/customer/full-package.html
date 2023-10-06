@@ -7,7 +7,9 @@
 <div class="navbar-div">
     {% include 'navbar.html' %}
 </div>
-<p ><a href="{{request.META.HTTP_REFERER}}" class="go-back">Go back</a></p>
+<a href="{{request.META.HTTP_REFERER}}" class="go-back">            
+    <img src="/static/images/back.png" alt="" width="40px"  >
+</a>
 
 <div class="grid-div">
 
@@ -25,7 +27,7 @@
             {% csrf_token %}
             <input type="date" name="date" placeholder="date" required>
             <input type="time" name="time" placeholder="time">
-            <input type="submit" value="SET">
+            <input type="submit" value="SET" class="set-button">
         </form>
         <br>
         {% if date and time %}

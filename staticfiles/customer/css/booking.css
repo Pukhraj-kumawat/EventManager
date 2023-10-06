@@ -1,3 +1,7 @@
+/* body{
+    background-color: rgb(255, 236, 239);    
+} */
+
 .venue-info-container{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -30,6 +34,7 @@
 .event-info-div {
     border: 0.3px solid #000;
     padding: 10px;
+    
 }
 
 .category-div {
@@ -41,8 +46,7 @@
 .grid-div {
     display: grid;
     grid-template-columns: 1fr 1fr;    
-    margin-top: 80px;
-
+    margin-top: 70px;  
 }
 
 /* .venue-div{
@@ -85,6 +89,7 @@
 .filter {
     border: 0.3px solid #000;
     padding: 10px;
+    /* background-color: rgb(255, 236, 239);     */
 }
 
 .price-range{
@@ -111,7 +116,7 @@
     color:rgb(7, 71, 210);
 }
 
-.all-price-range:hover,.all-city:hover,.venue-city:hover,.vendor-city:hover,.complete-gallary:hover,.complete-portfolio:hover{
+.all-price-range:hover,.all-city:hover,.venue-city:hover,.vendor-city:hover{
     text-decoration:underline;
     color: rgb(255, 109, 131);
 }
@@ -121,27 +126,25 @@
     text-decoration: none;    
     color:rgb(7, 71, 210);
 }
-
+.complete-gallary:hover,.complete-portfolio:hover{
+    text-decoration: underline;
+    color: rgb(136, 0, 0);
+}
 .search-bar-city{
-    height: 25px;
+    height: 20px;
     border: 1px solid #000;
     border-radius: 2px;
 }
-.venue-name,.view,.vendor-name,.go-back{
+.venue-name,.view,.vendor-name{
     text-decoration: none;
     color: rgb(136, 0, 0);
     font-weight: bold;
 }
-.venue-name:hover,.vendor-name:hover,.view:hover,.go-back:hover{
+.venue-name:hover,.vendor-name:hover,.view:hover{
     text-decoration: underline;
     color: blue;
 }
-.go-back{    
-    position: relative;
-    top: 70px;
-    left: 7px;
-    text-decoration: none;
-}
+
 .vendor-name{
     position: relative;
     bottom: 10px;
@@ -177,16 +180,13 @@
     left: 250px;
 }
 
-/* .venue-location,.vendor-location{
-    background-color: rgb(255, 236, 239);
-} */
 
 .showcase-img,.all-portfolio{    
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px black;
-    background-color: rgb(255, 236, 239);    
+    background-color: rgb(251, 217, 222);    
 }
 .all-portfolio{
     width: 100%;

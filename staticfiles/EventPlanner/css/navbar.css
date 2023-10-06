@@ -96,3 +96,10 @@
     top: 0;
 
 }
+
+.go-back{    
+    position: relative;
+    top: 70px;
+    left: 7px;
+    overflow: hidden;
+}

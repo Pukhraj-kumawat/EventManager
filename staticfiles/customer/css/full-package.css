@@ -13,7 +13,7 @@
 .grid-div{
     display: grid;
     grid-template-columns: 1fr 2fr;
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .vendor-info-div{
@@ -54,4 +54,19 @@
     align-items: center;
     border: 2px black;
     background-color: rgb(255, 236, 239);
+}
+.set-button{
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    background-color: white;
+    color:darkred;
+    border: solid rgb(0, 0, 0);
+    border-width: 1px;
+    border-radius: 3px;
+    width: 50px;
+    height: 24px;
+}
+.set-button:hover{
+    color: white;
+    background-color: rgb(127, 127, 255);   
 }

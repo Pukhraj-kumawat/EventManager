@@ -1,6 +1,7 @@
 .grid-div{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    margin-top: 80px;
 }
 .inner-grid-div{
     display:grid;
@@ -9,8 +10,4 @@
 
 #id_message{
     height: 20px;
-}
-
-.go-back{
-    margin-top: 100px;
 }
