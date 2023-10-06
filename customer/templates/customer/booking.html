@@ -115,24 +115,8 @@
                         {% if venue.vendors.all %}
                         <div><b> Book full packege</b> <a href="/full-package/{{venue.id}}/" class="view">View</a></div>
                         {% endif %}
-                    </h5>
-                    {% if request.user.is_authenticated %}
-
-                    {% if request.user.userprofile.user_type == 'is_customer' %}
-                    <p>Select date and time</p>
-                    <form action="/create-book/" method="POST">
-                        {% csrf_token %}
-                        <input type="date" name="date" placeholder="date" required class="date-input">
-                        <input type="time" name="time" placeholder="time" class="time-input">
-                        <input type="hidden" value="{{venue.id}}" name="venue_id">
-                        <br><br><br>
-                        <button type="submit" class="book-now-button">Book now</button>
-
-                        {% endif %}
-
-                        {% else %}
-                        <button class="un-auth-book"><a href="/login/" class="book-now-button">Book now</a></button>
-                        {% endif %}
+                    </h5>                   
+                    
                 </div>      
                 <div class="portfolio-div">                    
 
@@ -153,15 +137,32 @@
                     </div>
                     {% endif %}
                 </div>  
-                <div>
 
-                </div>
-                <div>
-                    
-                </div>
             </div>
 
-            
+            <div>
+                {% if request.user.is_authenticated %}
+
+                {% if request.user.userprofile.user_type == 'is_customer' %}
+                <div>
+                    <p>Select date and time</p>
+                    <form action="/create-book/" method="POST">
+                        {% csrf_token %}
+                        <input type="date" name="date" placeholder="date" required class="date-input">
+                        <input type="time" name="time" placeholder="time" class="time-input">
+                        <input type="hidden" value="{{venue.id}}" name="venue_id">
+                    
+                        <button type="submit" class="book-now-button">Book now</button>
+                        
+                    {% endif %}
+                </div>
+                {% else %}
+                <div>
+                    <button class="un-auth-book"><a href="/login/" class="book-now-button unauth-book-now-button">Book now</a></button>
+                </div>
+                {% endif %}
+            </div>
+        
         </div>
         {% endfor %}
 
@@ -244,25 +245,7 @@
                         </div>
                     </div>
                     <br>
-                    <div>{{event.description}}</div>                    
-                        {% if request.user.is_authenticated %}
-                            {% if request.user.userprofile.user_type == 'is_customer' %}
-                            <form action="/create-book/" method="POST">
-                                {% csrf_token %}
-                                <p><b>Enter venue location :</b> </p>                                
-                                <input type="text" name="location" placeholder="Location" required>
-                                
-                                <p><b>Select date and time for event</b></p>
-                                <input type="date" name="date" placeholder="date" required class="date-input">
-                                <input type="time" name="time" placeholder="time" class="time-input">
-                                <input type="hidden" value="{{event.event_planner.id}}" name="vendor_id">
-                                <br><br><br>
-                                <button type="submit" class="request-booking-button">Request booking</button>
-                            </form>
-                            {% endif %}
-                        {% else %}
-                        <button class="un-auth-book"><a href="/login/">Request booking</a></button>
-                        {% endif %}
+                    <div>{{event.description}}</div>                                           
                 </div>
 
 
@@ -287,10 +270,31 @@
                                     <a href="/event-planner-info/{{event.event_planner.id}}/" class="complete-portfolio">Complete portfolio</a>
                                 </div>
                                 {% endif %}
-                        </div>  
+                        </div>                          
 
             </div>
             {% endfor %}
+            <div>
+                {% if request.user.is_authenticated %}
+                {% if request.user.userprofile.user_type == 'is_customer' %}
+                <form action="/create-book/" method="POST">
+                    {% csrf_token %}
+                    <p><b>Enter venue location :</b> </p>                                
+                    <input type="text" name="location" placeholder="Location" required>
+                    
+                    <p><b>Select date and time for event</b></p>
+                    <input type="date" name="date" placeholder="date" required class="date-input">
+                    <input type="time" name="time" placeholder="time" class="time-input">
+                    <input type="hidden" value="{{event.event_planner.id}}" name="vendor_id">
+                
+                    <button type="submit" class="request-booking-button">Request booking</button>
+                </form>
+                {% endif %}
+            {% else %}
+            <button class="un-auth-book"><a href="/login/">Request booking</a></button>
+            {% endif %}
+
+            </div>
 
     </div>
 
