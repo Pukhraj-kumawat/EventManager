@@ -164,10 +164,9 @@ display: block;
 }
 
 
-.your-booking-2:active{
+.your-booking-2:hover{
     color: white;
-    background-color:rgb(51, 0, 255);
-    
+    background-color:rgb(51, 0, 255);    
 }
 
 .welcome-message-2{
@@ -185,7 +184,10 @@ display: block;
     text-decoration: none;
     color:rgb(7, 71, 210);
     font-weight: bold;
-
+}
+.category-name:hover{
+    color: rgb(136, 0, 0);
+    text-decoration: underline;
 }
 
 

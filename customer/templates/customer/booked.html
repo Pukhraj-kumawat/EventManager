@@ -1,5 +1,3 @@
-
-
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'customer/css/booked.css' %}">
@@ -17,191 +15,188 @@
     
     <div>
 
-        <h4>Bookings requests</h4>
-
     {% for booking in bookings reversed %}
 
         {% if booking.user == request.user %}
 
-        <hr>
-
 
         {% if booking.venue and booking.vendor %}
-        <h1>Full package block </h1>
+<div class="full-package-div">
 
-        <h2>Venue booked: => </h2>
 
-        <a href="/venue-info/{{booking.venue.id}}/">
+        <a href="/venue-info/{{booking.venue.id}}/" class="venue-name">
             <h3>{{booking.venue.name}}</h3>
         </a>
         <div>{{booking.venue.location}}</div>
-        <div>{{booking.venue.city}} {{booking.venue.state}}</div>
-        <h2>Vendor booked : => </h2>
+        <div>{{booking.venue.city}} {{booking.venue.state}}</div>        
+        <span style="font-size: 15px;"><b>({{booking.date}} {{booking.time}})</b></span>
 
+        <br>
         {% if booking.vendor.userprofile.profile_picture %}
-        <a href="/event-planner-info/{{booking.vendor.id}}">            
-            <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40">
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="anchor-profile">            
+            <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40" class="profile-picture">
         </a>
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
-        </a>
+
         {% else %}
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <img src="/static/images/No profile.jpeg" alt="" height="40" width="40">
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="anchor-profile">
+            <img src="/static/images/No profile.jpeg" alt="" height="40" width="40" class="profile-picture">
         </a>
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
-        </a>
+
         {% endif %}
 
-        <div>{{booking.vendor.userprofile.contact_info}}</div>        
-        <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
-        <div>{{booking.date}} {{booking.time}}</div>
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="vendor-name">
+            {{booking.vendor.first_name}} {{booking.vendor.last_name}}
+        </a>
 
+        {% if booking.vendor.userprofile.contact_info %}
+        <div>{{booking.vendor.userprofile.contact_info}}</div>        
+        {% endif %}
+        <div>
+            {% if booking.vendor.userprofile.company_name %}
+                {{booking.vendor.userprofile.company_name}} 
+            {% endif %}        
+            {% if booking.vendor.userprofile.website %}
+                {{booking.vendor.userprofile.website}}
+            {% endif %}
+        </div> 
+
+        <br><br>
 
         <form action="/delete-book/" method="POST">
             {% csrf_token %}
             <input type="hidden" value="{{booking.id}}" name="booking_id">
-            <input type="submit" value="Cancle booking">
+            <input type="submit" value="Cancle booking" class="cancle-booking">
         </form>
-
-        <hr>
+</div>
 
         {% elif booking.venue %}
+<div class="venue-div">        
 
-        <h2>Venue booked: => </h2>
-        <a href="/venue-info/{{booking.venue.id}}/">
+        <a href="/venue-info/{{booking.venue.id}}/" class="venue-name">
             <h3>{{booking.venue.name}}</h3>
         </a>
         <div>{{booking.venue.location}}</div>
         <div>{{booking.venue.city}} {{booking.venue.state}}</div>
-        <div>{{booking.date}} {{booking.time}}</div>
-
+        <span style="font-size: 15px;"><b>({{booking.date}} {{booking.time}})</b></span>
+        <br><br>
         <form action="/delete-book/" method="POST">
             {% csrf_token %}
             <input type="hidden" value="{{booking.id}}" name="booking_id">
-            <input type="submit" value="Cancle request">
+            <input type="submit" value="Cancle request" class="cancle-request">            
         </form>
 
-        <hr>
-
+</div>
         {% else %}
-
-        <h2>Vendor : => </h2>
-
-        
-
+<div class="vendor-div">
+        <br>
         {% if booking.vendor.userprofile.profile_picture %}
-        <a href="/event-planner-info/{{booking.vendor.id}}">            
-            <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40">
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="anchor-profile">            
+            <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40" class="profile-picture">
         </a>
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
-        </a>
+
         {% else %}
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <img src="/static/images/No profile.jpeg" alt="" height="40" width="40">
-        </a>
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="anchor-profile">
+            <img src="/static/images/No profile.jpeg" alt="" height="40" width="40" class="profile-picture">
         </a>
         {% endif %}
+
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="vendor-name">
+            {{booking.vendor.first_name}} {{booking.vendor.last_name}}
+        </a>
 
         <div>{{booking.vendor.userprofile.contact_info}}</div>
         <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
-        <div>{{booking.date}} {{booking.time}}</div>
         <div>
-            <h5>Location : => {{booking.location}}</h5>
+            <h4 style="height: 6px;">Location and time:</h4>
+            {{booking.location}} <br><span style="font-size: 15px;">{{booking.date}} {{booking.time}}</span>
         </div>
+        <br>
 
         <form action="/delete-book/" method="POST">
             {% csrf_token %}
             <input type="hidden" value="{{booking.id}}" name="booking_id">
-            <input type="submit" value="Cancle booking">
+            <input type="submit" value="Cancle booking" class="cancle-booking">
         </form>
+</div>        
         {% endif %}
 
         {% endif %}
-
+    
     {% endfor %}
 
     </div>
 
-    <div>
-        <h4>Bookings accpeted </h4>
-        <hr>
+
+
+    <div class="accepted-container">
 
         {% for booking in bookings reversed %}
-
+    <div class="accepted-div">
         {% if booking.user == request.user and booking.booking_accepted is True %}
 
 
         {% if booking.vendor.userprofile.profile_picture %}
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40">
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="anchor-profile">
+            <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40" class="profile-picture">
         </a>
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
-        </a>
+
         {% else %}
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <img src="/static/images/No profile.jpeg" alt="" height="40" width="40">
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="anchor-profile">
+            <img src="/static/images/No profile.jpeg" alt="" height="40" width="40" class="profile-picture">
         </a>
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
-        </a>
+        
         {% endif %}
+        
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="vendor-name">
+            {{booking.vendor.first_name}} {{booking.vendor.last_name}}
         </a>
-        <div>{{booking.vendor.userprofile.contact_info}}</div>
-        <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
-        <div>{{booking.date}} {{booking.time}}</div>
+
         <div>
-            <h5>Location : => {{booking.location}}</h5>
+            <h4 style="height: 6px;">Location and time:</h4>
+            {{booking.location}} <br><span style="font-size: 15px;">{{booking.date}} {{booking.time}}</span>
         </div>
-
         <p class="accepted">Accepted</p>
-
+        
         {% endif %}
-
+    </div>
         {% endfor %}
     </div>
 
-    <div>
+
+
+
+
+
+    <div class="rejected-container">
 
         {% for booking in bookings reversed %}
-
+    <div class="rejected-div">
         {% if booking.user == request.user and booking.booking_accepted is False %}
 
-        <h4>Booking rejects</h4>
-        <hr>
 
         {% if booking.vendor.userprofile.profile_picture %}
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40">
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="anchor-profile">
+            <img src="{{booking.vendor.userprofile.profile_picture.url}}" alt="" height="40" width="40" class="profile-picture"> 
         </a>
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
-        </a>
+
         {% else %}
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <img src="/static/images/No profile.jpeg" alt="" height="40" width="40">
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="anchor-profile">
+            <img src="/static/images/No profile.jpeg" alt="" height="40" width="40" class="profile-picture">
         </a>
-        <a href="/event-planner-info/{{booking.vendor.id}}">
-            <h3>{{booking.vendor.first_name}} {{booking.vendor.last_name}}</h3>
-        </a>
+
         {% endif %}
-        </a>
-        <div>{{booking.vendor.userprofile.contact_info}}</div>
-        <div>{{booking.vendor.userprofile.company_name}} {{booking.vendor.userprofile.website}}</div>
-        <div>{{booking.date}} {{booking.time}}</div>
+
+        <a href="/event-planner-info/{{booking.vendor.id}}" class="vendor-name">{{booking.vendor.first_name}} {{booking.vendor.last_name}}</a>
+
         <div>
-            <h5>Location : => {{booking.location}}</h5>
+            <h4 style="height: 6px;">Location and time:</h4>
+            {{booking.location}} <br><span style="font-size: 15px;">{{booking.date}} {{booking.time}}</span>
         </div>
 
         <p class="rejected">Rejected</p>
 
         {% endif %}
-
+    </div>
         {% endfor %}
 
     </div>
@@ -209,4 +204,3 @@
 </div>
 
 <script src="{% static 'js/booked.js' %}"></script>
-

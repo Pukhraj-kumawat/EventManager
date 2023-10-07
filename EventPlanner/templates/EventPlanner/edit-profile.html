@@ -11,62 +11,66 @@
     <img src="/static/images/back.png" alt="" width="40px"  >
 </a>
 
+<div><a href="/logout/" class="logout">Logout</a></div>
 
-<form id="profile-form" action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+<div class="grid-div">
+    <div class="profile-info">
+        <form id="profile-form" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-{% if request.user.userprofile.user_type == 'is_event_planner' %}
-    {% if request.user.userprofile.profile_picture %}
-            <img src="{{UserProfileForm.instance.profile_picture.url}}" alt=""  width="100" height="100">               
-            <div> {{UserProfileForm.profile_picture}}</div>            
-    {% else %}
-    <a href="/profile/">        
-        <img id="default-profile" src="{% static 'images/No profile.jpeg' %}" alt="" width="100" height="100">
-    </a>
-        <div> {{UserProfileForm.profile_picture}}</div>       
-    {% endif %}
-            <input type="hidden" value="" id="button-clicked" name="button-clicked">
-            <input id="remove-profile" type="button" value="Remove profile">
-
-{% endif %}
-    
-    <div>First name</div>
-    <div>{{user_form.first_name}}</div>
-
-    <div>Last name</div>
-    <div>{{user_form.last_name}}</div>
-
-
-    <div>Email</div>
-    <div>{{user_form.email}}</div>
-
-
-    <div class="hidden-div1">
-        <div>{{UserProfileForm.user}}</div>
-    </div>
-
-    <div class="hidden-div2">
-        <div>{{UserProfileForm.user_type}}</div>
-    </div>
-
-    {% if request.user.userprofile.user_type == 'is_event_planner' %}
-
-        {% for field in UserProfileForm %}
-            {% if not field.name == 'profile_picture' and not field.name == 'vendor_images' %}
-                <div>{{field.label_tag}}</div>
-                <div>{{field}}</div>
+        {% if request.user.userprofile.user_type == 'is_event_planner' %}
+            {% if request.user.userprofile.profile_picture %}
+                    <img src="{{UserProfileForm.instance.profile_picture.url}}" alt=""  width="100" height="100">               
+                    <div> {{UserProfileForm.profile_picture}}</div>            
+            {% else %}
+            <a href="/profile/">        
+                <img id="default-profile" src="{% static 'images/No profile.jpeg' %}" alt="" width="100" height="100">
+            </a>
+                <div> {{UserProfileForm.profile_picture}}</div>       
             {% endif %}
-        {% endfor %}
+                    <input type="hidden" value="" id="button-clicked" name="button-clicked">
+                    <input id="remove-profile" type="button" value="Remove profile">
 
-    {% endif %}
+        {% endif %}
+            
+            <div><b>First name</b></div>
+            <div>{{user_form.first_name}}</div>
+            <br>
+            <div><b>Last name</b></div>
+            <div>{{user_form.last_name}}</div>
+            <br>
+            <div><b>Email</b></div>
+            <div>{{user_form.email}}</div>
+            <br>
+            <div class="hidden-div1">
+                <div>{{UserProfileForm.user}}</div>
+            </div>
 
-    <input type="submit" value="Submit">
+            <div class="hidden-div2">
+                <div>{{UserProfileForm.user_type}}</div>
+            </div>
 
-</form>
+            {% if request.user.userprofile.user_type == 'is_event_planner' %}
 
-<div>
-    <a href="/change-password/">Change password</a>
+                {% for field in UserProfileForm %}
+                    {% if not field.name == 'profile_picture' and not field.name == 'vendor_images' %}
+                        <div>{{field.label_tag}}</div>
+                        <div>{{field}}</div>
+                    {% endif %}
+                {% endfor %}
+
+            {% endif %}
+
+            <input type="submit" value="Submit" class="submit">
+
+        </form>
+    </div>
+    <div>
+        <a href="/change-password/" class="change-password">Change password</a>
+    </div>
 </div>
+
+
 
 <script src="{% static 'EventPlanner/js/edit-profile.js' %}"></script>
 
