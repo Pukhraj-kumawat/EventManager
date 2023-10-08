@@ -1,14 +1,50 @@
-.login-form-div {
+.login-container{
+    margin-top: 100px;   
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 
 }
+.login-form-div{
+    background-color: rgb(255, 236, 239);  
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    width: 300px;
+    height: 200px;
+}
+
 .validation-error-div{
     display: flex;
+    align-items: center;
     justify-content: center;
+    background-color: rgb(255, 236, 239);
+    width: 320px;
+}
+
+.log-in,.sign-up{
+    text-decoration: none;
+    font-weight: bold;
+    background-color: white;
+    color:darkred;
+    border: solid rgb(0, 0, 0);
+    border-width: 1px;
+    border-radius: 2px;
+    padding: 2px 4px;
 
 }
 
-.login-container{
-    margin-top: 100px;
+.log-in:hover,.sign-up:hover{
+    background-color: darkred;
+    color: white;
+
+}
+.sign-up{
+    border: none;
+}
+.log-in{
+    position: relative;
+    left: 40px;
+    top: 10px;
 }

@@ -87,7 +87,7 @@
     transition: 0.3s ease;
 }
 
-.customer-navbar{
+.customer-navbar,.vendor-navbar{
     position: fixed;
     background-color:lightpink;
     width: 100%;
@@ -102,4 +102,12 @@
     top: 70px;
     left: 7px;
     overflow: hidden;
+}
+.profile-image{
+    position: absolute;
+    right: 40px;
+    top: 10px;    
+}
+.profile-pic{
+    border-radius: 50%;
 }

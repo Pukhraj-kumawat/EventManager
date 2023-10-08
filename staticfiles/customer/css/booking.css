@@ -210,3 +210,20 @@
 .profile-image-div{
     text-decoration: none;
 }
+.unauth-book-now-button,.un-auth-book{
+    text-decoration: none;
+    font-weight: bold;
+    background-color: white;
+    color:darkred;
+    border: solid rgb(0, 0, 0);
+    border-width: 1px;
+    border-radius: 2px;
+    width: 80px;
+    height: 25px;
+    padding: 2px 5px;
+}
+.unauth-book-now-button:hover,.un-auth-book:hover{
+    color:rgb(7, 71, 210);
+    text-decoration: underline;
+}
+

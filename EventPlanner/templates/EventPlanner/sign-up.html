@@ -15,15 +15,21 @@
 
         {% for field in signUpForm %}
 
-        <p>{{field.label_tag}}</p>
-        <p class="{{fiels.label_tag}}">{{field}}</p>
-        {{validation_error.field.label_tag}}
+        {{field.label_tag}}
+        <p >{{field}}</p>
 
+            {% if field.name == 'username' %}
+                {{validation_error.username}}
+            {% endif %}
+
+            {% if field.name == 'password2' %}    
+                {{validation_error.password2}}
+            {% endif %}                
         {% endfor %}
 
         <div class="sign-up-button-div">
             <input type="submit" value="Sign Up" class="sign-up-button">
-            </div> 
+        </div> 
 
         {% if user_type == 'is_customer' %}
         <h4>
@@ -39,8 +45,7 @@
 
 </div>
 
-<hr>
-{{errors}}
+
 
 <script src="{% static 'EventPlanner/js/sign-up.js' %}"></script>
 

@@ -66,7 +66,7 @@ def signUp(request,user_type):
                 form = SignUpForm(request.POST)
 
                 if form.is_valid():
-                    user = form.save(commit=False)
+                    user = form.save(commit = False)
                     # save the form 
                     user.save()
                     # Check whther user is an event planner 
@@ -75,25 +75,23 @@ def signUp(request,user_type):
                         UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_event_planner')
                         # login the user
                         login(request,user)
-                        # redirect the user to logged in page
+                        # redirect the user to home in page
                         return redirect('/home-E/')                    
                     else:
                         UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_customer')
                         # login the user
                         login(request,user)
                         # redirect the user to logged in page
-                        return redirect('/logged-in-C/')      
+                        return redirect('/home-E/')      
                 else:
                     # catch the error
                     validation_error = form.errors                
             except:
+                return HttpResponse('some error')
                 pass
         context = {'signUpForm':SignUpForm,'validation_error':validation_error,'user_type':user_type}
         return render(request,'EventPlanner/sign-up.html',context)
-    
-# @login_required(login_url='/login/')
-# def loggedIn(request):
-#     return render(request,'EventPlanner/logged-in.html')
+
 
 
 def loginPage(request):
@@ -243,7 +241,7 @@ def DeleteAccount(request):
 def confirmDelete(request):
     user = request.user
     user.delete()
-    return redirect('/')
+    return redirect('/home-C/')
 
 @login_required(login_url='/login/')
 def Messages_display(request):

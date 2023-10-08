@@ -56,14 +56,18 @@
                     </a>    
                     {% if request.user.is_authenticated %}
                     <span class="welcome-message welcome-message-2">welocome to <b>{{request.user.first_name}}</b></span>
-                    {% endif %}         
+                    <div>
+                        <a href="/create-event/" class="upload-event">Upload an Event</a>
+                    </div>
+                    {% endif %}
+                            
                     {% if request.user.userprofile.profile_picture %}            
                     <a href="/profile/" class="profile-image profile-image-2">        
-                        <img src="{{request.user.userprofile.profile_picture.url}}" alt="" width="35" height="35" >
+                        <img src="{{request.user.userprofile.profile_picture.url}}" alt="" width="35" height="35" class="profile-pic">
                     </a>
                     {% else %}      
                     <a href="/profile/" class="default-profile default-profile-2">        
-                        <img src="{% static 'images/No profile.jpeg' %}" alt="" width="35" height="35" class="profile">
+                        <img src="{% static 'images/No profile.jpeg' %}" alt="" width="40" height="40" class="profile">
                     </a>                
                     {% endif %} 
                 </div>    

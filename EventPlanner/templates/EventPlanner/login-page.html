@@ -8,26 +8,28 @@
 </div>
 
 <div class="login-container">
-    <div class="login-form-div">
-        <form action="" method="POST">
-            {% csrf_token %}
-            <p>Enter username</p>
-            <input type="text" name="username" placeholder="username" class="username">
-            <p>Enter password</p>
-            <input type="password" name="password" placeholder="password" class="password">
-            <p>
-                <input type="submit" value="Log in">                
-            </p>
-            <div>
-                Need an account? <a href="/sign-up-customer/">Sign up</a>
-            </div>
-        </form>
-    </div>
+    
+        <div class="login-form-div">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <p class="enter-username">Enter username</p>
+                <input type="text" name="username" placeholder="username" class="username">
+                <p class="enter-password">Enter password</p>
+                <input type="password" name="password" placeholder="password" class="password">
+                <p>
+                    <input type="submit" value="Log in" class="log-in">                
+                </p>                
+            </form>
+        </div>
+        <div class="validation-error-div">
+            {% if validation_error %}
+            <p>Username or Password is invalid!</p>
+            {% endif %}
+        </div>
+        <br>
+        <div>
+            Need an account? <a href="/sign-up-customer/" class="sign-up">Sign up</a>
+        </div>
 
-    <div class="validation-error-div">
-        {% if validation_error %}
-        <p>Username or Password is invalid!</p>
-        {% endif %}
-    </div>
 </div>
 <script src="{% static 'EventPlanner/js/login-page.js' %}"></script>
