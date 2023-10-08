@@ -207,3 +207,6 @@
     border-radius: 50%;
     overflow: hidden;
 }
+.profile-image-div{
+    text-decoration: none;
+}

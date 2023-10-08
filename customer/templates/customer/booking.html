@@ -236,12 +236,12 @@
                         <div class="vendor-info-container">
                             <div>
                                 {% if event.event_planner.userprofile.profile_picture %}
-                                <a href="/event-planner-info/{{event.event_planner.id}}/">                            
+                                <a href="/event-planner-info/{{event.event_planner.id}}/" class="profile-image-div">                             
                                         <img src="{{event.event_planner.userprofile.profile_picture.url}}" alt="" width="40" height="40" class="profile-image">
                                 </a>    
                                 {% else %}
         
-                                <a href="/event-planner-info/{{event.event_planner.id}}/">
+                                <a href="/event-planner-info/{{event.event_planner.id}}/" class="profile-image-div">
                                     <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40" class="default-profile"></div>
                                 </a>
                                 {% endif %}
