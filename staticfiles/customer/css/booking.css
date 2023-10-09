@@ -12,9 +12,12 @@
     grid-template-columns: 1fr 1fr;
     column-gap: 12px;
 }
+/* .vendor-info-div{
+    height: fit-content;
+} */
 .portfolio-div{
  display: grid;
- height: 220px;
+ height: fit-content;
  grid-template-columns: 1fr  1fr;
  grid-row-gap: 0px;   
  gap: 10px;

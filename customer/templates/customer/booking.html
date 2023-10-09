@@ -180,6 +180,7 @@
                     </div>
                 
                 </div>
+
                 {% endfor %}
         
         
@@ -231,7 +232,7 @@
                 </div>
         
         
-                    {% for event in events %}
+                {% for event in events %}
                     <div class="event-info-div">
                         <div class="vendor-info-container">
                             <div>
@@ -308,13 +309,17 @@
                         </form>
 
                         {% endif %}
+
                     {% else %}
+                    <br>
                     <a href="/login/" class="un-auth-book">Request booking</a>
                     {% endif %}
         
                     </div>
+
+                </div>
                 {% endfor %}
-            </div>
+            
         
             {% else %}
         
