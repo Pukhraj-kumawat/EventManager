@@ -111,3 +111,21 @@
 .profile-pic{
     border-radius: 50%;
 }
+
+.upload-event{
+    text-decoration: none;
+    font-weight: bold;
+    background-color: white;
+    color:darkred;
+    border: solid rgb(0, 0, 0);
+    border-width: 1px;
+    border-radius: 2px;
+    padding: 2px 4px;
+    position: relative;
+    left: 1060px;
+    top: 18px;
+}
+.upload-event:hover{
+    background-color: darkred;
+    color: white;
+}

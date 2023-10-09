@@ -2,22 +2,30 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'EventPlanner/css/create-event.css' %}">
+<link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
+
+<div class="navbar-div">
+    {% include 'navbar.html' %}
+    </div>
 
 <a href="{{request.META.HTTP_REFERER}}" class="go-back">            
     <img src="/static/images/back.png" alt="" width="40px"  >
 </a>
 
-<h3>Create a Event...</h3>
+<div class="parent-div">
 
-<form action="" method="POST">
-    {% csrf_token %}
-    {% for field in EventForm %}
-        <div>{{field.label_tag}}</div>
-        <div>{{field}}</div>
-
-    {% endfor %}
-    <input type="submit" value="Submit">
-</form>
-
+    <h3 class="upload-a-event">Upload a Event...</h3>
+    <div class="form-div">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {% for field in EventForm %}
+            <p class="field-lable">{{field.label_tag}}</p>
+            <div>{{field}}</div>
+        {% endfor %}
+        <br>
+        <input type="submit" value="Submit" class="submit">
+    </form>
+    </div>
+</div>
 <script src="{% static 'EventPlanner/js/create-event.js' %}"></script>
 

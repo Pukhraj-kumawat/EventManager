@@ -1,0 +1,21 @@
+.parent-div{
+    margin-top: 100px;
+    background-color: rgb(255, 236, 239);
+    width: fit-content;
+    padding: 10px;
+    margin-left: 20px;
+}
+.submit{
+    text-decoration: none;
+    font-weight: bold;
+    background-color: white;
+    color:darkred;
+    border: solid rgb(0, 0, 0);
+    border-width: 1px;
+    border-radius: 2px;
+    padding: 2px 4px;
+}
+.submit:hover{
+    background-color: darkred;
+    color: white;
+}

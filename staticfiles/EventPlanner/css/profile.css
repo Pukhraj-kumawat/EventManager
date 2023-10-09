@@ -1,11 +1,20 @@
+body{
+    margin-bottom: 50px;
+}
+
 .profile-div{
     margin-top: 100px;
     padding-left: 20px;
 }
 
+.portfolio-div{
+    margin-top:95px ;
+}
+
 .grid-div{
     display: grid;
     grid-template-columns: 1fr 2fr;
+    column-gap: 20px;
 }
 .profile-data-div{    
     border: 1px black;
@@ -14,6 +23,7 @@
     padding: 10px 10px 10px 20px;
     background-color: rgb(255, 236, 239);   
 }
+
 .delete-account{
     position: relative;
     top: 40px;
@@ -23,7 +33,7 @@
     right: 5px;
     bottom: 5px;
 }
-.logout{
+.logout,.portfolio-images{
     text-decoration: none;
     border: 1px solid black;
     border-radius: 1.7px;    
@@ -32,10 +42,15 @@
     font-weight: bold;
     margin-left: 2px;
 }
-.logout:hover{
+.logout:hover,.portfolio-images:hover{
     color: white;
     background-color:rgb(119, 91, 232);
     transition: 0.3s ease;
+}
+.portfolio-images{
+    position: relative;
+    left: 145px;
+    bottom: 80px;
 }
 .delete-account{
     text-decoration: none;
@@ -45,6 +60,7 @@
     background-color: rgb(142, 20, 20);
     color: white;
     font-weight: bold;
+
 }
 .delete-account:hover{
     text-decoration: none;
@@ -55,10 +71,9 @@
     background-color: white;
 }
 .delete-div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    position: relative;
+    left: 600px;
+    bottom: 300px;
 }
 
 .back{
@@ -93,4 +108,13 @@
     border-radius: 2px;    
     background-color: white;
 
+}
+.profile-image-big{
+    border-radius: 50%;
+    /* position: relative;
+    left: 0px; */
+}
+.profile{
+    /* position: relative;
+    left: 300px; */
 }

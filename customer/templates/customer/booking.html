@@ -290,7 +290,7 @@
                                 </div>                          
         
                     </div>
-                    {% endfor %}
+                    
                     <div>
                         {% if request.user.is_authenticated %}
                         {% if request.user.userprofile.user_type == 'is_customer' %}
@@ -303,16 +303,17 @@
                             <input type="date" name="date" placeholder="date" required class="date-input">
                             <input type="time" name="time" placeholder="time" class="time-input">
                             <input type="hidden" value="{{event.event_planner.id}}" name="vendor_id">
-                        
+                            
                             <button type="submit" class="request-booking-button">Request booking</button>
                         </form>
+
                         {% endif %}
                     {% else %}
                     <a href="/login/" class="un-auth-book">Request booking</a>
                     {% endif %}
         
                     </div>
-        
+                {% endfor %}
             </div>
         
             {% else %}
@@ -331,6 +332,7 @@
             </div>
         
             {% endif %}
+        
         
         </div>
         

@@ -41,7 +41,7 @@
     width: 300px;
     word-wrap: break-word;
 }
-.upload-event,.edit,.delete{
+.edit,.delete{
     text-decoration: none;
     font-weight: bold;
     background-color: white;
@@ -57,7 +57,7 @@
     top: 18px;
 }
 
-.upload-event:hover,.edit:hover,.delete:hover{
+.edit:hover,.delete:hover{
     background-color: darkred;
     color: white;
 }

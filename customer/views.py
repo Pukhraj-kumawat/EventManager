@@ -148,10 +148,10 @@ def create_book(request):
             venue = Venue.objects.get(id = venue_id)
             vendor = None
             booking = Booking(venue=venue,user = request.user,date=date,time=time,location = location)        
-        if vendor_id and not venue_id:
+        if vendor_id and not venue_id:            
             vendor = User.objects.get(id = vendor_id)
             venue = None
-            booking = Booking(vendor=vendor,user = request.user,date=date,time=time,location = location)  
+            booking = Booking(vendor=vendor,user = request.user,date=date,time=time,location = location)          
         booking.save()
         return redirect('/booked/')
 
