@@ -87,7 +87,7 @@ body {
 .event-div {
     border: 0.4px solid #000;
     padding: 10px;
-    background-color: rgb(255, 236, 239);    
+    /* background-color: rgb(255, 236, 239);     */
 }
 
 .photo{

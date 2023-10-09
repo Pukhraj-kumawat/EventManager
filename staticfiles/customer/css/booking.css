@@ -147,7 +147,7 @@
 
 .vendor-name{
     position: relative;
-    bottom: 10px;
+    bottom: 0px;
 }
 
 .book-now-button,.request-booking-button{
@@ -177,7 +177,8 @@
 }
 .request-booking-button{
     position: relative;
-    left: 250px;
+    bottom: 10px;
+    left: 240px;
 }
 
 

@@ -127,18 +127,18 @@ def logoutPage(request):
 
 
 @login_required(login_url='/login/')
-def edit_profile(request):
+def edit_profile(request):    
     user_errors = None
     profile_errors = None    
     button_clicked = None
     user_profile = UserProfile.objects.get(user = request.user)
     profile_form = UserProfileForm(instance = user_profile,initial={'website': user_profile.website if user_profile.website else 'https://'})
-    user_form = UserForm(instance = request.user)
-    if request.method == 'POST':                           
-        try:            
+    user_form = UserForm(instance = request.user)        
+    if request.method == 'POST':                                                   
+        try:                        
             profile_form = UserProfileForm(request.POST,request.FILES,instance = user_profile)                   
             user_form = UserForm(request.POST,instance = request.user)
-            button_clicked = request.POST.get('button-clicked')                                                      
+            button_clicked = request.POST.get('button-clicked')                                                                  
             if button_clicked:                                   
                 # default_profile = open('media/images/No profile.jpeg','rb')                                             
                 request.user.userprofile.profile_picture.delete()                

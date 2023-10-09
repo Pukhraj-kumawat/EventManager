@@ -44,7 +44,7 @@
                         <img src="{% static 'images/No profile.jpeg' %}" alt="" width="35" height="35" >  
                     </a>
                     {% if request.user.is_authenticated %}
-                    <span class="welcome-message welcome-message-2">welocome to <b>{{request.user.first_name}}</b></span>
+                    <span class="welcome-message welcome-message-2">Welocome to Event Hub, <b>"{{request.user.first_name}}"</b></span>
                     {% endif %}
                 </div>
             {% endif %}

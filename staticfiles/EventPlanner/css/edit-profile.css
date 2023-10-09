@@ -11,7 +11,18 @@
     padding: 10px 10px 10px 20px;    border: 1px black;
     border-style: solid;
     width: 380px;
-    height: 195px;
+    height: fit-content;
+}
+
+#remove-profile{
+    margin-bottom: 30px;
+}
+#id_profile_picture{
+    margin: 10px 0px;
+
+}
+.profile-pic{
+    border-radius: 50%;
 }
 
 #id_first_name{
@@ -67,4 +78,11 @@
     color: white;
     background-color:rgb(119, 91, 232);
     transition: 0.3s ease;
+}
+.label_tag{
+    font-weight: bold;
+    margin-bottom: -15px;
+}
+.extra-profile-div{
+    margin-top: -15px;
 }
