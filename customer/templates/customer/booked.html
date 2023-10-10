@@ -83,7 +83,7 @@
         <form action="/delete-book/" method="POST">
             {% csrf_token %}
             <input type="hidden" value="{{booking.id}}" name="booking_id">
-            <input type="submit" value="Cancle request" class="cancle-request">            
+            <input type="submit" value="Cancle booking" class="cancle-request">            
         </form>
 
 </div>
@@ -116,7 +116,7 @@
         <form action="/delete-book/" method="POST">
             {% csrf_token %}
             <input type="hidden" value="{{booking.id}}" name="booking_id">
-            <input type="submit" value="Cancle booking" class="cancle-booking">
+            <input type="submit" value="Cancle request" class="cancle-booking">
         </form>
 </div>        
         {% endif %}

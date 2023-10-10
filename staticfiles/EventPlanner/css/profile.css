@@ -8,7 +8,15 @@ body{
 }
 
 .portfolio-div{
-    margin-top:95px ;
+    margin-top:150px ;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: fit-content;
+    width: fit-content;
+}
+.portfolio-image{
+    padding: 5px;
+
 }
 
 .grid-div{

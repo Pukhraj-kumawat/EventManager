@@ -55,8 +55,9 @@
 
             
             {% if booking.booking_accepted is None %}
-            <button><a href="/accept-booking/{{booking.id}}/accepted/">Accept</a> </button>
-            <button><a href="/accept-booking/{{booking.id}}/rejected/">Reject</a></button>
+            <br>
+            <a href="/accept-booking/{{booking.id}}/accepted/" class="accept">Accept</a>
+            <a href="/accept-booking/{{booking.id}}/rejected/" class="reject">Reject</a>
 
             {% elif booking.booking_accepted is False %}
             <p class="rejected">Rejected</p>

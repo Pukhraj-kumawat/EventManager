@@ -68,9 +68,9 @@
 
                 
             <div class="portfolio-div">
-                <br><br><br>
+                            
                 {% for image in images %}
-                    <img src="{{image.image.url}}" alt="">
+                    <div class="portfolio-image"><img src="{{image.image.url}}" alt="" width="250px"></div>
                 {% endfor %}
 
             </div>

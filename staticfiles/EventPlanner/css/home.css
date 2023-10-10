@@ -115,3 +115,19 @@
     background-color: blue;
     
 }
+
+.accept,.reject{
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 1.7px;    
+    font-weight: bold;
+    margin-left: 2px;
+    background-color: white;
+    padding: 2px 4px;
+}
+.accept{
+    color: green;
+}
+.reject{
+    color: red;
+}
