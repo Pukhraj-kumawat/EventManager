@@ -85,7 +85,9 @@
                     {% for receiver,msgs in sent_dict.items %}
                     {% if receiver == sender %}
                     {% for msg in msgs %}
-                    <div><b>{{msg}}</b></div>
+                    <div><b>{{msg.message}}</b></div>
+                    <div style="font-size: small;">({{msg.created}})</div>
+                    <br>
                     {% endfor %}
                     {% endif %}
                     {% endfor %}   
@@ -96,6 +98,8 @@
                 <div class="receiver-messages">                    
                     {% for message in messages %}
                     <div>{{message.message}}</div>
+                    <div style="font-size: small;">({{message.created}})</div>
+                    <br>
                     {% endfor %}
 
                 </div>
@@ -121,5 +125,8 @@
 
     </div>
 </div>
+
+
+
 <script src="{% static 'EventPlanner/js/home.js' %}"></script>
 

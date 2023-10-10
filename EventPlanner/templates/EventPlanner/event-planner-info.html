@@ -65,25 +65,29 @@
                 {% endfor %}
                 <br>
             </div>
-    
-    </div>
-    <div class="empty-div"></div>
 
-    <div class="form-div">
-        <form action="" method="POST" id="send-bar">
-            {% csrf_token %}
-                {{MessageForm.message}}
-            <input type="hidden" value="{{unique_token}}" name="unique-token">
-            <input type="submit" value="Send" class="send-button">
-        </form>           
-        <img src="{{vendor.userprofile.profile_picture.url}}" alt="" width="30px" height="30px" class="profile">
-        <div class="sender-name">            
-            {{vendor.first_name}} {{vendor.last_name}}
-        </div>
-        
+
+            <div class="form-div">
+                <form action="" method="POST" id="send-bar">
+                    {% csrf_token %}
+                        {{MessageForm.message}}
+                    <input type="hidden" value="{{unique_token}}" name="unique-token">
+                    <input type="submit" value="Send" class="send-button">
+                </form>                             
+            </div>
+
+            <span class="sender-name-div">
+                <img src="{{vendor.userprofile.profile_picture.url}}" alt="" width="30px" height="30px" class="profile">
+                <span class="sender-name">            
+                    {{vendor.first_name}} {{vendor.last_name}}
+                </span>  
+            </div>
+
     </div>
     
 </div>
+
+
 
 <div class="portfolio-div">
 {% for image in images %}

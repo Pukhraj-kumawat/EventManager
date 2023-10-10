@@ -10,6 +10,8 @@
 
 <div class="sign-up-form">
 
+<div class="sign-up-div">
+
     <form action="" method="POST">
         {% csrf_token %}
 
@@ -30,19 +32,20 @@
         <div class="sign-up-button-div">
             <input type="submit" value="Sign Up" class="sign-up-button">
         </div> 
-
+</div>
+<div class="already-div">
         {% if user_type == 'is_customer' %}
         <h4>
-            Already Signed up? <a href="/login/">Sign in</a>
+            Already Signed up? <a href="/login/" class="sign-in">Sign in</a>
         </h4>
         {% else %}
         <h4>
-            Already Signed up? <a href="/login/">Sign in</a>
+            Already Signed up? <a href="/login/" class="sign-in">Sign in</a>
         </h4>
         {% endif %}
 
     </form>
-
+</div>
 </div>
 
 

@@ -218,10 +218,10 @@ display: block;
     font-weight: bold;
     z-index: 5;
 }
-
-
-
-
+.list-your-business:hover{
+    color: white;
+    background-color: blue;
+}
 
 
 /* Upone scrolling for unauth => */

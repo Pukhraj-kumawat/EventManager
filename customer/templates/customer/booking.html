@@ -243,14 +243,14 @@
                                 {% else %}
         
                                 <a href="/event-planner-info/{{event.event_planner.id}}/" class="profile-image-div">
-                                    <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40" class="default-profile"></div>
+                                    <div> <img src="/static/images/No profile.jpeg" alt="" width="40" height="40" class="default-profile" style="margin-right: 7px;"></div>
                                 </a>
                                 {% endif %}
                             
                                 <a href="/event-planner-info/{{event.event_planner.id}}/" class="vendor-name">
-                                    {{event.event_planner.first_name}} {{event.event_planner.last_name}}                            
+                                    {{event.event_planner.first_name}} {{event.event_planner.last_name}}                         
                                 </a>                    
-        
+                                <br><br>
                             <p>
                                <b>{{event.name}}</b>
                             </p>

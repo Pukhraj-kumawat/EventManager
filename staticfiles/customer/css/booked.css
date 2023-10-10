@@ -104,3 +104,12 @@
     color: white;
 }
 
+.no-booking{
+    position: relative;
+    top: 150px;
+    left: 460px;
+    font-weight: bold;
+    background-color: rgb(255, 236, 239);
+    padding: 5px;
+    width: fit-content;
+}

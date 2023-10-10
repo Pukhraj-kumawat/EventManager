@@ -32,7 +32,11 @@ def home(request):
         bookings = Booking.objects.filter(vendor = request.user)
         events = Event.objects.filter(event_planner = request.user)
         
-        received_dict,sent_dict =  Messages_display(request)
+        try:
+            received_dict,sent_dict = Messages_display(request)
+        except:
+            received_dict = None
+            sent_dict = None
 
         context = {'bookings':bookings,'received_dict':received_dict,'sent_dict':sent_dict,'MessageForm':MessageForm,'events':events}
 
@@ -82,12 +86,11 @@ def signUp(request,user_type):
                         # login the user
                         login(request,user)
                         # redirect the user to logged in page
-                        return redirect('/home-E/')      
+                        return redirect('/home-C/')      
                 else:
                     # catch the error
                     validation_error = form.errors                
-            except:
-                return HttpResponse('some error')
+            except:                
                 pass
         context = {'signUpForm':SignUpForm,'validation_error':validation_error,'user_type':user_type}
         return render(request,'EventPlanner/sign-up.html',context)
@@ -271,7 +274,7 @@ def Messages_display(request):
             list_messages = []
             for message_sent in message_as_sender:
                 if receiver_of_set == message_sent.receiver:
-                    list_messages.append(message_sent.message)
+                    list_messages.append(message_sent)
             sent_dict[receiver_of_set] = list_messages
         # if not received_dict:
         #     received_dict = None

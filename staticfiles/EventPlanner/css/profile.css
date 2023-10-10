@@ -111,4 +111,9 @@ body{
 }
 .profile-image-big{
     border-radius: 50%;
+    text-decoration: none;
+}
+
+.profile{
+    text-decoration: none;
 }

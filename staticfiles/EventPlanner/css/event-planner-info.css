@@ -14,9 +14,9 @@ body{
     column-gap: 10px;
     border: 1px black;
     border-style: solid;
-    padding: 35px 10px 0px 10px;
+    padding: 10px 10px 0px 10px;
     margin-top: 30px;
-    height: 385px;
+    height: 350px;
     
     background-color: rgb(255, 236, 239);
 }
@@ -25,6 +25,7 @@ body{
 }
 
 #id_message{
+    width: 250px;
     height: 20px;
 }
 .profile-image{
@@ -45,15 +46,10 @@ body{
 .field-lable{
     font-weight: bold;
 }
-#send-bar{
-    position: relative;
-    bottom: 35px;
-    left: 16px;    
-}
+
 #id_message{
     width: 235px;
     height: 25px;
-
 }
 .send-button{
     text-decoration: none;
@@ -75,34 +71,37 @@ body{
 }
 .sender-messages,.receiver-messages{
     border: 1px black;
-    padding: 10px;
+    padding: 10px 10px 0px 10px;
     border-style: solid;
     background-color: white;
+    height: 300px;
+    
 }
 .sender-name{
-    position: relative;
-    bottom: 495px;
-    left: 430px;
     font-size: 20px;
     font-weight: bold;
+    margin-left: 8px;
 }
 .profile{
-    position: relative;
-    left: 390px;
-    bottom: 467px;
     border-radius: 50%;
+
 }
 .portfolio-images{
     background-color: rgb(255, 236, 239);
     padding: 10px;
 }
-.empty-div,.form-div{
+
+.form-div,.sender-name-div{
     height: 20px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 6px;
 }
+
 
 .chat-slogan{
     position: relative;
-    left: 642px;
+    left: 650px;
     top: 98px;
     font-weight: bold;
 }

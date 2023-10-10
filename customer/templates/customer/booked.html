@@ -11,6 +11,7 @@
     <img src="/static/images/back.png" alt="" width="40px"  >
 </a>
 
+{% if bookings %}
 <div class="grid-div">
     
     <div>
@@ -202,5 +203,9 @@
     </div>
 
 </div>
+
+{% else %}
+    <p class="no-booking">You don't have any booking right now..</p>
+{% endif %}
 
 <script src="{% static 'js/booked.js' %}"></script>

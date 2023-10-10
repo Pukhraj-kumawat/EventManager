@@ -69,14 +69,15 @@
 .message-div{
     position: relative;
     bottom: 55px;
-    left: 2px;
+    left: 10px;
     
 }
 .sender{
     position: relative;
+    font-weight: 20px;
     left: 290px;
     bottom: 240px;
-    color: darkred;
+    color: black;
     width: fit-content;
 }
 .messages{

@@ -18,5 +18,5 @@ class Messages(models.Model):
     sender = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False)
     receiver = models.ForeignKey(User,on_delete=models.CASCADE,null=False,blank=False,related_name = 'receiver')
     message = models.TextField(null=False,blank=False)
-    created=models.DateTimeField(auto_now_add = True)
+    created = models.DateTimeField(auto_now_add = True)
 

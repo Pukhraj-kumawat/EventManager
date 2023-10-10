@@ -20,16 +20,16 @@
                 {% csrf_token %}
 
                 {% if request.user.userprofile.user_type == 'is_event_planner' %}
-                {% if request.user.userprofile.profile_picture %}
-                <img src="{{UserProfileForm.instance.profile_picture.url}}" alt="" width="100" height="100" class="profile-pic">
-                <div> {{UserProfileForm.profile_picture}}</div>
-                {% else %}
-                <a href="/profile/">
-                    <img id="default-profile" src="{% static 'images/No profile.jpeg' %}" alt="" width="100"
-                        height="100" class="profile-pic">
-                </a>
-                <div> {{UserProfileForm.profile_picture}}</div>
-                {% endif %}
+                    {% if request.user.userprofile.profile_picture %}
+                    <img src="{{UserProfileForm.instance.profile_picture.url}}" alt="" width="100" height="100" class="profile-pic">
+                    <div> {{UserProfileForm.profile_picture}}</div>
+                    {% else %}
+                    <a href="/profile/">
+                        <img id="default-profile" src="{% static 'images/No profile.jpeg' %}" alt="" width="100"
+                            height="100" class="profile-pic">
+                    </a>
+                    <div> {{UserProfileForm.profile_picture}}</div>
+                    {% endif %}
                 <input type="hidden" value="" id="button-clicked" name="button-clicked">
                 <input id="remove-profile" type="button" value="Remove profile">
 

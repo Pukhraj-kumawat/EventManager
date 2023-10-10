@@ -55,7 +55,7 @@
                         <img src="{% static 'images/logo.png' %}" alt="" width="90" height="50" class="logo-image">
                     </a>    
                     {% if request.user.is_authenticated %}
-                    <span class="welcome-message welcome-message-2">welocome to <b>{{request.user.first_name}}</b></span>
+                    <span class="welcome-message welcome-message-2">welocome to Event Hub ,<b>"{{request.user.first_name}}"</b></span>
                     <div>
                         <a href="/create-event/" class="upload-event">Upload an Event</a>
                     </div>
