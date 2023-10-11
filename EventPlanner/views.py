@@ -18,7 +18,7 @@ from django.core.files import File
 
 # Create your views here.
 
-
+#hello
 
 @login_required(login_url='/login/')
 def home(request):    
