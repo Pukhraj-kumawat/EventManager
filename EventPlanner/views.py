@@ -371,3 +371,4 @@ def vendor_images(request):
 
 def hello():
     print('this is a sample function for resolving repo confilict')
+    print('this is a new changes')
