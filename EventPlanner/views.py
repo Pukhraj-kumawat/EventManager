@@ -86,7 +86,7 @@ def signUp(request,user_type):
                         UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_customer')
                         # login the user
                         login(request,user)
-                        # redirect the user to logged in page
+                        # redirect the user to logged in helo hello
                         return redirect('/home-C/')      
                 else:
                     # catch the error
