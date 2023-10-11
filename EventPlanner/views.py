@@ -75,7 +75,8 @@ def signUp(request,user_type):
                     user.save()
                     # Check whther user is an event planner 
                     if user_type == 'is_event_planner':
-                    # create the UserProfile for the above user
+                    # create the UserProfile for the above user ohk
+                    
                         UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_event_planner')
                         # login the user
                         login(request,user)
