@@ -367,3 +367,7 @@ def vendor_images(request):
             return redirect('/vendor-images/')    
         context = {'ImageForm':ImageForm,'images':images,}
         return render(request, 'EventPlanner/vendor-images.html',context)
+
+
+def hello():
+    print('this is a sample function for resolving repo confilict')
