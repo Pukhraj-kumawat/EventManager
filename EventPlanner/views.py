@@ -16,7 +16,7 @@ from django.core.files import File
 
 
 
-# Create your views here.
+# Create your views here. yes ok
 
 #hello
 
