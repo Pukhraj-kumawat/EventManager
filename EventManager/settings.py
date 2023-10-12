@@ -22,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = 'django-insecure-t*wmt6(zqaqm9_4*j&5jo#gqx*91aswp43tv97gk4@s**c8qfz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG','False').lower() == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(" ")
+ALLOWED_HOSTS = ['*']
 
 STATIC_URL = 'static'
 
@@ -119,9 +119,7 @@ DATABASES = {
     }
 }
 
-database_url = os.environ.get('DATABASE_URL')
-
-DATABASES["default"] = dj_database_url.parse(database_url)
+DATABASES["default"] = dj_database_url.parse('postgres://eventmanagerdatabase_user:0AiWWiDJ81IQGvud9FljZmX1OXGwod5T@dpg-ckjsviekpues73brkl4g-a.singapore-postgres.render.com/eventmanagerdatabase')
 
 
 # Password validation
