@@ -70,12 +70,14 @@ INSTALLED_APPS = [
     'livereload',
     'django.contrib.staticfiles',
     'customer',
+    'whitenoise',
     'EventPlanner',
     'phonenumber_field',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
