@@ -149,7 +149,8 @@ def edit_profile(request):
                 # request.user.userprofile.profile_picture.save('default_profile',File(default_profile))            
                 # default_profile.close()
                 return redirect('/profile/')  
-            if user_form.is_valid():                   
+            if user_form.is_valid():
+                return HttpResponse('come')                   
                 user_form.save()
                 if request.user.userprofile.user_type =='is_customer':
                     return redirect('/profile/')                                     
