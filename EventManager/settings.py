@@ -26,14 +26,12 @@ SECRET_KEY = 'django-insecure-t*wmt6(zqaqm9_4*j&5jo#gqx*91aswp43tv97gk4@s**c8qfz
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG','False').lower() == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 STATIC_URL = 'static'
 
-# used for production = >>>
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # used for development ==>
 
@@ -47,6 +45,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'staticfiles'),  
 ]
+
+# used for production = >>>
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
