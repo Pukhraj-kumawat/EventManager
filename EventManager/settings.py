@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'livereload',
     'django.contrib.staticfiles',
+    'django_cleanup',
     'customer',
     'whitenoise',
     'EventPlanner',
