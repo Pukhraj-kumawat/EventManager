@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-if (document.getElementById('default-profile').src === 'http://127.0.0.1:8000/static/images/No%20profile.jpeg'){
+if (document.getElementById('default-profile').src === 'staticfiles/images/No%20profile.jpeg'){
 
     document.getElementById('remove-profile').style.visibility = 'hidden';
 

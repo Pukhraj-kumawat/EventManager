@@ -159,7 +159,8 @@ def edit_profile(request):
             if profile_form.is_valid():                
                 changed_fields = profile_form.changed_data 
                 if 'profile_picture' in changed_fields:                    
-                    if request.user.userprofile.profile_picture:                        
+                    if request.user.userprofile.profile_picture:
+                        return HttpResponse('gone')                        
                         request.user.userprofile.profile_picture.delete()                        
 
                 form_data = profile_form.save(commit = False)                
