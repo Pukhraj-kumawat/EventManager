@@ -4,6 +4,7 @@ boto3==1.28.63
 botocore==1.31.63
 dj-database-url==2.1.0
 Django==4.2.5
+django-cleanup==8.0.0
 django-livereload-server==0.4
 django-phonenumber-field==7.1.0
 django-storages==1.14.2
