@@ -146,9 +146,9 @@ def edit_profile(request):
         button_clicked = request.POST.get('button-clicked')                           
         if button_clicked:                                                   
             # default_profile = open('media/images/No profile.jpeg','rb')                
-            url_s3 = request.user.userprofile.profile_picture.url.split('?')[0]
-            s3_client = boto3.client("s3")
-            response = s3_client.delete_object(Bucket ='eventmanagementbucket', Key = url_s3)
+            # url_s3 = request.user.userprofile.profile_picture.url.split('?')[0]
+            # s3_client = boto3.client("s3")
+            # response = s3_client.delete_object(Bucket ='eventmanagementbucket', Key = url_s3)
             request.user.userprofile.profile_picture.delete()                                                
             # request.user.userprofile.profile_picture.save('default_profile',File(default_profile))            
             # default_profile.close()
