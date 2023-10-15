@@ -364,8 +364,8 @@ def vendor_images(request):
                 if image_to_delete:                                                           
                     image_to_delete.delete()
                     # remove image from media folder too.
-                    if os.path.isfile(image_to_delete.image.path):
-                        os.remove(image_to_delete.image.path)                                                     
+                    # if os.path.isfile(image_to_delete.image.path):
+                    #     os.remove(image_to_delete.image.path)                                                     
                     return redirect('/vendor-images/')                
             return redirect('/vendor-images/')    
         context = {'ImageForm':ImageForm,'images':images,}
