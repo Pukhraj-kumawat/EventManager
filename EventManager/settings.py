@@ -13,6 +13,21 @@ import dj_database_url
 from pathlib import Path
 import os
 
+
+
+AWS_ACCESS_KEY_ID = 'AKIAW4477TBABBGBBUFB '
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'eventmanagementbucket'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'ap-south-1'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -172,15 +187,3 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AWS_ACCESS_KEY_ID = 'AKIAW4477TBAH3RAVOWV '
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'eventmanagementbucket'
-AWS_S3_SIGNATURE_NAME = 's3v4',
-AWS_S3_REGION_NAME = 'ap-south-1'
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL =  None
-AWS_S3_VERITY = True
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
