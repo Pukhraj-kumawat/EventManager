@@ -10,12 +10,13 @@ import boto3
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
 env = environ.Env(
     DEBUG = (bool,False)
 )
 
-client = boto3.client(
-'s3',)
 environ.Env.read_env(BASE_DIR / 'EventManager/.env')
 
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
@@ -25,12 +26,7 @@ AWS_S3_SIGNATURE_NAME = env('AWS_S3_SIGNATURE_NAME')
 AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME')
 AWS_S3_FILE_OVERWRITE = env('AWS_S3_FILE_OVERWRITE')
 AWS_DEFAULT_ACL = env('AWS_DEFAULT_ACL')
-AWS_S3_VERITY = env('AWS_S3_VERITY')
-
-
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
+AWS_S3_VERIFY = env('AWS_S3_VERIFY')
 
 
 
