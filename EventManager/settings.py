@@ -3,8 +3,8 @@ import dj_database_url
 from pathlib import Path
 import os
 import environ
+import boto3
 
-os.environ['AWS_DEFAULT_ACL'] = 'None'
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -14,7 +14,8 @@ env = environ.Env(
     DEBUG = (bool,False)
 )
 
-
+client = boto3.client(
+'s3',)
 environ.Env.read_env(BASE_DIR / 'EventManager/.env')
 
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
@@ -86,7 +87,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'livereload',
     'django.contrib.staticfiles',
-    'django_cleanup',
     'customer',
     'whitenoise',
     'EventPlanner',
