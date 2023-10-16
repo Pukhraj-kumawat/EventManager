@@ -10,8 +10,6 @@ import boto3
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
 
 env = environ.Env(
     DEBUG = (bool,False)
@@ -28,6 +26,7 @@ AWS_S3_FILE_OVERWRITE = env('AWS_S3_FILE_OVERWRITE')
 AWS_DEFAULT_ACL = env('AWS_DEFAULT_ACL')
 AWS_S3_VERIFY = env('AWS_S3_VERIFY')
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 # Quick-start development settings - unsuitable for production
