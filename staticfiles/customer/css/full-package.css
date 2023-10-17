@@ -55,7 +55,7 @@
     border: 2px black;
     background-color: rgb(255, 236, 239);
 }
-.set-button{
+.set-button,.request-booking-button{
     font-weight: bold;
     color: rgb(0, 0, 0);
     background-color: white;
@@ -66,7 +66,16 @@
     width: 50px;
     height: 24px;
 }
-.set-button:hover{
+.set-button:hover,.request-booking-button-anchor:hover{
     color: white;
     background-color: rgb(127, 127, 255);   
+}
+
+.request-booking-button{
+    width: fit-content;
+    text-decoration: none;
+}
+
+.request-booking-button-anchor{
+    text-decoration: none;
 }
