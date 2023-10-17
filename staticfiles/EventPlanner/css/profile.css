@@ -68,6 +68,7 @@ body{
     background-color: rgb(142, 20, 20);
     color: white;
     font-weight: bold;
+    margin-bottom: 50px;
 
 }
 .delete-account:hover{
