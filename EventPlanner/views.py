@@ -14,6 +14,7 @@ from django.db import connection
 import os
 from django.core.files import File
 import boto3
+import cloudinary
 
 
 
@@ -145,10 +146,10 @@ def edit_profile(request):
         user_form = UserForm(request.POST,instance = request.user)
         button_clicked = request.POST.get('button-clicked')                           
         if button_clicked:                                                                             
-            url_s3 = request.user.userprofile.profile_picture.url.split('?')[0]
-            s3_client = boto3.client("s3")
-            response = s3_client.delete_object(Bucket ='eventmanagementbucket', Key = url_s3)
-            request.user.userprofile.profile_picture.delete()                                                
+            # request.user.userprofile.profile_picture.delete()                                                
+            cloudinary.uploader.destroy(request.user.userprofile.profile_picture.public_id,invalidate=True)  
+            request.user.userprofile.profile_picture = None
+            request.user.userprofile.save()  
             # request.user.userprofile.profile_picture.save('default_profile',File(default_profile))            
             # default_profile.close()
             return redirect('/profile/')                  
@@ -359,9 +360,10 @@ def vendor_images(request):
                                 
             delete_image_id = request.POST.get('delete-image-id')              
             if delete_image_id:                                 
-                image_to_delete  = Image.objects.get(id = int(delete_image_id)) 
-                if image_to_delete:                                                           
-                    image_to_delete.delete()
+                image_to_delete  = Image.objects.get(id = int(delete_image_id))                 
+                if image_to_delete:         
+                    cloudinary.uploader.destroy(image_to_delete.image.public_id,invalidate=True)       
+                    image_to_delete.delete()                    
                     # remove image from media folder too.
                     # if os.path.isfile(image_to_delete.image.path):
                     #     os.remove(image_to_delete.image.path)                                                     

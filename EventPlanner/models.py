@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 # from phonenumber_field.formfields import PhoneNumberField
 
 # Create your models here.
@@ -24,9 +25,9 @@ user_type_choices = (('is_customer','is_customer'),('is_event_planner','is_event
 class Image(models.Model):
     user_profile = models.ForeignKey('userprofile',on_delete = models.CASCADE,null = True,blank = True)
     venue_object = models.ForeignKey('Venue',on_delete = models.CASCADE,null = True, blank = True)
-    image = models.ImageField(upload_to='images/',null = True,blank = True)
+    # image = models.ImageField(upload_to='images/',null = True,blank = True)
+    image = CloudinaryField('image',blank=True)
     upload_date = models.DateTimeField(auto_now = True)
-
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
@@ -39,7 +40,7 @@ class UserProfile(models.Model):
     state = models.CharField(max_length = 20,null = False,blank = False)
     location = models.TextField(blank = True,null = True)
     service_offered = models.TextField(blank = True,null = True)
-    profile_picture = models.ImageField(upload_to = 'images/',null = True,blank = True)
+    profile_picture = CloudinaryField('image',blank=True)
     vendor_images = models.ManyToManyField('Image', blank = True,null = True,related_name = 'portfolio_images')
     # showcase_image = models.OneToOneField('Image',blank = True,null = True,on_delete=models.CASCADE)
 

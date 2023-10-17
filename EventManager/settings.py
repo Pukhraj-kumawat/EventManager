@@ -3,8 +3,11 @@ import dj_database_url
 from pathlib import Path
 import os
 import environ
-import boto3
-
+# import boto3
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+# import cloudinary_storage
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -17,16 +20,34 @@ env = environ.Env(
 
 environ.Env.read_env(BASE_DIR / 'EventManager/.env')
 
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME="eventmanagementbucket"
-AWS_S3_SIGNATURE_NAME="s3v4"
-AWS_S3_REGION_NAME="ap-south-1"
-AWS_S3_FILE_OVERWRITE=False
-AWS_DEFAULT_ACL=None
-AWS_S3_VERIFY=False
+# AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME="eventmanagementbucket"
+# AWS_S3_SIGNATURE_NAME="s3v4"
+# AWS_S3_REGION_NAME="ap-south-1"
+# AWS_S3_FILE_OVERWRITE=False
+# AWS_DEFAULT_ACL=None
+# AWS_S3_VERIFY=False
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+# serve media files using cloudinary
+
+api_key = env('api_key')
+api_secret = env('api_secret')
+
+cloudinary.config(
+
+    cloud_name = "dcvtpwhol",
+    api_key = api_key,
+    api_secret = api_secret
+
+)
+
+
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -87,6 +108,8 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'storages',
     'django_cleanup.apps.CleanupConfig',
+    'cloudinary'
+    # 'cloudinary_storage'
 
 ]
 
