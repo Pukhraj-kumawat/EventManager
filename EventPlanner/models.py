@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django.db import models
+
 # from phonenumber_field.formfields import PhoneNumberField
 
 # Create your models here.
@@ -65,3 +67,7 @@ class Venue(models.Model):
     venue_images = models.ManyToManyField('Image', blank = True,null = True)
 
     
+
+# accounts/models.py
+
+

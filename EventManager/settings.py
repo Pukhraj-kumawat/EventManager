@@ -7,6 +7,8 @@ import environ
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+
+# from EventPlanner.models import CustomUser
 # import cloudinary_storage
 
 
@@ -108,7 +110,9 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'storages',
     'django_cleanup.apps.CleanupConfig',
-    'cloudinary'
+    'cloudinary',
+    'rest_framework'
+    
     # 'cloudinary_storage'
 
 ]
@@ -204,5 +208,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# mydrfproject/settings.py
+
+# Email Backend Configuration
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Replace with your preferred backend
+
+EMAIL_HOST = 'smtp.gmail.com'  # Replace with your email host
+EMAIL_PORT = 587  # Replace with your email port
+EMAIL_USE_TLS = True  # Set to False if your email server doesn't use TLS
+EMAIL_HOST_USER = 'pukhrajkumawat048@gmail.com'  # Replace with your email username
+EMAIL_HOST_PASSWORD = 'xljs bflq chht qkuk'  # Replace with your email password
 
 
