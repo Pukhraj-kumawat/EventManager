@@ -24,8 +24,10 @@
     width: fit-content;
     background-color: rgb(255, 236, 239);   
     padding: 20px;
-
+    
 }
+
+
 .sign-in,.sign-up-button{
     text-decoration: none;
     font-weight: bold;

@@ -1,0 +1,33 @@
+.parent-div{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+
+}
+
+.child-div{  
+    background-color: rgb(255, 236, 239);   
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px 20px;
+    height: fit-content;
+    
+}
+
+.submit{
+    position: relative;
+    left: 35px;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: white;
+    color:darkred;
+    border: solid rgb(0, 0, 0);
+    border-width: 1px;
+    border-radius: 2px;
+    padding: 2px 4px;
+}
+.submit:hover{
+    color: white;
+    background-color: darkred;
+}

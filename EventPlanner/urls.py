@@ -19,7 +19,7 @@ urlpatterns = [
     path('edit-event/<int:pk>/',views.edit_event),
     path('delete-event/<int:pk>/',views.delete_event),
     path('vendor-images/',views.vendor_images),
-    # path('confirm-otp/',views.confirm_otp),
+    path('confirm-otp/',views.confirm_otp),
     path('api/venue-info/<str:pk>/',views.Venue_data.as_view())
     
 ]

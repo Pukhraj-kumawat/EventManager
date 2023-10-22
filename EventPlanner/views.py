@@ -18,11 +18,11 @@ import cloudinary
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import VenueSerializers
-# from django.core.mail import send_mail
-# import pyotp
-# import smtplib
-# from django.core.mail import get_connection, EmailMessage
-# import ssl
+from django.core.mail import send_mail
+import pyotp
+import smtplib
+from django.core.mail import get_connection, EmailMessage
+import ssl
 
 # Create your views here. yes ok
 
@@ -69,30 +69,42 @@ def create_messages(request):
 #     context = {'events':events}
 #     return render(request,'EventPlanner/booking.html',context)
 
-# def send_otp_email(user):        
-#     otp_secret_key = pyotp.random_base32()    
-#     otp = pyotp.TOTP(otp_secret_key)
-#     otp_code = otp.now()
-#     request.session['otp'] = otp_code
-#     subject = 'Your OTP for Registration'
-#     message = f'Your OTP for Event Hub is: {otp_code}'
-#     from_email = 'pukhrajkumawat048@example.com'    
-#     recipient_list = [user.email]    
-#     send_mail(subject, message, from_email, recipient_list)  
 
 
 
-# def confirm_otp(request):
-#     if request.method == 'POST':
-#         otp = request.POST.get('otp')
-#         session_otp = request.session.get('otp')
-#         if otp == session_otp:
-#             pass
-#         else:
-#             return HttpResponse('wrong OTP')
+def send_otp_email(request,user,user_type):   
+    otp_secret_key = pyotp.random_base32()    
+    otp = pyotp.TOTP(otp_secret_key)
+    otp_code = otp.now()
+    request.session['otp'] = otp_code
+    subject = 'Your OTP for Registration'
+    message = f'Your OTP for Event Hub is: {otp_code}'
+    from_email = 'pukhrajkumawat048@example.com'    
+    recipient_list = [user.email]    
+    send_mail(subject, message, from_email, recipient_list)  
+    
 
-#     return render(request,'EventPlanner/confirm-otp.html')
-
+def confirm_otp(request):
+    otp_verify = 'running'
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        otp = request.POST.get('otp')
+        otp_session = request.session.get('otp')
+        user = authenticate(request,username=username,password=password)
+        if otp:
+            if otp == otp_session:            
+                login(request,user)
+                user.userprofile.otp_verified = True   
+                user.userprofile.save()         
+                if user.userprofile.user_type == 'is_customer':                
+                    return redirect('/home-C/') 
+                else:
+                    return redirect('/home-E/')
+            else:            
+                otp_verify = 'False'
+    context = {'otp_verify':otp_verify}
+    return render(request,'EventPlanner/confirm-otp.html',context)
 
 def signUp(request,user_type):
     if not request.user.is_authenticated:
@@ -105,26 +117,22 @@ def signUp(request,user_type):
                 if form.is_valid():
                     user = form.save(commit = False)
 
-                    send_otp_email(user)
-                    
-                    # save the form 
-                    user.save()
-                    # Check whther user is an event planner 
+                    send_otp_email(request,user,user_type)        
+                                        
                     if user_type == 'is_event_planner':
-                    # create the UserProfile for the above user ohk
-                    
+                        user.save()                   
+
                         UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_event_planner')
-                        
-                        # login the user
-                        login(request,user)
-                        # redirect the user to home in page
-                        return redirect('/home-E/')                    
+                        return render(request,'EventPlanner/confirm-otp.html')
+                        # login(request,user)
+                        # return redirect('/home-E/')                    
                     else:
-                        UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_customer')
-                        # login the user
-                        login(request,user)
-                        # redirect the user to logged in helo hello
-                        return redirect('/home-C/')      
+                        user.save()
+
+                        UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_customer')   
+                        return render(request,'EventPlanner/confirm-otp.html')                     
+                        # login(request,user)                        
+                        # return redirect('/home-C/')      
                 else:
                     # catch the error
                     validation_error = form.errors                
@@ -147,7 +155,7 @@ def loginPage(request):
                 password = request.POST.get('password')
                 # authenticate the user
                 user = authenticate(request,username = username,password = password)                
-                if user:
+                if user and user.userprofile.otp_verified:
                     if user.userprofile.user_type == 'is_event_planner':
                         login(request,user)
                         return redirect('/home-E/')

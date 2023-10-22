@@ -1,14 +1,28 @@
-
 {% load static %}
 <title>Event Hub</title>
+<link rel="stylesheet" href="{% static 'EventPlanner/css/confirm-otp.css' %}">
 <link rel="stylesheet" href="{% static 'EventPlanner/css/navbar.css' %}">
 
 <div class="navbar-div">
-{% include 'navbar.html' %}
+    {% include 'navbar.html' %}
 </div>
 
-<form action="" method="POST">
-    <input type="text" placeholder="Enter OTP here..." name="otp">
-    <input type="submit" value="Submit">
-</form>
+<div class="parent-div">
+    <div class="child-div">
+    <form action="/confirm-otp/" method="POST">
+        {% csrf_token %}
+        <p>Enter username again</p>
+        <input type="text" placeholder="username" name="username">
+        <p>Enter password again</p>
+        <input type="password" placeholder="password" name="password">
+        <p>Enter your otp</p>
+        <input type="text" placeholder="Enter otp here..." name="otp">
+        <br><br>
+        <input type="submit" value="Submit" class="submit">
+    </form>
 
+    {% if otp_verify == 'False' %}
+    <p>Otp is wrong</p>
+    {% endif %}
+</div>
+</div>

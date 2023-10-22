@@ -44,6 +44,7 @@ class UserProfile(models.Model):
     service_offered = models.TextField(blank = True,null = True)
     profile_picture = CloudinaryField('image',blank=True)
     vendor_images = models.ManyToManyField('Image', blank = True,null = True,related_name = 'portfolio_images')
+    otp_verified = models.BooleanField(default=False)
     # showcase_image = models.OneToOneField('Image',blank = True,null = True,on_delete=models.CASCADE)
 
 
