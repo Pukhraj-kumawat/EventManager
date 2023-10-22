@@ -18,11 +18,11 @@ import cloudinary
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import VenueSerializers
-from django.core.mail import send_mail
-import pyotp
-import smtplib
-from django.core.mail import get_connection, EmailMessage
-import ssl
+# from django.core.mail import send_mail
+# import pyotp
+# import smtplib
+# from django.core.mail import get_connection, EmailMessage
+# import ssl
 
 # Create your views here. yes ok
 
@@ -69,29 +69,29 @@ def create_messages(request):
 #     context = {'events':events}
 #     return render(request,'EventPlanner/booking.html',context)
 
-def send_otp_email(user):        
-    otp_secret_key = pyotp.random_base32()    
-    otp = pyotp.TOTP(otp_secret_key)
-    otp_code = otp.now()
-    request.session['otp'] = otp_code
-    subject = 'Your OTP for Registration'
-    message = f'Your OTP for Event Hub is: {otp_code}'
-    from_email = 'pukhrajkumawat048@example.com'    
-    recipient_list = [user.email]    
-    send_mail(subject, message, from_email, recipient_list)  
+# def send_otp_email(user):        
+#     otp_secret_key = pyotp.random_base32()    
+#     otp = pyotp.TOTP(otp_secret_key)
+#     otp_code = otp.now()
+#     request.session['otp'] = otp_code
+#     subject = 'Your OTP for Registration'
+#     message = f'Your OTP for Event Hub is: {otp_code}'
+#     from_email = 'pukhrajkumawat048@example.com'    
+#     recipient_list = [user.email]    
+#     send_mail(subject, message, from_email, recipient_list)  
 
 
 
-def confirm_otp(request):
-    if request.method == 'POST':
-        otp = request.POST.get('otp')
-        session_otp = request.session.get('otp')
-        if otp == session_otp:
-            pass
-        else:
-            return HttpResponse('wrong OTP')
+# def confirm_otp(request):
+#     if request.method == 'POST':
+#         otp = request.POST.get('otp')
+#         session_otp = request.session.get('otp')
+#         if otp == session_otp:
+#             pass
+#         else:
+#             return HttpResponse('wrong OTP')
 
-    return render(request,'EventPlanner/confirm-otp.html')
+#     return render(request,'EventPlanner/confirm-otp.html')
 
 
 def signUp(request,user_type):
