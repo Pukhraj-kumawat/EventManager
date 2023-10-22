@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
 from .models import Category,Event,UserProfile,Venue,Image
 from django.contrib.auth.models import User
 from django.contrib.auth import login,logout,authenticate
@@ -15,8 +15,14 @@ import os
 from django.core.files import File
 import boto3
 import cloudinary
-
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import VenueSerializers
+from django.core.mail import send_mail
+import pyotp
+import smtplib
+from django.core.mail import get_connection, EmailMessage
+import ssl
 
 # Create your views here. yes ok
 
@@ -63,6 +69,31 @@ def create_messages(request):
 #     context = {'events':events}
 #     return render(request,'EventPlanner/booking.html',context)
 
+def send_otp_email(user):        
+    otp_secret_key = pyotp.random_base32()    
+    otp = pyotp.TOTP(otp_secret_key)
+    otp_code = otp.now()
+    request.session['otp'] = otp_code
+    subject = 'Your OTP for Registration'
+    message = f'Your OTP for Event Hub is: {otp_code}'
+    from_email = 'pukhrajkumawat048@example.com'    
+    recipient_list = [user.email]    
+    send_mail(subject, message, from_email, recipient_list)  
+
+
+
+def confirm_otp(request):
+    if request.method == 'POST':
+        otp = request.POST.get('otp')
+        session_otp = request.session.get('otp')
+        if otp == session_otp:
+            pass
+        else:
+            return HttpResponse('wrong OTP')
+
+    return render(request,'EventPlanner/confirm-otp.html')
+
+
 def signUp(request,user_type):
     if not request.user.is_authenticated:
         validation_error = None
@@ -73,6 +104,9 @@ def signUp(request,user_type):
 
                 if form.is_valid():
                     user = form.save(commit = False)
+
+                    send_otp_email(user)
+                    
                     # save the form 
                     user.save()
                     # Check whther user is an event planner 
@@ -80,6 +114,7 @@ def signUp(request,user_type):
                     # create the UserProfile for the above user ohk
                     
                         UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_event_planner')
+                        
                         # login the user
                         login(request,user)
                         # redirect the user to home in page
@@ -376,3 +411,26 @@ def vendor_images(request):
 def hello():
     print('this is a sample function for resolving repo confilict')
     print('this is a new changes')
+
+
+
+
+# Codes for API:
+
+
+
+class Venue_data(APIView):
+    def get(self,request,pk):
+        venue = Venue.objects.get(id = int(pk))
+        serializer = VenueSerializers(venue,many = False)
+        return Response(serializer.data)
+    def post(self,request):
+        pass
+
+
+
+
+# code for OTP authentication
+
+
+
