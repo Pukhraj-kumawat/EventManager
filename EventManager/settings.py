@@ -164,7 +164,7 @@ WSGI_APPLICATION = 'EventManager.wsgi.application'
 
 DATABASES = {}
 
-DATABASES["default"] = dj_database_url.parse('postgres://eventmanagerdatabase_user:0AiWWiDJ81IQGvud9FljZmX1OXGwod5T@dpg-ckjsviekpues73brkl4g-a.singapore-postgres.render.com/eventmanagerdatabase')
+DATABASES["default"] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
 
 
 
