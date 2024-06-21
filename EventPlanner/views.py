@@ -426,7 +426,6 @@ def hello():
 # Codes for API:
 
 
-
 class Venue_data(APIView):
     def get(self,request,pk):
         venue = Venue.objects.get(id = int(pk))
