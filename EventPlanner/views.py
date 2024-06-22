@@ -31,7 +31,10 @@ import environ
 #hello
 
 @login_required(login_url='/login/')
-def home(request):    
+def home(request):  
+    env = environ.Env()
+    DEBUG = env.bool('DEBUG', default=True)  
+    print(env('DATABASE_URL'))
     if request.user.userprofile.user_type == 'is_event_planner':
         # if request.method =='POST':
         #     message = request.POST.get('message')

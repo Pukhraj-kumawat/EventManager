@@ -140,9 +140,9 @@ DATABASES = {}
 DATABASES["default"] = dj_database_url.parse(env('DATABASE_URL'))
 
 # Example of ensuring the correct options
-# DATABASES['default']['OPTIONS'] = {
-#     'sslmode': 'require',
-# }
+DATABASES['default']['OPTIONS'] = {
+    'sslmode': 'require',
+}
 
 
 
