@@ -24,6 +24,8 @@ import smtplib
 from django.core.mail import get_connection, EmailMessage
 import ssl
 
+import environ
+
 # Create your views here. yes ok
 
 #hello
@@ -109,7 +111,10 @@ def confirm_otp(request):
     context = {'otp_verify':otp_verify}
     return render(request,'EventPlanner/confirm-otp.html',context)
 
-def signUp(request,user_type):    
+def signUp(request,user_type):  
+    env = environ.Env()
+    DEBUG = env.bool('DEBUG', default=True)  
+    print(env('DATABASE_URL'))
     if not request.user.is_authenticated:
         validation_error = None
         if request.method == 'POST':            

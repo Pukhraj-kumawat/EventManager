@@ -152,6 +152,8 @@ WSGI_APPLICATION = 'EventManager.wsgi.application'
 #     }
 # }
 
+print('samjhe kya..',env('DATABASE_URL'))
+
 DATABASES = {}
 
 DATABASES["default"] = dj_database_url.parse(env('DATABASE_URL'))
