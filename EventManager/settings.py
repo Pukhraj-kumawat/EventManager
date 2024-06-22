@@ -164,7 +164,7 @@ WSGI_APPLICATION = 'EventManager.wsgi.application'
 
 DATABASES = {}
 
-DATABASES["default"] = dj_database_url.parse(os.environ.get('DATABASE_URL', ssl_require=True))
+DATABASES["default"] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
 
 # Example of ensuring the correct options
 DATABASES['default']['OPTIONS'] = {
