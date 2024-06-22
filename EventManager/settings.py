@@ -15,12 +15,12 @@ import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
 
-env = environ.Env(
-    DEBUG = (bool,True)
-)
+DEBUG = env.bool('DEBUG', default=True)
 
-environ.Env.read_env(BASE_DIR / 'EventManager/.env')
+
+API_KEY = env('API_KEY')
 
 # AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 # AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
@@ -164,7 +164,7 @@ WSGI_APPLICATION = 'EventManager.wsgi.application'
 
 DATABASES = {}
 
-DATABASES["default"] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
+DATABASES["default"] = dj_database_url.parse(env('DATABASE_URL'))
 
 # Example of ensuring the correct options
 DATABASES['default']['OPTIONS'] = {
