@@ -36,14 +36,13 @@ API_KEY = env('API_KEY')
 
 # serve media files using cloudinary
 
-api_key = env('api_key')
-api_secret = env('api_secret')
+API_SECRET = env('API_SECRET')
 
 cloudinary.config(
 
     cloud_name = "dcvtpwhol",
-    api_key = api_key,
-    api_secret = api_secret
+    API_KEY = API_KEY,
+    API_SECRET = API_SECRET
 
 )
 
