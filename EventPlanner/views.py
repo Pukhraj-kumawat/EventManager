@@ -92,7 +92,9 @@ def confirm_otp(request):
         otp = request.POST.get('otp')
         otp_session = request.session.get('otp')
         user = authenticate(request,username=username,password=password)
-        if otp:
+        print('this is user',user)
+        if otp and user:
+            print('gone 3')
             if otp == otp_session:            
                 login(request,user)
                 user.userprofile.otp_verified = True   
@@ -103,14 +105,14 @@ def confirm_otp(request):
                     return redirect('/home-E/')
             else:            
                 otp_verify = 'False'
+        print('gone 4')
     context = {'otp_verify':otp_verify}
     return render(request,'EventPlanner/confirm-otp.html',context)
 
-def signUp(request,user_type):
-    print('gone brother')
+def signUp(request,user_type):    
     if not request.user.is_authenticated:
         validation_error = None
-        if request.method == 'POST':
+        if request.method == 'POST':            
             try:
                 # access filled form instance
                 form = SignUpForm(request.POST)
@@ -124,10 +126,11 @@ def signUp(request,user_type):
                         user.save()                   
 
                         UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_event_planner')
+                        print('gone 1')
                         return render(request,'EventPlanner/confirm-otp.html')
                         # login(request,user)
                         # return redirect('/home-E/')                    
-                    else:
+                    else:                        
                         user.save()
 
                         UserProfile_instance = UserProfile.objects.create(user=user,user_type='is_customer')   

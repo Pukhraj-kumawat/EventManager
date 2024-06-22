@@ -19,11 +19,6 @@ env = environ.Env()
 
 DEBUG = env.bool('DEBUG', default=True)
 
-
-API_KEY = env('API_KEY')
-
-print(API_KEY)
-
 # AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 # AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 # AWS_STORAGE_BUCKET_NAME="eventmanagementbucket"
@@ -37,6 +32,7 @@ print(API_KEY)
 
 # serve media files using cloudinary
 
+API_KEY = env('API_KEY')
 API_SECRET = env('API_SECRET')
 
 cloudinary.config(
@@ -44,13 +40,7 @@ cloudinary.config(
     cloud_name = "dcvtpwhol",
     API_KEY = API_KEY,
     API_SECRET = API_SECRET
-
 )
-
-print(API_KEY,API_SECRET)
-
-
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
