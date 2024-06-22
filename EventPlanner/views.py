@@ -107,6 +107,7 @@ def confirm_otp(request):
     return render(request,'EventPlanner/confirm-otp.html',context)
 
 def signUp(request,user_type):
+    print('gone brother')
     if not request.user.is_authenticated:
         validation_error = None
         if request.method == 'POST':
