@@ -19,16 +19,6 @@ env = environ.Env()
 
 DEBUG = env.bool('DEBUG', default=True)
 
-# AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME="eventmanagementbucket"
-# AWS_S3_SIGNATURE_NAME="s3v4"
-# AWS_S3_REGION_NAME="ap-south-1"
-# AWS_S3_FILE_OVERWRITE=False
-# AWS_DEFAULT_ACL=None
-# AWS_S3_VERIFY=False
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
 
 # serve media files using cloudinary
 
@@ -42,14 +32,11 @@ cloudinary.config(
     API_SECRET = API_SECRET
 )
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-t*wmt6(zqaqm9_4*j&5jo#gqx*91aswp43tv97gk4@s**c8qfz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG','False').lower() == 'True'
+# DEBUG = os.environ.get('DEBUG','False').lower() == 'True'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -79,11 +66,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-
-# settings.py
-
-
 
 # Application definition
 
@@ -152,16 +134,15 @@ WSGI_APPLICATION = 'EventManager.wsgi.application'
 #     }
 # }
 
-print('samjhe kya..',env('DATABASE_URL'))
 
 DATABASES = {}
 
 DATABASES["default"] = dj_database_url.parse(env('DATABASE_URL'))
 
 # Example of ensuring the correct options
-DATABASES['default']['OPTIONS'] = {
-    'sslmode': 'require',
-}
+# DATABASES['default']['OPTIONS'] = {
+#     'sslmode': 'require',
+# }
 
 
 

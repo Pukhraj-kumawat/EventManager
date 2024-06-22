@@ -114,7 +114,6 @@ def confirm_otp(request):
 def signUp(request,user_type):  
     env = environ.Env()
     DEBUG = env.bool('DEBUG', default=True)  
-    print(env('DATABASE_URL'))
     if not request.user.is_authenticated:
         validation_error = None
         if request.method == 'POST':            
