@@ -126,16 +126,28 @@ WSGI_APPLICATION = 'EventManager.wsgi.application'
 # }
 
 
-DATABASES = {}
 
-
-# DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
-DATABASES["default"] = dj_database_url.parse(env('DATABASE_URL'))
-
-# Example of ensuring the correct options
-DATABASES['default']['OPTIONS'] = {
-    'sslmode': 'require',
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'EventManagerDb',
+        'USER': env('USERNAME'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOSTNAME'),
+        'PORT': '5432',
+    }
 }
+
+
+# # DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
+# DATABASES["default"] = dj_database_url.parse(env('DATABASE_URL'))
+
+# # Example of ensuring the correct options
+# DATABASES['default']['OPTIONS'] = {
+#     'sslmode': 'require',
+# }
+
+
 
 
 
