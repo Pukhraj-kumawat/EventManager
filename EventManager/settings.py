@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # DEBUG = os.environ.get('DEBUG','False').lower() == 'True'
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','https://eventmanager-1.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'eventmanager-1.onrender.com']
 
 STATIC_URL = 'static'
 
