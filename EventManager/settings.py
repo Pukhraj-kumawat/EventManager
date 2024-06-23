@@ -28,9 +28,9 @@ SECRET_KEY = 'django-insecure-t*wmt6(zqaqm9_4*j&5jo#gqx*91aswp43tv97gk4@s**c8qfz
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.environ.get('DEBUG','False').lower() == 'True'
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['https://eventmanager-1.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','https://eventmanager-1.onrender.com']
 
 STATIC_URL = 'static'
 
@@ -180,8 +180,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-# mydrfproject/settings.py
 
 # Email Backend Configuration
 
