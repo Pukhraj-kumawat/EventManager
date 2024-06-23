@@ -8,19 +8,10 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-# from EventPlanner.models import CustomUser
-# import cloudinary_storage
 
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
-
-DEBUG = env.bool('DEBUG', default=True)
-
-
-# serve media files using cloudinary
 
 API_KEY = env('API_KEY')
 API_SECRET = env('API_SECRET')
@@ -39,7 +30,7 @@ SECRET_KEY = 'django-insecure-t*wmt6(zqaqm9_4*j&5jo#gqx*91aswp43tv97gk4@s**c8qfz
 # DEBUG = os.environ.get('DEBUG','False').lower() == 'True'
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://eventmanager-1.onrender.com']
 
 STATIC_URL = 'static'
 
@@ -137,6 +128,8 @@ WSGI_APPLICATION = 'EventManager.wsgi.application'
 
 DATABASES = {}
 
+
+# DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
 DATABASES["default"] = dj_database_url.parse(env('DATABASE_URL'))
 
 # Example of ensuring the correct options
