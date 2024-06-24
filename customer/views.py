@@ -47,8 +47,8 @@ def home(request):
         return render(request,'customer/home.html',context)
 
 
-def book(request,pk):
-    if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':        
+def book(request,pk):    
+    if not request.user.is_authenticated or request.user.userprofile.user_type == 'is_customer':                
         error = None
         category = Category.objects.get(id = pk)
         events_on_category = Event.objects.filter(category = category)

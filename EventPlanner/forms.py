@@ -39,7 +39,7 @@ class UserProfileForm(ModelForm):
         model = UserProfile
         widgets = {'profile_picture':FileInput()}
         fields = '__all__' 
-        exclude = ('user_type','user',)
+        exclude = ('user_type','user','otp_verified')
                       
 
 class UserForm(ModelForm):

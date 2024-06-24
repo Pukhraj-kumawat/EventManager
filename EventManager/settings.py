@@ -2,57 +2,58 @@
 import dj_database_url
 from pathlib import Path
 import os
-import environ
-# import boto3
+from dotenv import load_dotenv
+# import environ
+import boto3
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
+# env = environ.Env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-env = environ.Env()
+dotenv_path = BASE_DIR / '.env'
 
-API_KEY = env('API_KEY')
-API_SECRET = env('API_SECRET')
+load_dotenv(dotenv_path,override=True)
 
 cloudinary.config(
-
     cloud_name = "dcvtpwhol",
-    API_KEY = API_KEY,
-    API_SECRET = API_SECRET
+    api_key = os.environ.get('API_KEY'),
+    api_secret = os.environ.get('API_SECRET')
 )
 
+
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.environ.get('DEBUG','False').lower() == 'True'
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'eventmanager-1.onrender.com']
 
-STATIC_URL = 'static'
 
+STATIC_URL = '/static/'
 
 # used for development ==>
 
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),  
-]
+# STATICFILES_FINDERS = (
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+# )
 
 # used for production = >>>
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    # os.path.join(BASE_DIR, 'staticfiles'),  
+    BASE_DIR / 'staticfiles',
+]
+
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -126,29 +127,22 @@ WSGI_APPLICATION = 'EventManager.wsgi.application'
 # }
 
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'EventManagerDb',
-        'USER': env('USERNAME'),
-        'PASSWORD': env('PASSWORD'),
-        'HOST': env('HOSTNAME'),
+        'NAME': 'eventmanagerdb_v8ty',
+        'USER': os.environ.get('USERNAME'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': os.environ.get('HOSTNAME'),
         'PORT': '5432',
     }
 }
 
-
-# # DATABASES["default"] = dj_database_url.parse(os.getenv('DATABASE_URL'))
-# DATABASES["default"] = dj_database_url.parse(env('DATABASE_URL'))
-
-# # Example of ensuring the correct options
+# DATABASES = {}
+# DATABASES["default"] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
 # DATABASES['default']['OPTIONS'] = {
 #     'sslmode': 'require',
 # }
-
-
-
 
 
 # Password validation
@@ -201,6 +195,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587  
 EMAIL_USE_TLS = True  
 EMAIL_HOST_USER = 'pukhrajkumawat048@gmail.com'
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 

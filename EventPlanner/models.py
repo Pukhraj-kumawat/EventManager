@@ -28,7 +28,7 @@ class Image(models.Model):
     user_profile = models.ForeignKey('userprofile',on_delete = models.CASCADE,null = True,blank = True)
     venue_object = models.ForeignKey('Venue',on_delete = models.CASCADE,null = True, blank = True)
     # image = models.ImageField(upload_to='images/',null = True,blank = True)
-    image = CloudinaryField('image',blank=True)
+    image = CloudinaryField('image',blank=True,null=True)
     upload_date = models.DateTimeField(auto_now = True)
 
 class UserProfile(models.Model):
@@ -42,7 +42,7 @@ class UserProfile(models.Model):
     state = models.CharField(max_length = 20,null = False,blank = False)
     location = models.TextField(blank = True,null = True)
     service_offered = models.TextField(blank = True,null = True)
-    profile_picture = CloudinaryField('image',blank=True)
+    profile_picture = CloudinaryField('image',blank=True,null=True)
     vendor_images = models.ManyToManyField('Image', blank = True,null = True,related_name = 'portfolio_images')
     otp_verified = models.BooleanField(default=False)
     # showcase_image = models.OneToOneField('Image',blank = True,null = True,on_delete=models.CASCADE)

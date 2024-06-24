@@ -24,17 +24,12 @@ import smtplib
 from django.core.mail import get_connection, EmailMessage
 import ssl
 
-import environ
 
 # Create your views here. yes ok
 
-#hello
 
 @login_required(login_url='/login/')
 def home(request):  
-    env = environ.Env()
-    DEBUG = env.bool('DEBUG', default=True)  
-    print(env('DATABASE_URL'))
     if request.user.userprofile.user_type == 'is_event_planner':
         # if request.method =='POST':
         #     message = request.POST.get('message')
@@ -115,8 +110,6 @@ def confirm_otp(request):
     return render(request,'EventPlanner/confirm-otp.html',context)
 
 def signUp(request,user_type):  
-    env = environ.Env()
-    DEBUG = env.bool('DEBUG', default=True)  
     if not request.user.is_authenticated:
         validation_error = None
         if request.method == 'POST':            
@@ -187,7 +180,7 @@ def logoutPage(request):
 
 
 @login_required(login_url='/login/')
-def edit_profile(request):    
+def edit_profile(request):        
     user_errors = None
     profile_errors = None    
     button_clicked = None
@@ -302,6 +295,7 @@ def DeleteAccount(request):
 @login_required(login_url='/login/')
 def confirmDelete(request):
     user = request.user
+    logout(request)
     user.delete()
     return redirect('/home-C/')
 
