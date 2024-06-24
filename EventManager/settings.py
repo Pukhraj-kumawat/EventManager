@@ -3,19 +3,22 @@ import dj_database_url
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-# import environ
+import environ
 import boto3
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-# env = environ.Env()
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Used to load environment variables from .env
 dotenv_path = BASE_DIR / '.env'
-
 load_dotenv(dotenv_path,override=True)
+
+# Used to load environment variables from render
+env = environ.Env()
 
 cloudinary.config(
     cloud_name = "dcvtpwhol",
