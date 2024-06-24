@@ -22,8 +22,8 @@ env = environ.Env()
 
 cloudinary.config(
     cloud_name = "dcvtpwhol",
-    api_key = os.environ.get('API_KEY'),
-    api_secret = os.environ.get('API_SECRET')
+    api_key = env('API_KEY'),
+    api_secret = env('API_SECRET')
 )
 
 
@@ -134,9 +134,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'eventmanagerdb_v8ty',
-        'USER': os.environ.get('USERNAME'),
-        'PASSWORD': os.environ.get('PASSWORD'),
-        'HOST': os.environ.get('HOSTNAME'),
+        'USER': env('USERNAME'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOSTNAME'),
         'PORT': '5432',
     }
 }
