@@ -4,7 +4,7 @@ from .models import Category,Event,UserProfile,Venue,Image
 # Register your models here.
 
 class customUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'user_type','otp_verified')
+    list_display = ('user','user_type','otp_verified')
 
 
 admin.site.register(Event)
